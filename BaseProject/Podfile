@@ -1,0 +1,14 @@
+# platform :ios, “7.0”
+target ‘BaseProject’ do
+
+pod ‘YYKit’
+pod 'AFNetworking'
+pod 'SDWebImage'
+pod 'MBProgressHUD'
+pod ‘AMap3DMap’
+pod ‘AMapLocation’
+pod ‘AMapSearch’
+pod ‘AMapNavi’
+pod 'Masonry'
+
+end
