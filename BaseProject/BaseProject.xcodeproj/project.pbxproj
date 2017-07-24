@@ -61,6 +61,9 @@
 		42C84F1D1EF2EB650008189D /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F191EF2EB650008189D /* NSString+SBJSON.m */; };
 		42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F1B1EF2EB650008189D /* SBJSON.m */; };
 		6BB129861F24F696004D9A24 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB129851F24F696004D9A24 /* UserModel.m */; };
+		6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */; };
+		6BBCE7E21F2630F0006B6DA4 /* HomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7E11F2630F0006B6DA4 /* HomeView.m */; };
+		6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7E51F26437F006B6DA4 /* Constants.m */; };
 		B79A5CFD6299881CB3643ACB /* libPods-BaseProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65EBE4FCE8758654A9B05419 /* libPods-BaseProject.a */; };
 /* End PBXBuildFile section */
 
@@ -192,6 +195,12 @@
 		65EBE4FCE8758654A9B05419 /* libPods-BaseProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BaseProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB129841F24F696004D9A24 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		6BB129851F24F696004D9A24 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		6BBCE7DC1F262F0F006B6DA4 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		6BBCE7E01F2630F0006B6DA4 /* HomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeView.h; sourceTree = "<group>"; };
+		6BBCE7E11F2630F0006B6DA4 /* HomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeView.m; sourceTree = "<group>"; };
+		6BBCE7E41F26437F006B6DA4 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Constrants/Constants.h; sourceTree = "<group>"; };
+		6BBCE7E51F26437F006B6DA4 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Constrants/Constants.m; sourceTree = "<group>"; };
 		A2BC379B4929E517CCEBBD81 /* Pods-BaseProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.release.xcconfig"; sourceTree = "<group>"; };
 		F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,9 +260,10 @@
 		4295583B1F248A6E000B2BB2 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
+				6BBCE7E31F264324006B6DA4 /* Constants */,
+				6BBCE7DF1F2630DB006B6DA4 /* Views */,
 				4295583C1F248A6E000B2BB2 /* Models */,
 				4295583D1F248A6E000B2BB2 /* ViewControllers */,
-				4295583E1F248A6E000B2BB2 /* Views */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -268,15 +278,10 @@
 		4295583D1F248A6E000B2BB2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6BBCE7DC1F262F0F006B6DA4 /* HomeViewController.h */,
+				6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		4295583E1F248A6E000B2BB2 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		4295583F1F248A6E000B2BB2 /* Commen */ = {
@@ -579,6 +584,24 @@
 			path = Json;
 			sourceTree = "<group>";
 		};
+		6BBCE7DF1F2630DB006B6DA4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6BBCE7E01F2630F0006B6DA4 /* HomeView.h */,
+				6BBCE7E11F2630F0006B6DA4 /* HomeView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6BBCE7E31F264324006B6DA4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				6BBCE7E41F26437F006B6DA4 /* Constants.h */,
+				6BBCE7E51F26437F006B6DA4 /* Constants.m */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		7F5FE81AF3930B1D8AB68F96 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -793,6 +816,7 @@
 				42C84ECA1EF2DD1A0008189D /* NSDictionary+Smart.m in Sources */,
 				42C84EC81EF2DD1A0008189D /* DIc.m in Sources */,
 				42C84F071EF2E97D0008189D /* UIButton+Category.m in Sources */,
+				6BBCE7E21F2630F0006B6DA4 /* HomeView.m in Sources */,
 				42C84EFF1EF2E97D0008189D /* NSMutableArray+Category.m in Sources */,
 				6BB129861F24F696004D9A24 /* UserModel.m in Sources */,
 				42C84F0F1EF2E97D0008189D /* UIView+BGFrame.m in Sources */,
@@ -802,6 +826,7 @@
 				42C84F131EF2EA140008189D /* UITextView+placeholder.m in Sources */,
 				42C84F091EF2E97D0008189D /* UIControl+ResponseTime.m in Sources */,
 				42C84F021EF2E97D0008189D /* NSString+Category.m in Sources */,
+				6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */,
 				429558341F2488CA000B2BB2 /* TBRefreshFootView.m in Sources */,
 				42C84EFE1EF2E97D0008189D /* NSDictionary+Category.m in Sources */,
 				42C84EFC1EF2E97D0008189D /* NSData+Category.m in Sources */,
@@ -820,6 +845,7 @@
 				42A4443E1EF133E000F90791 /* BaseProject.xcdatamodeld in Sources */,
 				42C84F001EF2E97D0008189D /* NSMutableAttributedString+Category.m in Sources */,
 				42C84F0B1EF2E97D0008189D /* UIMenuItem+Category.m in Sources */,
+				6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */,
 				42C84EB61EF2DCBC0008189D /* ConfigModel.m in Sources */,
 				42C84EB11EF2DB060008189D /* main.m in Sources */,
 				42C84EC91EF2DD1A0008189D /* DicToString.m in Sources */,
