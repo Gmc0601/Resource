@@ -89,7 +89,7 @@
     cell.backgroundColor = [UIColor blueColor];
     UILabel *lblName = [cell viewWithTag:tag];
     
-    cell.layer.cornerRadius = 5;
+    cell.layer.cornerRadius = SizeHeight(5);
     
     if (lblName == nil) {
         lblName = [[UILabel alloc] init];
@@ -100,8 +100,9 @@
         [cell addSubview:lblName];
         
         [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
+            CGFloat height = SizeHeight(15);
             make.width.equalTo(cell.mas_width);
-            make.height.equalTo(@15);
+            make.height.equalTo(@(height));
             make.centerY.equalTo(cell.mas_centerY);
             make.left.equalTo(cell.mas_left);
         }];
@@ -112,9 +113,9 @@
 
 -(void) addCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(113, 113);
+    layout.itemSize = CGSizeMake(SizeWidth(113), SizeHeight(113));
     
-    layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, (538/2 + 10));
+    layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
@@ -164,7 +165,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return CGSizeMake(self.view.bounds.size.width, (538/2 + 10));
+        return CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
     }else{
         return CGSizeMake(self.view.bounds.size.width, 40);;
     }
@@ -173,7 +174,7 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     if (section == 1) {
-        return UIEdgeInsetsMake(0, 10, 10, 10);
+        return UIEdgeInsetsMake(0, SizeWidth(10), SizeHeight(10), SizeWidth(10));
     }
     
     return UIEdgeInsetsZero;
@@ -182,7 +183,7 @@
 //设置每个item水平间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 8;
+    return SizeWidth(8);
 }
 
 //点击item方法
@@ -192,7 +193,7 @@
 }
 
 -(void) setHeaderView:(UICollectionReusableView *) headerView{
-    UIImageView *header = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, headerView.bounds.size.width, headerView.bounds.size.height-10)];
+    UIImageView *header = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, headerView.bounds.size.width, headerView.bounds.size.height-SizeHeight(10))];
     header.image = [UIImage imageNamed:@"sgd_bg_sy"];
     
     [headerView addSubview:header];
@@ -203,10 +204,10 @@
     
     [header addSubview:btnMessage];
     [btnMessage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(header.mas_top).offset(44);
-        make.leading.equalTo(header.mas_leading).offset(16);
-        make.width.equalTo(@22);
-        make.height.equalTo(@19);
+        make.top.equalTo(header.mas_top).offset(SizeHeight(44));
+        make.leading.equalTo(header.mas_leading).offset(SizeWidth(16));
+        make.width.equalTo(@(SizeWidth(22)));
+        make.height.equalTo(@(SizeHeight(19)));
     }];
     
     UIButton *btnSetting = [[UIButton alloc] init];
@@ -215,10 +216,10 @@
     
     [header addSubview:btnSetting];
     [btnSetting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(header.mas_top).offset(44);
-        make.right.equalTo(header.mas_right).offset(-16);
-        make.width.equalTo(@20.4);
-        make.height.equalTo(@22);
+        make.top.equalTo(header.mas_top).offset(SizeHeight(44));
+        make.right.equalTo(header.mas_right).offset(SizeWidth(-16));
+        make.width.equalTo(@(SizeWidth(20.4)));
+        make.height.equalTo(@(SizeHeight(22)));
     }];
     
     
@@ -228,16 +229,16 @@
     btnCheck.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:11];
     btnCheck.layer.borderColor = [ColorContants orange].CGColor;
     btnCheck.layer.borderWidth = 1;
-    btnCheck.layer.cornerRadius = 9.5;
+    btnCheck.layer.cornerRadius = SizeHeight(9.5);
     
     [btnCheck addTarget:self action:@selector(tapCheckButton) forControlEvents:UIControlEventTouchUpInside];
     
     [header addSubview:btnCheck];
     [btnCheck mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(header.mas_bottom).offset(-17);
-        make.centerX.equalTo(header.mas_centerX).offset(38);
-        make.width.equalTo(@73);
-        make.height.equalTo(@19);
+        make.bottom.equalTo(header.mas_bottom).offset(SizeHeight(-17));
+        make.centerX.equalTo(header.mas_centerX).offset(SizeWidth(38));
+        make.width.equalTo(@(SizeWidth(73)));
+        make.height.equalTo(@(SizeHeight(19)));
     }];
     
     _lblIntegral  = [[UILabel alloc] init];
@@ -248,8 +249,8 @@
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(btnCheck.mas_centerY).offset(0);
         make.left.equalTo(header.mas_left).offset(0);
-        make.right.equalTo(btnCheck.mas_left).offset(-37);
-        make.height.equalTo(@15);
+        make.right.equalTo(btnCheck.mas_left).offset(SizeWidth(-37));
+        make.height.equalTo(@(SizeHeight(15)));
     }];
     
     UILabel *lblTag  = [[UILabel alloc] init];
@@ -258,15 +259,15 @@
     lblTag.textAlignment = NSTextAlignmentCenter;
     lblTag.layer.borderColor = [ColorContants red].CGColor;
     lblTag.layer.borderWidth = 1;
-    lblTag.layer.cornerRadius = 7;
+    lblTag.layer.cornerRadius = SizeHeight(7);
     lblTag.font = [UIFont fontWithName:[FontConstrants pingFang] size:11];
     [header addSubview:lblTag];
     
     [lblTag mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(btnCheck.mas_centerX).offset(0);
-        make.bottom.equalTo(btnCheck.mas_top).offset(-26);
-        make.height.equalTo(@14);
-        make.width.equalTo(@44);
+        make.bottom.equalTo(btnCheck.mas_top).offset(SizeWidth(-26));
+        make.height.equalTo(@(SizeHeight(14)));
+        make.width.equalTo(@(SizeWidth(44)));
         
     }];
     
@@ -278,9 +279,9 @@
     [header addSubview:_lblTelNumber];
     
     [_lblTelNumber mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(lblTag.mas_left).offset(5);
+        make.right.equalTo(lblTag.mas_left).offset(SizeWidth(5));
         make.centerY.equalTo(lblTag.mas_centerY);
-        make.width.equalTo(@100);
+        make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(lblTag.mas_height);
     }];
     
@@ -294,9 +295,9 @@
     
         [_lblName mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(header.mas_centerX);
-            make.bottom.equalTo(_lblTelNumber.mas_top).offset(-13);
-            make.width.equalTo(@300);
-            make.height.equalTo(@14);
+            make.bottom.equalTo(_lblTelNumber.mas_top).offset(SizeHeight(-13));
+            make.width.equalTo(@(SizeWidth(300)));
+            make.height.equalTo(@(SizeHeight(14)));
         }];
     
     
@@ -306,9 +307,9 @@
     
         [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(header.mas_centerX).offset(0);
-            make.bottom.equalTo(_lblName.mas_top).offset(-36);
-            make.width.equalTo(@72);
-            make.height.equalTo(@72);
+            make.bottom.equalTo(_lblName.mas_top).offset(SizeHeight(-36));
+            make.width.equalTo(@(SizeWidth(72)));
+            make.height.equalTo(@(SizeHeight(72)));
         }];
 }
 
