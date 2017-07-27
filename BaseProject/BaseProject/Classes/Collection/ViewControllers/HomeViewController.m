@@ -30,7 +30,7 @@
     [super viewDidLoad];
     _models = [NSMutableArray arrayWithCapacity:0];
     [self addCollectionView];
-    
+    [self addCallButton];
     GoodsCategoryModel *model1 = [GoodsCategoryModel new];
     model1.name = @"废纸";
     [_models addObject:model1];
@@ -56,6 +56,44 @@
     [_models addObject:model6];
 }
 
+-(void) addCallButton{
+    UIButton *btnShowCall = [[UIButton alloc] init];
+    [btnShowCall setImage:[UIImage imageNamed:@"icon_nav_dh"] forState:UIControlStateNormal];
+    [btnShowCall addTarget:self action:@selector(showCallView) forControlEvents:UIControlEventTouchUpInside];
+    [btnShowCall setTitle:@"平台" forState:UIControlStateNormal];
+    [btnShowCall setTitleColor:[ColorContants userNameFontColor] forState:UIControlStateNormal];
+    btnShowCall.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
+    btnShowCall.titleLabel.textAlignment = NSTextAlignmentCenter;
+    btnShowCall.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    btnShowCall.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+    btnShowCall.imageEdgeInsets = UIEdgeInsetsMake(0, 0, SizeHeight(20), SizeWidth(-40));
+    btnShowCall.contentEdgeInsets = UIEdgeInsetsMake(0, SizeWidth(-20), SizeHeight(5), 0);
+    [self.view addSubview:btnShowCall];
+    
+    [btnShowCall mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view.mas_right).offset(SizeWidth(-30));
+        make.bottom.equalTo(self.view.mas_bottom).offset(SizeHeight(-45));
+        make.height.equalTo(@(SizeHeight(52)));
+        make.width.equalTo(@(SizeWidth(52)));
+    }];
+}
+
+-(void)  showCallView{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拨打平台电话"
+                                                    message:@"400-800-1234"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"拨打"
+                                          otherButtonTitles:@"取消",nil];
+    alert.delegate = self;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        NSString *phoneNumber = [NSString stringWithFormat:@"telprompt://%@",@"13377892977"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+    }
+}
 
 #pragma UICollection Delegate
 

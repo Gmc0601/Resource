@@ -1,6 +1,7 @@
-# platform :ios, “7.0”
-target ‘BaseProject’ do
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
 
+target ‘BaseProject’ do
 pod ‘YYKit’
 pod 'AFNetworking'
 pod 'SDWebImage'
@@ -10,5 +11,4 @@ pod ‘AMapLocation’
 pod ‘AMapSearch’
 pod ‘AMapNavi’
 pod 'Masonry'
-
 end
