@@ -60,6 +60,8 @@
 		42C84F1C1EF2EB650008189D /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F171EF2EB650008189D /* NSObject+SBJSON.m */; };
 		42C84F1D1EF2EB650008189D /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F191EF2EB650008189D /* NSString+SBJSON.m */; };
 		42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F1B1EF2EB650008189D /* SBJSON.m */; };
+		6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */; };
+		6B59000A1F2A4EC900874676 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5900091F2A4EC900874676 /* BaseViewController.m */; };
 		6B8F8D861F29BC1B00F413F2 /* CollectionCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D851F29BC1B00F413F2 /* CollectionCellTableViewCell.m */; };
 		6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */; };
 		6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D8B1F29E02400F413F2 /* GoodsCategoryModel.m */; };
@@ -195,6 +197,10 @@
 		42C84F191EF2EB650008189D /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
 		42C84F1A1EF2EB650008189D /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
 		42C84F1B1EF2EB650008189D /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		6B5900051F2A4C7100874676 /* RecycleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecycleDetailViewController.h; sourceTree = "<group>"; };
+		6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecycleDetailViewController.m; sourceTree = "<group>"; };
+		6B5900081F2A4EC900874676 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = BaseProject/Classes/Commen/ViewController/BaseViewController.h; sourceTree = SOURCE_ROOT; };
+		6B5900091F2A4EC900874676 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = BaseProject/Classes/Commen/ViewController/BaseViewController.m; sourceTree = SOURCE_ROOT; };
 		6B8F8D841F29BC1B00F413F2 /* CollectionCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCellTableViewCell.h; sourceTree = "<group>"; };
 		6B8F8D851F29BC1B00F413F2 /* CollectionCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCellTableViewCell.m; sourceTree = "<group>"; };
 		6B8F8D871F29BCEF00F413F2 /* GoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoodsModel.h; path = BaseProject/Classes/Collection/Views/GoodsModel.h; sourceTree = SOURCE_ROOT; };
@@ -293,6 +299,8 @@
 			children = (
 				6BBCE7DC1F262F0F006B6DA4 /* HomeViewController.h */,
 				6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */,
+				6B5900051F2A4C7100874676 /* RecycleDetailViewController.h */,
+				6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -319,6 +327,8 @@
 		429558411F248A6E000B2BB2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6B5900081F2A4EC900874676 /* BaseViewController.h */,
+				6B5900091F2A4EC900874676 /* BaseViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -841,6 +851,7 @@
 				42C84F041EF2E97D0008189D /* NSString+MD5.m in Sources */,
 				42C84F131EF2EA140008189D /* UITextView+placeholder.m in Sources */,
 				42C84F091EF2E97D0008189D /* UIControl+ResponseTime.m in Sources */,
+				6B59000A1F2A4EC900874676 /* BaseViewController.m in Sources */,
 				42C84F021EF2E97D0008189D /* NSString+Category.m in Sources */,
 				6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */,
 				429558341F2488CA000B2BB2 /* TBRefreshFootView.m in Sources */,
@@ -873,6 +884,7 @@
 				42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */,
 				42C84EFA1EF2E97D0008189D /* NSArray+Category.m in Sources */,
 				42C84EC71EF2DD1A0008189D /* GTMBase64.m in Sources */,
+				6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */,
 				42C84F011EF2E97D0008189D /* NSMutableDictionary+Category.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

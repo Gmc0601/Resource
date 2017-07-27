@@ -15,19 +15,21 @@
 #import "UIImageView+WebCache.h"
 #import "UserModel.h"
 #import "GoodsCategoryModel.h"
+#import "RecycleDetailViewController.h"
 
 @interface HomeViewController ()
-@property(retain,atomic) NSMutableArray *models;
-@property(retain,atomic) UILabel *lblIntegral;
-@property(retain,atomic) UILabel *lblName;
-@property(retain,atomic) UIImageView *avatar;
-@property(retain,atomic) UILabel *lblTelNumber;
-@property(retain,atomic) UICollectionView *collectionView;
-@end
+    @property(retain,atomic) NSMutableArray *models;
+    @property(retain,atomic) UILabel *lblIntegral;
+    @property(retain,atomic) UILabel *lblName;
+    @property(retain,atomic) UIImageView *avatar;
+    @property(retain,atomic) UILabel *lblTelNumber;
+    @property(retain,atomic) UICollectionView *collectionView;
+    @end
 
 @implementation HomeViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.hidden = YES;
     _models = [NSMutableArray arrayWithCapacity:0];
     [self addCollectionView];
     [self addCallButton];
@@ -55,7 +57,12 @@
     model6.name = @"冰箱";
     [_models addObject:model6];
 }
-
+    
+    -(void) viewWillDisappear:(BOOL)animated{
+        [super viewWillDisappear:animated];
+        self.navigationController.navigationBar.hidden = NO;
+    }
+    
 -(void) addCallButton{
     UIButton *btnShowCall = [[UIButton alloc] init];
     [btnShowCall setImage:[UIImage imageNamed:@"icon_nav_dh"] forState:UIControlStateNormal];
@@ -77,30 +84,31 @@
         make.width.equalTo(@(SizeWidth(52)));
     }];
 }
-
+    
 -(void)  showCallView{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拨打平台电话"
                                                     message:@"400-800-1234"
                                                    delegate:nil
                                           cancelButtonTitle:@"拨打"
                                           otherButtonTitles:@"取消",nil];
+    
     alert.delegate = self;
     [alert show];
 }
-
+    
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
-        NSString *phoneNumber = [NSString stringWithFormat:@"telprompt://%@",@"13377892977"];
+        NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",@"13377892977"];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
     }
 }
-
+    
 #pragma UICollection Delegate
-
+    
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 2;
 }
-
+    
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
@@ -112,18 +120,18 @@
     [self setCell:cell withMode:_models[indexPath.row]];
     return cell;
 }
-
-
-//设置每个item垂直间距
+    
+    
+    //设置每个item垂直间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 7;
-}
-
-
+    {
+        return 7;
+    }
+    
+    
 -(void) setCell:(UICollectionViewCell *)cell withMode:(GoodsModel *)model{
     int tag = 1001;
-//    cell.backgroundView = [UIImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+    //    cell.backgroundView = [UIImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
     cell.backgroundColor = [UIColor blueColor];
     UILabel *lblName = [cell viewWithTag:tag];
     
@@ -148,7 +156,7 @@
     
     lblName.text = model.name;
 }
-
+    
 -(void) addCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(SizeWidth(113), SizeHeight(113));
@@ -167,40 +175,40 @@
     
     [self.view addSubview:self.collectionView];
 }
-
+    
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionReusableView *headerView;
-   
-    if (indexPath.section == 0) {
-         headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header1" forIndexPath:indexPath];
-        if (headerView.subviews.count == 0) {
+    {
+        UICollectionReusableView *headerView;
+        
+        if (indexPath.section == 0) {
+            headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header1" forIndexPath:indexPath];
+            if (headerView.subviews.count == 0) {
+                headerView.backgroundColor = [ColorContants gray];
+                [self setHeaderView:headerView];
+            }
+        }else{
+            headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2" forIndexPath:indexPath];
             headerView.backgroundColor = [ColorContants gray];
-            [self setHeaderView:headerView];
+            if (headerView.subviews.count == 0) {
+                UILabel *lblTitile = [[UILabel alloc] init];
+                lblTitile.text = @"回收商品种类";
+                lblTitile.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+                lblTitile.textColor = [ColorContants userNameFontColor];
+                headerView.backgroundColor = self.collectionView.backgroundColor;
+                [headerView addSubview:lblTitile];
+                
+                [lblTitile mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(headerView.mas_left).offset(16);
+                    make.top.equalTo(headerView.mas_top).offset(15);
+                    make.bottom.equalTo(headerView.mas_bottom).offset(-15);
+                    make.right.equalTo(headerView.mas_right).offset(0);
+                }];
+            }
         }
-    }else{
-        headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2" forIndexPath:indexPath];
-        headerView.backgroundColor = [ColorContants gray];
-        if (headerView.subviews.count == 0) {
-            UILabel *lblTitile = [[UILabel alloc] init];
-            lblTitile.text = @"回收商品种类";
-            lblTitile.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
-            lblTitile.textColor = [ColorContants userNameFontColor];
-            headerView.backgroundColor = self.collectionView.backgroundColor;
-            [headerView addSubview:lblTitile];
-            
-            [lblTitile mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(headerView.mas_left).offset(16);
-                 make.top.equalTo(headerView.mas_top).offset(15);
-                 make.bottom.equalTo(headerView.mas_bottom).offset(-15);
-                make.right.equalTo(headerView.mas_right).offset(0);
-            }];
-        }
+        
+        return headerView;
     }
     
-    return headerView;
-}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
@@ -208,28 +216,29 @@
         return CGSizeMake(self.view.bounds.size.width, 40);;
     }
 }
-
+    
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    if (section == 1) {
-        return UIEdgeInsetsMake(0, SizeWidth(10), SizeHeight(10), SizeWidth(10));
+    {
+        if (section == 1) {
+            return UIEdgeInsetsMake(0, SizeWidth(10), SizeHeight(10), SizeWidth(10));
+        }
+        
+        return UIEdgeInsetsZero;
     }
     
-    return UIEdgeInsetsZero;
-}
-
-//设置每个item水平间距
+    //设置每个item水平间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    return SizeWidth(8);
-}
-
-//点击item方法
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+    {
+        return SizeWidth(8);
+    }
     
-}
-
+    //点击item方法
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+    {
+        RecycleDetailViewController *newViewController = [[RecycleDetailViewController alloc] init];
+        [self.navigationController pushViewController:newViewController animated:YES];
+    }
+    
 -(void) setHeaderView:(UICollectionReusableView *) headerView{
     UIImageView *header = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, headerView.bounds.size.width, headerView.bounds.size.height-SizeHeight(10))];
     header.image = [UIImage imageNamed:@"sgd_bg_sy"];
@@ -323,55 +332,55 @@
         make.height.equalTo(lblTag.mas_height);
     }];
     
-        _lblName  = [[UILabel alloc] init];
-        _lblName.text = @"我只是个名字";
-        _lblName.textAlignment = NSTextAlignmentCenter;
-
-        _lblName.textColor = [ColorContants userNameFontColor];
-        _lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
-        [header addSubview:_lblName];
+    _lblName  = [[UILabel alloc] init];
+    _lblName.text = @"我只是个名字";
+    _lblName.textAlignment = NSTextAlignmentCenter;
     
-        [_lblName mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(header.mas_centerX);
-            make.bottom.equalTo(_lblTelNumber.mas_top).offset(SizeHeight(-13));
-            make.width.equalTo(@(SizeWidth(300)));
-            make.height.equalTo(@(SizeHeight(14)));
-        }];
+    _lblName.textColor = [ColorContants userNameFontColor];
+    _lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    [header addSubview:_lblName];
+    
+    [_lblName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(header.mas_centerX);
+        make.bottom.equalTo(_lblTelNumber.mas_top).offset(SizeHeight(-13));
+        make.width.equalTo(@(SizeWidth(300)));
+        make.height.equalTo(@(SizeHeight(14)));
+    }];
     
     
-        _avatar  = [[UIImageView alloc] init];
-        _avatar.image = [UIImage imageNamed:@"mrtx144"];
-        [header addSubview:_avatar];
+    _avatar  = [[UIImageView alloc] init];
+    _avatar.image = [UIImage imageNamed:@"mrtx144"];
+    [header addSubview:_avatar];
     
-        [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(header.mas_centerX).offset(0);
-            make.bottom.equalTo(_lblName.mas_top).offset(SizeHeight(-36));
-            make.width.equalTo(@(SizeWidth(72)));
-            make.height.equalTo(@(SizeHeight(72)));
-        }];
+    [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(header.mas_centerX).offset(0);
+        make.bottom.equalTo(_lblName.mas_top).offset(SizeHeight(-36));
+        make.width.equalTo(@(SizeWidth(72)));
+        make.height.equalTo(@(SizeHeight(72)));
+    }];
 }
-
+    
 -(void) setIntergral:(NSString *) strIntegral{
     UIFont *font1 = [UIFont fontWithName:[FontConstrants helveticaNeue] size:15];
     UIFont *font2 = [UIFont fontWithName:[FontConstrants pingFang] size:12];
     _lblIntegral.attributedText = [NSMutableAttributedString attributeString:strIntegral prefixFont:font1 prefixColor:[ColorContants orange] suffixString:@" 积分" suffixFont:font2 suffixColor:[ColorContants orange] ];
 }
-
+    
 -(void) addGoodsList{
     
 }
-
+    
 -(void) tapMessageButton{
     
 }
-
+    
 -(void) tapSettingButton{
     
 }
-
+    
 -(void) tapCheckButton{
     
 }
-
-
-@end
+    
+    
+    @end
