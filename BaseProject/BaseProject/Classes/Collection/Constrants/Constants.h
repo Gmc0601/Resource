@@ -15,4 +15,15 @@
 @end
 
 @interface ColorContants : NSObject
++(UIColor *) red;
+
++(UIColor *) orange;
+
++(UIColor *) gray;
+
++(UIColor *) phoneNumerFontColor;
+
++(UIColor *) userNameFontColor;
+
++(UIColor *) otherFontColor;
 @end
