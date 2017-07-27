@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface FontConstrants : NSObject
-+(NSString *) pinFang;
++(NSString *) pingFang;
 +(NSString *) helveticaNeue;
 +(NSString *) helveticaNeue_pingFang;
++(NSString *) pingFangBold;
 @end
 
 @interface ColorContants : NSObject
@@ -26,4 +27,5 @@
 +(UIColor *) userNameFontColor;
 
 +(UIColor *) otherFontColor;
++(UIColor *) whiteFontColor;
 @end

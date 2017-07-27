@@ -16,4 +16,6 @@
 @property(retain,atomic) NSString *purchaseAddress;
 @property(retain,atomic) NSString *purchaseDetailAddress;
 @property(retain,atomic) NSArray *credentialImages;
+@property(retain,atomic) NSString *avatarUrl;
+@property(retain,atomic) NSString *integral;
 @end

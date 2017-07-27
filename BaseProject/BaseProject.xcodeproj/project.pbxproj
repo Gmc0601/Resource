@@ -60,6 +60,9 @@
 		42C84F1C1EF2EB650008189D /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F171EF2EB650008189D /* NSObject+SBJSON.m */; };
 		42C84F1D1EF2EB650008189D /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F191EF2EB650008189D /* NSString+SBJSON.m */; };
 		42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F1B1EF2EB650008189D /* SBJSON.m */; };
+		6B8F8D861F29BC1B00F413F2 /* CollectionCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D851F29BC1B00F413F2 /* CollectionCellTableViewCell.m */; };
+		6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */; };
+		6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D8B1F29E02400F413F2 /* GoodsCategoryModel.m */; };
 		6BB129861F24F696004D9A24 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB129851F24F696004D9A24 /* UserModel.m */; };
 		6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */; };
 		6BBCE7E21F2630F0006B6DA4 /* HomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7E11F2630F0006B6DA4 /* HomeView.m */; };
@@ -193,6 +196,12 @@
 		42C84F1A1EF2EB650008189D /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
 		42C84F1B1EF2EB650008189D /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
 		65EBE4FCE8758654A9B05419 /* libPods-BaseProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BaseProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B8F8D841F29BC1B00F413F2 /* CollectionCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCellTableViewCell.h; sourceTree = "<group>"; };
+		6B8F8D851F29BC1B00F413F2 /* CollectionCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCellTableViewCell.m; sourceTree = "<group>"; };
+		6B8F8D871F29BCEF00F413F2 /* GoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoodsModel.h; path = BaseProject/Classes/Collection/Views/GoodsModel.h; sourceTree = SOURCE_ROOT; };
+		6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoodsModel.m; path = BaseProject/Classes/Collection/Views/GoodsModel.m; sourceTree = SOURCE_ROOT; };
+		6B8F8D8A1F29E02400F413F2 /* GoodsCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsCategoryModel.h; sourceTree = "<group>"; };
+		6B8F8D8B1F29E02400F413F2 /* GoodsCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsCategoryModel.m; sourceTree = "<group>"; };
 		6BB129841F24F696004D9A24 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		6BB129851F24F696004D9A24 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		6BBCE7DC1F262F0F006B6DA4 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -271,6 +280,10 @@
 		4295583C1F248A6E000B2BB2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6B8F8D871F29BCEF00F413F2 /* GoodsModel.h */,
+				6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */,
+				6B8F8D8A1F29E02400F413F2 /* GoodsCategoryModel.h */,
+				6B8F8D8B1F29E02400F413F2 /* GoodsCategoryModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -589,6 +602,8 @@
 			children = (
 				6BBCE7E01F2630F0006B6DA4 /* HomeView.h */,
 				6BBCE7E11F2630F0006B6DA4 /* HomeView.m */,
+				6B8F8D841F29BC1B00F413F2 /* CollectionCellTableViewCell.h */,
+				6B8F8D851F29BC1B00F413F2 /* CollectionCellTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -818,6 +833,7 @@
 				42C84F071EF2E97D0008189D /* UIButton+Category.m in Sources */,
 				6BBCE7E21F2630F0006B6DA4 /* HomeView.m in Sources */,
 				42C84EFF1EF2E97D0008189D /* NSMutableArray+Category.m in Sources */,
+				6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */,
 				6BB129861F24F696004D9A24 /* UserModel.m in Sources */,
 				42C84F0F1EF2E97D0008189D /* UIView+BGFrame.m in Sources */,
 				429558261F248874000B2BB2 /* BaseTableView.m in Sources */,
@@ -846,11 +862,13 @@
 				42C84F001EF2E97D0008189D /* NSMutableAttributedString+Category.m in Sources */,
 				42C84F0B1EF2E97D0008189D /* UIMenuItem+Category.m in Sources */,
 				6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */,
+				6B8F8D861F29BC1B00F413F2 /* CollectionCellTableViewCell.m in Sources */,
 				42C84EB61EF2DCBC0008189D /* ConfigModel.m in Sources */,
 				42C84EB11EF2DB060008189D /* main.m in Sources */,
 				42C84EC91EF2DD1A0008189D /* DicToString.m in Sources */,
 				42C84EFD1EF2E97D0008189D /* NSData+CommonCryptor.m in Sources */,
 				42C84F0A1EF2E97D0008189D /* UIImage+Category.m in Sources */,
+				6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */,
 				42C84EB01EF2DB060008189D /* AppDelegate.m in Sources */,
 				42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */,
 				42C84EFA1EF2E97D0008189D /* NSArray+Category.m in Sources */,

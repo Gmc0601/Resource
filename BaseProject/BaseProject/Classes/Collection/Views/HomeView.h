@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserModel.h"
 
 @interface HomeView : UIView
-
+@property(retain,nonatomic) UserModel *user;
+@property(retain,atomic) UICollectionView *collectionView;
 @end
