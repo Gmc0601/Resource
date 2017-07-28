@@ -29,13 +29,13 @@
 @implementation HomeViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.hidden = YES;
     _models = [NSMutableArray arrayWithCapacity:0];
     [self addCollectionView];
     [self addCallButton];
     GoodsCategoryModel *model1 = [GoodsCategoryModel new];
     model1.name = @"废纸";
     [_models addObject:model1];
+    
     
     GoodsCategoryModel *model2 = [GoodsCategoryModel new];
     model2.name = @"废塑料";
@@ -56,12 +56,33 @@
     GoodsCategoryModel *model6 = [GoodsCategoryModel new];
     model6.name = @"冰箱";
     [_models addObject:model6];
+    
+    GoodsCategoryModel *model7 = [GoodsCategoryModel new];
+    model7.name = @"空调";
+    [_models addObject:model7];
+    
+    GoodsCategoryModel *model8 = [GoodsCategoryModel new];
+    model8.name = @"电脑";
+    [_models addObject:model8];
+    
+    GoodsCategoryModel *model9 = [GoodsCategoryModel new];
+    model9.name = @"手机";
+    [_models addObject:model9];
+    
+    GoodsCategoryModel *model10 = [GoodsCategoryModel new];
+    model10.name = @"汽车";
+    [_models addObject:model10];
 }
     
-    -(void) viewWillDisappear:(BOOL)animated{
-        [super viewWillDisappear:animated];
-        self.navigationController.navigationBar.hidden = NO;
-    }
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+    
+-(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+}
     
 -(void) addCallButton{
     UIButton *btnShowCall = [[UIButton alloc] init];
