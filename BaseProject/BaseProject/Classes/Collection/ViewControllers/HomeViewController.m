@@ -10,12 +10,12 @@
 #import "GoodsModel.h"
 #import "Constants.h"
 #import <Masonry/Masonry.h>
-#import "HomeView.h"
 #import "NSMutableAttributedString+Category.h"
 #import "UIImageView+WebCache.h"
 #import "UserModel.h"
 #import "GoodsCategoryModel.h"
 #import "RecycleDetailViewController.h"
+#import "IntegalViewController.h"
 
 @interface HomeViewController ()
     @property(retain,atomic) NSMutableArray *models;
@@ -74,15 +74,15 @@
     [_models addObject:model10];
 }
     
--(void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
-}
-    
--(void) viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.hidden = NO;
-}
+//-(void) viewWillAppear:(BOOL)animated{
+//    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:YES];
+//}
+//    
+//-(void) viewWillDisappear:(BOOL)animated{
+//    [super viewWillDisappear:animated];
+//    self.navigationController.navigationBar.hidden = NO;
+//}
     
 -(void) addCallButton{
     UIButton *btnShowCall = [[UIButton alloc] init];
@@ -270,10 +270,10 @@
     [btnMessage setBackgroundImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
     [btnMessage addTarget:self action:@selector(tapMessageButton) forControlEvents:UIControlEventTouchUpInside];
     
-    [header addSubview:btnMessage];
+    [headerView addSubview:btnMessage];
     [btnMessage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(header.mas_top).offset(SizeHeight(44));
-        make.leading.equalTo(header.mas_leading).offset(SizeWidth(16));
+        make.top.equalTo(headerView.mas_top).offset(SizeHeight(11.5));
+        make.leading.equalTo(headerView.mas_leading).offset(SizeWidth(16));
         make.width.equalTo(@(SizeWidth(22)));
         make.height.equalTo(@(SizeHeight(19)));
     }];
@@ -282,10 +282,10 @@
     [btnSetting setBackgroundImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
     [btnSetting addTarget:self action:@selector(tapMessageButton) forControlEvents:UIControlEventTouchUpInside];
     
-    [header addSubview:btnSetting];
+    [headerView addSubview:btnSetting];
     [btnSetting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(header.mas_top).offset(SizeHeight(44));
-        make.right.equalTo(header.mas_right).offset(SizeWidth(-16));
+        make.top.equalTo(headerView.mas_top).offset(SizeHeight(10));
+        make.right.equalTo(headerView.mas_right).offset(SizeWidth(-16));
         make.width.equalTo(@(SizeWidth(20.4)));
         make.height.equalTo(@(SizeHeight(22)));
     }];
@@ -301,10 +301,10 @@
     
     [btnCheck addTarget:self action:@selector(tapCheckButton) forControlEvents:UIControlEventTouchUpInside];
     
-    [header addSubview:btnCheck];
+    [headerView addSubview:btnCheck];
     [btnCheck mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(header.mas_bottom).offset(SizeHeight(-17));
-        make.centerX.equalTo(header.mas_centerX).offset(SizeWidth(38));
+        make.bottom.equalTo(headerView.mas_bottom).offset(SizeHeight(-27));
+        make.centerX.equalTo(headerView.mas_centerX).offset(SizeWidth(38));
         make.width.equalTo(@(SizeWidth(73)));
         make.height.equalTo(@(SizeHeight(19)));
     }];
@@ -312,12 +312,18 @@
     _lblIntegral  = [[UILabel alloc] init];
     [self setIntergral:@"1000"];
     _lblIntegral.textAlignment = NSTextAlignmentRight;
-    [header addSubview:_lblIntegral];
+    _lblIntegral.userInteractionEnabled = YES;
+    [headerView addSubview:_lblIntegral];
+    
+    UITapGestureRecognizer *tapIntegral = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showIntegralDetail:)];
+    tapIntegral.numberOfTapsRequired = 1;
+    [_lblIntegral addGestureRecognizer:tapIntegral];
+
     
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(btnCheck.mas_centerY).offset(0);
-        make.left.equalTo(header.mas_left).offset(0);
-        make.right.equalTo(btnCheck.mas_left).offset(SizeWidth(-37));
+        make.width.equalTo(@(SizeHeight(100)));
+        make.right.equalTo(btnCheck.mas_left).offset(SizeWidth(-30));
         make.height.equalTo(@(SizeHeight(15)));
     }];
     
@@ -329,7 +335,7 @@
     lblTag.layer.borderWidth = 1;
     lblTag.layer.cornerRadius = SizeHeight(7);
     lblTag.font = [UIFont fontWithName:[FontConstrants pingFang] size:11];
-    [header addSubview:lblTag];
+    [headerView addSubview:lblTag];
     
     [lblTag mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(btnCheck.mas_centerX).offset(0);
@@ -344,7 +350,7 @@
     _lblTelNumber.textAlignment = NSTextAlignmentCenter;
     _lblTelNumber.textColor = [ColorContants phoneNumerFontColor];
     _lblTelNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:13];
-    [header addSubview:_lblTelNumber];
+    [headerView addSubview:_lblTelNumber];
     
     [_lblTelNumber mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(lblTag.mas_left).offset(SizeWidth(5));
@@ -359,10 +365,10 @@
     
     _lblName.textColor = [ColorContants userNameFontColor];
     _lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
-    [header addSubview:_lblName];
+    [headerView addSubview:_lblName];
     
     [_lblName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(header.mas_centerX);
+        make.centerX.equalTo(headerView.mas_centerX);
         make.bottom.equalTo(_lblTelNumber.mas_top).offset(SizeHeight(-13));
         make.width.equalTo(@(SizeWidth(300)));
         make.height.equalTo(@(SizeHeight(14)));
@@ -371,7 +377,7 @@
     
     _avatar  = [[UIImageView alloc] init];
     _avatar.image = [UIImage imageNamed:@"mrtx144"];
-    [header addSubview:_avatar];
+    [headerView addSubview:_avatar];
     
     [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(header.mas_centerX).offset(0);
@@ -385,6 +391,7 @@
     UIFont *font1 = [UIFont fontWithName:[FontConstrants helveticaNeue] size:15];
     UIFont *font2 = [UIFont fontWithName:[FontConstrants pingFang] size:12];
     _lblIntegral.attributedText = [NSMutableAttributedString attributeString:strIntegral prefixFont:font1 prefixColor:[ColorContants orange] suffixString:@" 积分" suffixFont:font2 suffixColor:[ColorContants orange] ];
+    [_lblIntegral sizeToFit];
 }
     
 -(void) addGoodsList{
@@ -402,6 +409,10 @@
 -(void) tapCheckButton{
     
 }
-    
-    
-    @end
+
+-(void) showIntegralDetail:(UITapGestureRecognizer *) sender{
+    IntegalViewController *newViewController = [[IntegalViewController alloc] init];
+    [self.navigationController pushViewController:newViewController animated:YES];
+
+}
+@end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface HomeViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,
+@interface HomeViewController : BaseViewController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,
 UIAlertViewDelegate>
 
 @end

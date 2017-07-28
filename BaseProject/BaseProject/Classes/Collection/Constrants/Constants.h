@@ -28,4 +28,9 @@
 
 +(UIColor *) otherFontColor;
 +(UIColor *) whiteFontColor;
++(UIColor *) silverColor;
++(UIColor *) BlueFontColor;
++(UIColor *) integralSummeryFontColor;
++(UIColor *) kitingFontColor;
++(UIColor *) integralWhereFontColor;
 @end

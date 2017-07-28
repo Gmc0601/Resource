@@ -9,5 +9,4 @@
 #import "GoodsModel.h"
 
 @implementation GoodsModel
-
 @end

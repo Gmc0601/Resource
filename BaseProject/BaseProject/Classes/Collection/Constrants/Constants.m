@@ -56,4 +56,24 @@
     return [UIColor colorWithHexString:@"#e0e0e0"];
 }
 
++(UIColor *) silverColor{
+    return [UIColor colorWithHexString:@"#80ffff"];
+}
+
++(UIColor *) integralSummeryFontColor{
+    return [UIColor colorWithHexString:@"#d9ffff"];
+}
+
++(UIColor *) BlueFontColor{
+    return [UIColor colorWithHexString:@"#78b4f7"];
+}
+
++(UIColor *) kitingFontColor{
+    return [UIColor colorWithHexString:@"#666666"];
+}
+
++(UIColor *) integralWhereFontColor{
+    return [UIColor colorWithHexString:@"#cccccc"];
+}
+
 @end

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HomeViewController.h"
+#import "TBNavigationController.h"
 @interface AppDelegate ()
 
 @end
@@ -19,12 +20,15 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    TBNavigationController * nav = [[TBNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = nav;
     
     self.window.backgroundColor = [UIColor whiteColor];
     
     [self.window makeKeyAndVisible];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [UINavigationBar appearance].shadowImage = [UIImage new];
     
     return YES;
 }

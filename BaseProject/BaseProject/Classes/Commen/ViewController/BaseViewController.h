@@ -2,12 +2,16 @@
 //  BaseViewController.h
 //  BaseProject
 //
-//  Created by LeoGeng on 28/07/2017.
-//  Copyright © 2017 cc. All rights reserved.
+//  Created by cc on 2017/6/22.
+//  Copyright © 2017年 cc. All rights reserved.
 //
-
 #import <UIKit/UIKit.h>
+#import <Masonry/Masonry.h>
 
 @interface BaseViewController : UIViewController
+
+- (void)backAction;
+
+- (void)setNavTitle:(NSString *)title;
 
 @end

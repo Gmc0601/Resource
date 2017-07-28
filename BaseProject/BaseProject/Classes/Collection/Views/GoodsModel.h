@@ -11,5 +11,5 @@
 @interface GoodsModel : NSObject
 @property(retain,atomic) NSString *name;
 @property(retain,atomic) NSString *imgUrl;
-@property(retain,atomic) NSString *id;
+@property(retain,atomic) NSString *_id;
 @end
