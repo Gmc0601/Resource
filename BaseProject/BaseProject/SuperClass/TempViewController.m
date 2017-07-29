@@ -8,11 +8,22 @@
 
 #import "TempViewController.h"
 
+#import "HomeViewController.h"
+#import "TBNavigationController.h"
+
 @interface TempViewController ()
 
 @end
 
 @implementation TempViewController
+- (IBAction)TapPersion:(id)sender {
+    
+}
+- (IBAction)tapPoint:(id)sender {
+    TBNavigationController * nav = [[TBNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    [self presentViewController:nav animated:YES completion:nil];
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HomeViewController.h"
 #import "TBNavigationController.h"
+#import "TempViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -20,7 +21,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    TBNavigationController * nav = [[TBNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    TempViewController * nav = [[TempViewController alloc] init];
     self.window.rootViewController = nav;
     
     self.window.backgroundColor = [UIColor whiteColor];
