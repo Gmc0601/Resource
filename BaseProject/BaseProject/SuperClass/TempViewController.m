@@ -16,9 +16,9 @@
 @end
 
 @implementation TempViewController
-- (IBAction)TapPersion:(id)sender {
-    
+- (IBAction)tapPerson:(id)sender {
 }
+
 - (IBAction)tapPoint:(id)sender {
     TBNavigationController * nav = [[TBNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     [self presentViewController:nav animated:YES completion:nil];
