@@ -33,4 +33,5 @@
 +(UIColor *) integralSummeryFontColor;
 +(UIColor *) kitingFontColor;
 +(UIColor *) integralWhereFontColor;
++(UIColor *) integralSeperatorColor;
 @end

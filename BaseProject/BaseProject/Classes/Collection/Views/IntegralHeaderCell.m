@@ -125,15 +125,15 @@
 }
 
 -(void) tapConvertButton{
-    
+    [self.delegate tapConvertButton];
 }
 
 -(void) tapKitingButton{
-    
+    [self.delegate tapKitingButton];
 }
 
 -(void) tapSend{
-    
+    [self.delegate tapSend];
 }
 
 @end

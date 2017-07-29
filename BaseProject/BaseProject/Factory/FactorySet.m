@@ -27,7 +27,7 @@
     leftButton.frame = CGRectMake(0, 0, 25, 25);
     leftButton.titleLabel.font = Nav_Back_Font_M;
 //    //    [leftButton setTitleColor:Theme_Color_Pink forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"icon_nav_fhb.png"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"icon_nav_fh"] forState:UIControlStateNormal];
     leftButton.adjustsImageWhenHighlighted = NO;
     
     [leftButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

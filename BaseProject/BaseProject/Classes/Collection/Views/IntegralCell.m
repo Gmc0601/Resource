@@ -42,45 +42,46 @@
     
     _lblSum = [[UILabel alloc]init];
     _lblSum.textColor = [ColorContants BlueFontColor];
-    _lblSum.font = [UIFont fontWithName:@"PingFang-SC" size:15];
+    _lblSum.font = [UIFont fontWithName:[FontConstrants pingFangBold] size:15];
     _lblSum.textAlignment = NSTextAlignmentRight;
     [self addSubview:_lblSum];
     
     [_lblSum mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SizeHeight(16));
-        make.right.equalTo(self.mas_right).offset(SizeWidth(16));
+        make.right.equalTo(self.mas_right).offset(SizeWidth(-16));
         make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(@(SizeHeight(15)));
     }];
     
     _lblType = [[UILabel alloc]init];
     _lblType.textColor = [ColorContants kitingFontColor];
-    _lblType.font = [UIFont fontWithName:@"PingFang-SC" size:14];
+    _lblType.font = [UIFont fontWithName:[FontConstrants pingFang] size:14];
     _lblType.textAlignment = NSTextAlignmentLeft;
     [self addSubview:_lblType];
     
     [_lblType mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_lblSum.mas_centerY).offset(0);
-        make.left.equalTo(self.mas_left).offset(SizeWidth(8));
+        make.top.equalTo(self.mas_top).offset(SizeHeight(16));
+        make.left.equalTo(self.mas_left).offset(SizeWidth(12));
         make.width.equalTo(@(SizeWidth(200)));
         make.height.equalTo(@(SizeHeight(14)));
     }];
     
     _lblDate = [[UILabel alloc]init];
     _lblDate.textColor = [ColorContants phoneNumerFontColor];
-    _lblDate.font = [UIFont fontWithName:@"PingFang-SC" size:14];
+    _lblDate.font = [UIFont fontWithName:[FontConstrants pingFang] size:14];
     _lblDate.textAlignment = NSTextAlignmentLeft;
     [self addSubview:_lblDate];
     
     [_lblDate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SizeWidth(8));
+        make.left.equalTo(self.mas_left).offset(SizeWidth(12));
+        make.top.equalTo(_lblType.mas_bottom).offset(SizeWidth(10));
         make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(@(SizeHeight(14)));
     }];
     
     _lblTime = [[UILabel alloc]init];
     _lblTime.textColor = [ColorContants phoneNumerFontColor];
-    _lblTime.font = [UIFont fontWithName:@"PingFang-SC" size:14];
+    _lblTime.font = [UIFont fontWithName:[FontConstrants pingFang] size:14];
     _lblTime.textAlignment = NSTextAlignmentLeft;
     [self addSubview:_lblTime];
     
@@ -93,7 +94,7 @@
     
     _lblSummery = [[UILabel alloc]init];
     _lblSummery.textColor = [ColorContants integralWhereFontColor];
-    _lblSummery.font = [UIFont fontWithName:@"PingFang-SC" size:12];
+    _lblSummery.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
     _lblSummery.textAlignment = NSTextAlignmentRight;
     [self addSubview:_lblSummery];
     

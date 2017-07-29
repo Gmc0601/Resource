@@ -76,4 +76,8 @@
     return [UIColor colorWithHexString:@"#cccccc"];
 }
 
++(UIColor *) integralSeperatorColor{
+    return [UIColor colorWithHexString:@"#f0f0f0"];
+}
+
 @end

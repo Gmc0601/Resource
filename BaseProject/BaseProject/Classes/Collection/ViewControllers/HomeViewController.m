@@ -272,7 +272,7 @@
     
     [headerView addSubview:btnMessage];
     [btnMessage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_top).offset(SizeHeight(11.5));
+        make.top.equalTo(headerView.mas_top).offset(SizeHeight(31.5));
         make.leading.equalTo(headerView.mas_leading).offset(SizeWidth(16));
         make.width.equalTo(@(SizeWidth(22)));
         make.height.equalTo(@(SizeHeight(19)));
@@ -284,7 +284,7 @@
     
     [headerView addSubview:btnSetting];
     [btnSetting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_top).offset(SizeHeight(10));
+        make.top.equalTo(headerView.mas_top).offset(SizeHeight(30));
         make.right.equalTo(headerView.mas_right).offset(SizeWidth(-16));
         make.width.equalTo(@(SizeWidth(20.4)));
         make.height.equalTo(@(SizeHeight(22)));

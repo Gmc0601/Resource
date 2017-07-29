@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IntegralHeaderCellDelegate <NSObject>
+
+-(void) tapKitingButton;
+-(void) tapConvertButton;
+-(void) tapSend;
+
+@end
+
 @interface IntegralHeaderCell : UITableViewCell
 @property (retain,nonatomic) NSString *integral;
+@property (atomic,weak) id<IntegralHeaderCellDelegate> delegate;
 @end

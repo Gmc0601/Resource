@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-@interface IntegalViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource>
+#import "IntegralHeaderCell.h"
+
+@interface IntegalViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource,IntegralHeaderCellDelegate>
 
 @end
