@@ -60,6 +60,8 @@
 		42C84F1C1EF2EB650008189D /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F171EF2EB650008189D /* NSObject+SBJSON.m */; };
 		42C84F1D1EF2EB650008189D /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F191EF2EB650008189D /* NSString+SBJSON.m */; };
 		42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C84F1B1EF2EB650008189D /* SBJSON.m */; };
+		6B0165F21F2C9098002071E2 /* TempViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0165F01F2C9098002071E2 /* TempViewController.m */; };
+		6B0165F31F2C9098002071E2 /* TempViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B0165F11F2C9098002071E2 /* TempViewController.xib */; };
 		6B12E47C1F2B762B008C4A3F /* IntegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */; };
 		6B12E47F1F2B810D008C4A3F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B12E4821F2B8157008C4A3F /* FactorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4811F2B8157008C4A3F /* FactorySet.m */; };
@@ -202,6 +204,9 @@
 		42C84F191EF2EB650008189D /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
 		42C84F1A1EF2EB650008189D /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
 		42C84F1B1EF2EB650008189D /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		6B0165EF1F2C9098002071E2 /* TempViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempViewController.h; path = BaseProject/SuperClass/TempViewController.h; sourceTree = SOURCE_ROOT; };
+		6B0165F01F2C9098002071E2 /* TempViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TempViewController.m; path = BaseProject/SuperClass/TempViewController.m; sourceTree = SOURCE_ROOT; };
+		6B0165F11F2C9098002071E2 /* TempViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TempViewController.xib; path = BaseProject/SuperClass/TempViewController.xib; sourceTree = SOURCE_ROOT; };
 		6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegalViewController.h; sourceTree = "<group>"; };
 		6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegalViewController.m; sourceTree = "<group>"; };
 		6B12E47D1F2B810D008C4A3F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = BaseProject/Classes/Commen/ViewController/BaseViewController.h; sourceTree = SOURCE_ROOT; };
@@ -350,6 +355,9 @@
 				6B12E4841F2B8201008C4A3F /* TBNavigationController.m */,
 				6B12E47D1F2B810D008C4A3F /* BaseViewController.h */,
 				6B12E47E1F2B810D008C4A3F /* BaseViewController.m */,
+				6B0165EF1F2C9098002071E2 /* TempViewController.h */,
+				6B0165F01F2C9098002071E2 /* TempViewController.m */,
+				6B0165F11F2C9098002071E2 /* TempViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -784,6 +792,7 @@
 				4295584B1F248A9B000B2BB2 /* LoginViewController.xib in Resources */,
 				42A444431EF133E000F90791 /* LaunchScreen.storyboard in Resources */,
 				42A444401EF133E000F90791 /* Assets.xcassets in Resources */,
+				6B0165F31F2C9098002071E2 /* TempViewController.xib in Resources */,
 				42A4443B1EF133E000F90791 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -913,6 +922,7 @@
 				42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */,
 				42C84EFA1EF2E97D0008189D /* NSArray+Category.m in Sources */,
 				42C84EC71EF2DD1A0008189D /* GTMBase64.m in Sources */,
+				6B0165F21F2C9098002071E2 /* TempViewController.m in Sources */,
 				6B12E4911F2B941F008C4A3F /* IntegralRecordModel.m in Sources */,
 				6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */,
 				42C84F011EF2E97D0008189D /* NSMutableDictionary+Category.m in Sources */,
