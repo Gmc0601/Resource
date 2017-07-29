@@ -14,6 +14,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *getCodeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *personBtnHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sepaViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *thirdHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *thirdSepaHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqHeight;
+
+
 @end
 
 @implementation LoginViewController
@@ -21,8 +29,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self CreateUI];
+    
+    self.personBtnHeight.constant = 64*kScreenH/667;
+    self.sepaViewHeight.constant = 153*kScreenH/667;
+    self.thirdHeight.constant = 73*kScreenH/667;
+    self.thirdSepaHeight.constant = 83.5*kScreenH/667;
+    self.qqHeight.constant = 48*kScreenH/667;
+    
+    NSLog(@"%f", self.personBtnHeight.constant);
     // Do any additional setup after loading the view from its nib.
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
