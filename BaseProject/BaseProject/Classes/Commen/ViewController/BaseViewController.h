@@ -7,11 +7,12 @@
 //
 #import <UIKit/UIKit.h>
 #import <Masonry/Masonry.h>
+#import "UIColor+BGHexColor.h"
 
 @interface BaseViewController : UIViewController
 
 - (void)backAction;
 
 - (void)setNavTitle:(NSString *)title;
-
+-(CGFloat) getNavBarHeight;
 @end

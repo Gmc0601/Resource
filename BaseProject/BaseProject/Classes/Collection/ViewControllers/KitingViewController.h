@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface KitingViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource>
+@interface KitingViewController : BaseViewController<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
 @end

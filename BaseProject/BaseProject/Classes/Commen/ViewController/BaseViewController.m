@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 #include "FactorySet.h"
 #include "PublicClass.h"
+#import "Constants.h"
 
 #define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
 #define ViewController_BackGround [UIColor colorWithRed:243.0/255.0 green:243.0/255.0 blue:243.0/255.0 alpha:1.0]//视图控制器背景颜色
@@ -29,7 +30,7 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
         
     }
-    self.view.backgroundColor = ViewController_BackGround;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     //导航栏 返回 按钮
     NSArray *viewControllers = self.navigationController.viewControllers;
@@ -63,7 +64,7 @@
 }
 
 - (void)setNavTitle:(NSString *)str_title{
-    [PublicClass seTitleViewOnTargetNav:self UIFont:[UIFont fontWithName:@"PingFang-SC" size:18] title:str_title textColor:UIColorFromHex(666666)];
+    [PublicClass seTitleViewOnTargetNav:self UIFont:[UIFont fontWithName:[FontConstrants pingFang] size:18] title:str_title textColor:UIColorFromHex(666666)];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -95,16 +96,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
--(void)setCustomerTitle:(NSString *)title{
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
-    titleLabel.text = title;
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.font = [UIFont systemFontOfSize:18];
-    self.navigationItem.titleView = titleLabel;
-    
+-(CGFloat) getNavBarHeight{
+    return  SizeHeight(64);
 }
-
 
 @end

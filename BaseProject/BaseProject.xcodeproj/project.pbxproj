@@ -66,6 +66,7 @@
 		6B0165F91F2CD7D0002071E2 /* BankCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0165F81F2CD7D0002071E2 /* BankCardModel.m */; };
 		6B0165FC1F2CD812002071E2 /* KitingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0165FB1F2CD812002071E2 /* KitingModel.m */; };
 		6B0165FD1F2CDB9D002071E2 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
+		6B0166001F2CEEB7002071E2 /* KitingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0165FF1F2CEEB7002071E2 /* KitingCell.m */; };
 		6B12E47C1F2B762B008C4A3F /* IntegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */; };
 		6B12E47F1F2B810D008C4A3F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B12E4821F2B8157008C4A3F /* FactorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4811F2B8157008C4A3F /* FactorySet.m */; };
@@ -217,6 +218,8 @@
 		6B0165F81F2CD7D0002071E2 /* BankCardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankCardModel.m; sourceTree = "<group>"; };
 		6B0165FA1F2CD812002071E2 /* KitingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingModel.h; sourceTree = "<group>"; };
 		6B0165FB1F2CD812002071E2 /* KitingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingModel.m; sourceTree = "<group>"; };
+		6B0165FE1F2CEEB7002071E2 /* KitingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingCell.h; sourceTree = "<group>"; };
+		6B0165FF1F2CEEB7002071E2 /* KitingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingCell.m; sourceTree = "<group>"; };
 		6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegalViewController.h; sourceTree = "<group>"; };
 		6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegalViewController.m; sourceTree = "<group>"; };
 		6B12E47D1F2B810D008C4A3F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = BaseProject/Classes/Commen/ViewController/BaseViewController.h; sourceTree = SOURCE_ROOT; };
@@ -663,6 +666,8 @@
 				6B12E48A1F2B8B48008C4A3F /* IntegralCell.m */,
 				6B12E48C1F2B8D45008C4A3F /* IntegralHeaderCell.h */,
 				6B12E48D1F2B8D45008C4A3F /* IntegralHeaderCell.m */,
+				6B0165FE1F2CEEB7002071E2 /* KitingCell.h */,
+				6B0165FF1F2CEEB7002071E2 /* KitingCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -895,6 +900,7 @@
 				42C84EFF1EF2E97D0008189D /* NSMutableArray+Category.m in Sources */,
 				6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */,
 				6BB129861F24F696004D9A24 /* UserModel.m in Sources */,
+				6B0166001F2CEEB7002071E2 /* KitingCell.m in Sources */,
 				42C84F0F1EF2E97D0008189D /* UIView+BGFrame.m in Sources */,
 				429558261F248874000B2BB2 /* BaseTableView.m in Sources */,
 				42C84F081EF2E97D0008189D /* UIColor+BGHexColor.m in Sources */,
