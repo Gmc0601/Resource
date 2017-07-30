@@ -10,6 +10,8 @@
 #import "Constants.h"
 #import "KitingGoodsModel.h"
 #import "KitingGoodCell.h"
+#import "PublicClass.h"
+#import "KitingGoodsRecordViewController.h"
 
 @interface KitingGoodsViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -24,6 +26,7 @@
     [self setNavTitle:@"积分兑换"];
     [self addCollectionView];
     _models = [NSMutableArray arrayWithCapacity:0];
+    [PublicClass setRightTitleOnTargetNav:self action:@selector(gotoRecord) Title:@"兑换记录"];
     
     KitingGoodsModel *model1 = [KitingGoodsModel new];
     model1.name = @"秋田小町米";
@@ -185,7 +188,9 @@
 }
 
 -(void) gotoRecord{
+    KitingGoodsRecordViewController *newViewController = [KitingGoodsRecordViewController new];
     
+    [self.navigationController pushViewController:newViewController animated:YES];
 }
 
 @end
