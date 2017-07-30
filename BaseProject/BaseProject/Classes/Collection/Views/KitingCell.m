@@ -64,14 +64,19 @@
     }];
 }
 -(void) changeState{
-    UIColor *borderColor = [ColorContants gray];
-    UIColor *integralFontColor = [ColorContants kitingFontColor];
-    UIColor *moneyColor = [ColorContants phoneNumerFontColor];
+    UIColor *borderColor;
+    UIColor *integralFontColor;
+    UIColor *moneyColor;
+    
     if (self.selected) {
         UIColor *color = [UIColor colorWithHexString:@"#f78478"];
         borderColor = color;
         integralFontColor = color;
         moneyColor = [ColorContants whiteFontColor];
+    }else{
+        borderColor = [ColorContants gray];
+        integralFontColor = [ColorContants kitingFontColor];
+        moneyColor = [ColorContants phoneNumerFontColor];
     }
     
     self.layer.borderColor = borderColor.CGColor;

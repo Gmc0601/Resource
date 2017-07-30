@@ -1,5 +1,5 @@
 //
-//  KitingCell.h
+//  BankCardCell.h
 //  BaseProject
 //
 //  Created by LeoGeng on 30/07/2017.
@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KitingModel.h"
-@interface KitingCell : UICollectionViewCell
-@property (retain,nonatomic) KitingModel *model;
+
+@interface BankCardCell : UICollectionViewCell
 
 @end

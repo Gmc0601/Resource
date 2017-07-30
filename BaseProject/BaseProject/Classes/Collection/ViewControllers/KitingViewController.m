@@ -11,6 +11,7 @@
 #import "BankCardModel.h"
 #import "KitingModel.h"
 #import "KitingCell.h"
+#import "BankCardCell.h"
 
 @interface KitingViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -108,7 +109,7 @@
 //    layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
     
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [_collectionView registerClass:[BankCardCell class] forCellWithReuseIdentifier:@"cell"];
      [_collectionView registerClass:[KitingCell class] forCellWithReuseIdentifier:@"KitingCell"];
     
     _collectionView.dataSource = self;
@@ -137,14 +138,36 @@
     return  0;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+        NSIndexPath *newIndex = [NSIndexPath indexPathForRow:_selectIndex inSection:1 ];
+        [UIView animateWithDuration:0 animations:^{
+            [collectionView performBatchUpdates:^{
+                [collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:newIndex]];
+            } completion:nil];
+        }];
+        
+        [UIView animateWithDuration:0 animations:^{
+            [collectionView performBatchUpdates:^{
+                [collectionView selectItemAtIndexPath:newIndex animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+            } completion:nil];
+        }];
+        
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        NSIndexPath *newIndex = [NSIndexPath indexPathForRow:_selectIndex inSection:1 ];
-        UICollectionViewCell * cell = [collectionView cellForItemAtIndexPath: newIndex];
-        [cell setSelected:YES];
-        [cell setNeedsLayout];
+//        NSIndexPath *newIndex = [NSIndexPath indexPathForRow:_selectIndex inSection:1 ];
+//        UICollectionViewCell * cell = [collectionView cellForItemAtIndexPath: newIndex];
+//        [cell setSelected:YES];
+//        [cell setNeedsLayout];
     }else{
         _selectIndex = indexPath.row;
     }

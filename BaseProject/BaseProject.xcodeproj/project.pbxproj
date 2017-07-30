@@ -67,6 +67,7 @@
 		6B0165FC1F2CD812002071E2 /* KitingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0165FB1F2CD812002071E2 /* KitingModel.m */; };
 		6B0165FD1F2CDB9D002071E2 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B0166001F2CEEB7002071E2 /* KitingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0165FF1F2CEEB7002071E2 /* KitingCell.m */; };
+		6B0166031F2D7677002071E2 /* BankCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166021F2D7677002071E2 /* BankCardCell.m */; };
 		6B12E47C1F2B762B008C4A3F /* IntegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */; };
 		6B12E47F1F2B810D008C4A3F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B12E4821F2B8157008C4A3F /* FactorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4811F2B8157008C4A3F /* FactorySet.m */; };
@@ -220,6 +221,8 @@
 		6B0165FB1F2CD812002071E2 /* KitingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingModel.m; sourceTree = "<group>"; };
 		6B0165FE1F2CEEB7002071E2 /* KitingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingCell.h; sourceTree = "<group>"; };
 		6B0165FF1F2CEEB7002071E2 /* KitingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingCell.m; sourceTree = "<group>"; };
+		6B0166011F2D7677002071E2 /* BankCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankCardCell.h; sourceTree = "<group>"; };
+		6B0166021F2D7677002071E2 /* BankCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankCardCell.m; sourceTree = "<group>"; };
 		6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegalViewController.h; sourceTree = "<group>"; };
 		6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegalViewController.m; sourceTree = "<group>"; };
 		6B12E47D1F2B810D008C4A3F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = BaseProject/Classes/Commen/ViewController/BaseViewController.h; sourceTree = SOURCE_ROOT; };
@@ -668,6 +671,8 @@
 				6B12E48D1F2B8D45008C4A3F /* IntegralHeaderCell.m */,
 				6B0165FE1F2CEEB7002071E2 /* KitingCell.h */,
 				6B0165FF1F2CEEB7002071E2 /* KitingCell.m */,
+				6B0166011F2D7677002071E2 /* BankCardCell.h */,
+				6B0166021F2D7677002071E2 /* BankCardCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -914,6 +919,7 @@
 				429558341F2488CA000B2BB2 /* TBRefreshFootView.m in Sources */,
 				42C84EFE1EF2E97D0008189D /* NSDictionary+Category.m in Sources */,
 				42C84EFC1EF2E97D0008189D /* NSData+Category.m in Sources */,
+				6B0166031F2D7677002071E2 /* BankCardCell.m in Sources */,
 				42C84EFB1EF2E97D0008189D /* NSAttributedString+Category.m in Sources */,
 				4295584A1F248A9B000B2BB2 /* LoginViewController.m in Sources */,
 				42C84EAF1EF2DB060008189D /* ViewController.m in Sources */,
