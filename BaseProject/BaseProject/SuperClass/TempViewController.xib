@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-LF-4FD">
-                    <rect key="frame" x="102" y="202" width="142" height="36"/>
+                    <rect key="frame" x="102" y="100" width="142" height="36"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="EFY-WV-4m1"/>
                         <constraint firstAttribute="width" constant="142" id="GOM-DU-SXP"/>
@@ -31,7 +31,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hv-kq-0YR">
-                    <rect key="frame" x="142" y="304" width="46" height="30"/>
+                    <rect key="frame" x="150" y="537" width="46" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="ICT-Ol-G9B"/>
                     </constraints>
@@ -43,11 +43,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="0Hv-kq-0YR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="142" id="81T-hs-PnZ"/>
-                <constraint firstItem="0Hv-kq-0YR" firstAttribute="top" secondItem="yTL-LF-4FD" secondAttribute="bottom" constant="66" id="82g-u3-RnE"/>
                 <constraint firstItem="yTL-LF-4FD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="102" id="GBn-Kc-PZc"/>
-                <constraint firstItem="yTL-LF-4FD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="202" id="dLp-07-P0K"/>
-                <constraint firstAttribute="trailing" secondItem="0Hv-kq-0YR" secondAttribute="trailing" constant="187" id="gtN-BT-RpO"/>
+                <constraint firstItem="0Hv-kq-0YR" firstAttribute="centerX" secondItem="yTL-LF-4FD" secondAttribute="centerX" id="Qm3-FN-DIZ"/>
+                <constraint firstAttribute="bottom" secondItem="0Hv-kq-0YR" secondAttribute="bottom" constant="100" id="Tgp-lB-Z2N"/>
+                <constraint firstItem="yTL-LF-4FD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="dLp-07-P0K"/>
                 <constraint firstAttribute="trailing" secondItem="yTL-LF-4FD" secondAttribute="trailing" constant="131" id="jSd-vv-iqj"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="53.5"/>

@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <Masonry/Masonry.h>
 #import "UIColor+BGHexColor.h"
-
+#import "Constants.h"
 @interface BaseViewController : UIViewController
 
 - (void)backAction;

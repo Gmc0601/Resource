@@ -11,4 +11,5 @@
 @interface BankCardModel : NSObject
 @property(retain,atomic) NSString *bankName;
 @property(retain,atomic) NSString *cardNumber;
+@property(retain,atomic) NSString *userName;
 @end

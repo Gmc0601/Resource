@@ -12,6 +12,7 @@
 #import "KitingModel.h"
 #import "KitingCell.h"
 #import "BankCardCell.h"
+#import "BankCarInfoViewController.h"
 
 @interface KitingViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -224,10 +225,11 @@
     }];
     
     
-    BankCardModel *bank = [BankCardModel new];
-    bank.cardNumber = @"**** **** **** 1177";
-    bank.bankName = @"招商银行";
-    [self setBankCard:bank];
+    _bankCard = [BankCardModel new];
+    _bankCard.cardNumber = @"**** **** **** 1177";
+    _bankCard.bankName = @"招商银行";
+    _bankCard.userName = @"招商银行";
+    [self setBankCard:_bankCard];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -261,7 +263,8 @@
 }
 
 -(void) addNewBankCard{
-    NSLog(@"dasds");
+    BankCarInfoViewController *newViewController = [BankCarInfoViewController new];
+    [self.navigationController pushViewController:newViewController animated:YES];
 }
 
 -(void) tapKitingButton{
@@ -319,7 +322,10 @@
 }
 
 -(void) gotoEditView{
-    
+    BankCarInfoViewController *newViewController = [BankCarInfoViewController new];
+    [self.navigationController pushViewController:newViewController animated:YES];
+    newViewController.model = _bankCard;
+
 }
 
 @end

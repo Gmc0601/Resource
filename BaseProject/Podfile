@@ -11,4 +11,5 @@ pod ‘AMapLocation’
 pod ‘AMapSearch’
 pod ‘AMapNavi’
 pod 'Masonry'
+pod 'IQKeyboardManager'
 end

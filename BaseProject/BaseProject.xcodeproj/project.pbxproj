@@ -68,6 +68,7 @@
 		6B0165FD1F2CDB9D002071E2 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B0166001F2CEEB7002071E2 /* KitingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0165FF1F2CEEB7002071E2 /* KitingCell.m */; };
 		6B0166031F2D7677002071E2 /* BankCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166021F2D7677002071E2 /* BankCardCell.m */; };
+		6B0166061F2D8016002071E2 /* BankCarInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166051F2D8016002071E2 /* BankCarInfoViewController.m */; };
 		6B12E47C1F2B762B008C4A3F /* IntegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */; };
 		6B12E47F1F2B810D008C4A3F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B12E4821F2B8157008C4A3F /* FactorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4811F2B8157008C4A3F /* FactorySet.m */; };
@@ -223,6 +224,8 @@
 		6B0165FF1F2CEEB7002071E2 /* KitingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingCell.m; sourceTree = "<group>"; };
 		6B0166011F2D7677002071E2 /* BankCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankCardCell.h; sourceTree = "<group>"; };
 		6B0166021F2D7677002071E2 /* BankCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankCardCell.m; sourceTree = "<group>"; };
+		6B0166041F2D8016002071E2 /* BankCarInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankCarInfoViewController.h; sourceTree = "<group>"; };
+		6B0166051F2D8016002071E2 /* BankCarInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankCarInfoViewController.m; sourceTree = "<group>"; };
 		6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegalViewController.h; sourceTree = "<group>"; };
 		6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegalViewController.m; sourceTree = "<group>"; };
 		6B12E47D1F2B810D008C4A3F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = BaseProject/Classes/Commen/ViewController/BaseViewController.h; sourceTree = SOURCE_ROOT; };
@@ -347,6 +350,8 @@
 				6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */,
 				6B0165F41F2CD700002071E2 /* KitingViewController.h */,
 				6B0165F51F2CD700002071E2 /* KitingViewController.m */,
+				6B0166041F2D8016002071E2 /* BankCarInfoViewController.h */,
+				6B0166051F2D8016002071E2 /* BankCarInfoViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -893,6 +898,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				429558361F2488CA000B2BB2 /* UIScrollView+TBRefresh.m in Sources */,
+				6B0166061F2D8016002071E2 /* BankCarInfoViewController.m in Sources */,
 				42C84F101EF2E97D0008189D /* UIView+Category.m in Sources */,
 				42C84F0C1EF2E97D0008189D /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				42C84F061EF2E97D0008189D /* NSTimer+Category.m in Sources */,
