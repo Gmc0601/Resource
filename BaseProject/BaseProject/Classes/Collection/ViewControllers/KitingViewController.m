@@ -31,6 +31,7 @@
     [self setNavTitle:@"提现"];
     [self addCollectionView];
     [self addSubviews];
+    _selectIndex = -1;
     _models = [NSMutableArray arrayWithCapacity:0];
     
     KitingModel *model1 = [KitingModel new];
@@ -140,7 +141,7 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0 && _selectIndex >=0) {
         NSIndexPath *newIndex = [NSIndexPath indexPathForRow:_selectIndex inSection:1 ];
         [UIView animateWithDuration:0 animations:^{
             [collectionView performBatchUpdates:^{
