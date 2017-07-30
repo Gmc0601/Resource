@@ -76,6 +76,8 @@
     [self presentViewController:na animated:YES completion:^{
         
     }];
+//    PersonViewController *personHomePageVC = [[PersonViewController alloc] init];
+//    [self.navigationController pushViewController:personHomePageVC animated:YES];
 
 }
 
