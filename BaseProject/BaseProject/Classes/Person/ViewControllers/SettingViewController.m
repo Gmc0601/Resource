@@ -9,7 +9,9 @@
 #import "SettingViewController.h"
 #import "AboutUsViewController.h"
 #import "CDZPicker.h"
-@interface SettingViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
+
+#import "ProtocolViewController.h"
+@interface SettingViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIAlertViewDelegate>
 {
     NSArray *roleArray;
 }
@@ -31,6 +33,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
      [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.translucent = YES;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
@@ -51,9 +54,28 @@
 }
 
 - (IBAction)PlayCustomerTelBtn:(UIButton *)sender {
-    NSMutableString* str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",self.phoneStr];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拨打客服电话"
+                                                    message:self.phoneLabel.text
+                                                   delegate:nil
+                                          cancelButtonTitle:@"拨打"
+                                          otherButtonTitles:@"取消",nil];
+    
+    alert.delegate = self;
+    [alert show];
+    
+//    NSMutableString* str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",self.phoneStr];
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",self.phoneLabel.text];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+    }
+}
+
+
+
 - (IBAction)CleanMemoryBtn:(UIButton *)sender {
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"清除缓存数据,给手机瘦身吧" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
@@ -74,6 +96,8 @@
     [self.navigationController pushViewController:aboutUsVC animated:YES];
 }
 - (IBAction)CustomerProtocol:(UIButton *)sender {
+    ProtocolViewController *protocolVC = [[ProtocolViewController alloc] init];
+    [self.navigationController pushViewController:protocolVC animated:YES];
     
 }
 
@@ -104,6 +128,8 @@
     float cacheSize = [self readCacheSize] *1024;
     NSLog(@"%f999-----", cacheSize);
 //    self.cacheSize.text = [NSString stringWithFormat:@"%.2fKB",cacheSize];
+    
+    [ConfigModel mbProgressHUD:[NSString stringWithFormat:@"恭喜您已清除%@M",[NSString stringWithFormat:@"%.2f",cacheSize/1024]] andView:self.view];
     
 }
 -( float )readCacheSize

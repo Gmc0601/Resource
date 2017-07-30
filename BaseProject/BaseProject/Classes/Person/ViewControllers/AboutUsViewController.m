@@ -9,6 +9,7 @@
 #import "AboutUsViewController.h"
 
 @interface AboutUsViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *logoImg;
 
 @end
 
@@ -23,6 +24,8 @@
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     self.versonlabel.text = app_Version;
     NSLog(@"%@---%@", app_Name,app_Version);
+    
+    self.logoImg.frame = CGRectMake((kScreenW- SizeWidth(72))/2, 64+SizeHeight(125), SizeWidth(72), SizeHeight(72));
 }
 - (void)clickBackBtn{
     [self.navigationController popViewControllerAnimated:YES];

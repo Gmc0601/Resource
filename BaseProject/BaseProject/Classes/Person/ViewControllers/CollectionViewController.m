@@ -18,6 +18,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 - (void)viewWillAppear:(BOOL)animated{
+     self.navigationController.navigationBar.translucent = NO;
      [self.navigationController setNavigationBarHidden:NO animated:YES];
      [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
@@ -28,16 +29,13 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"更多商品";
+    self.title = @"更多废品";
     self.collectionView.backgroundColor = RGBColor(237, 239, 239);
      self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
+
     [self.collectionView registerClass:[PagegeCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    // Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.collectionView.frame = CGRectMake(0, 0, kScreenW, kScreenH);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,13 +79,6 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark <UICollectionViewDelegate>
 
-
-//  设置集合视图内间距(上左下右)
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    
-    return UIEdgeInsetsMake(10, 10, 0, 10);
-    
-}
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

@@ -41,13 +41,18 @@
 
 
 - (void)CreateUI{
-    TBheadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 392)];
+    TBheadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, SizeHeight(392))];
     TBheadView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 1)];
+    [TBheadView addSubview:topView];
+    topView.backgroundColor = UIColorFromHex(0xf1f2f2);
+
     
     BottomImgView = [[UIImageView alloc] init];
     BottomImgView.layer.cornerRadius = 5;
     BottomImgView.layer.masksToBounds = YES;
-    BottomImgView.frame = CGRectMake((kScreenW-355)/2, 15, 355, 308);
+    BottomImgView.frame = CGRectMake(SizeWidth((kScreenW-SizeWidth(355))/2), SizeHeight(15), SizeWidth(355), SizeHeight(308));
     [TBheadView addSubview:BottomImgView];
     BottomImgView.image = [UIImage imageNamed:@"53ccb7628f2cd"];
     BottomImgView.userInteractionEnabled = YES;
@@ -55,7 +60,7 @@
     headImgView = [[UIImageView alloc] init];
     headImgView.layer.cornerRadius = 5;
     headImgView.layer.masksToBounds = YES;
-    headImgView.frame = CGRectMake(-1, 1, 357, 310);
+    headImgView.frame = CGRectMake(-1, 1, SizeWidth(357), SizeHeight(310));
     [BottomImgView addSubview:headImgView];
     headImgView.image = [UIImage imageNamed:@"圆角矩形-11-拷贝"];
     headImgView.userInteractionEnabled = YES;
@@ -64,9 +69,9 @@
     [headImgView addSubview:moneyLabel];
     [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headImgView);
-        make.top.equalTo(headImgView).offset(132);
+        make.top.equalTo(headImgView).offset(SizeHeight(132));
         make.width.equalTo(headImgView);
-        make.height.equalTo(@20);
+        make.height.equalTo(@(SizeHeight(20)));
         
     }];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
@@ -83,10 +88,10 @@
     UILabel *unitLabel = [[UILabel alloc]init];
     [headImgView addSubview:unitLabel];
     [unitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headImgView).offset(20);
-        make.top.equalTo(moneyLabel).offset(54);
-        make.width.equalTo(@100);
-        make.height.equalTo(@13);
+        make.left.equalTo(headImgView).offset(SizeWidth(20));
+        make.top.equalTo(moneyLabel).offset(SizeHeight(54));
+        make.width.equalTo(@(SizeWidth(100)));
+        make.height.equalTo(@(SizeHeight(13)));
         
     }];
     unitLabel.font = [UIFont systemFontOfSize:15];
@@ -101,10 +106,10 @@
     AmountTF.font = [UIFont systemFontOfSize:14];
     AmountTF.layer.borderColor = UIColorFromHex(0xe0e0e0).CGColor;
     [AmountTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headImgView).offset(20);
-        make.top.equalTo(unitLabel).offset(30);
-        make.width.equalTo(@249);
-        make.height.equalTo(@44);
+        make.left.equalTo(headImgView).offset(SizeWidth(20));
+        make.top.equalTo(unitLabel).offset(SizeHeight(30));
+        make.width.equalTo(@(SizeWidth(249)));
+        make.height.equalTo(@(SizeHeight(44)));
         
     }];
     
@@ -116,10 +121,10 @@
     [sureBtn addTarget:self action:@selector(calculateMoneyBtn) forControlEvents:UIControlEventTouchUpInside];
     [headImgView addSubview:sureBtn];
     [sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(headImgView).offset(-20);
+        make.right.equalTo(headImgView).offset(SizeWidth(-20));
         make.top.equalTo(AmountTF);
-        make.width.equalTo(@57);
-        make.height.equalTo(@44);
+        make.width.equalTo(@(SizeWidth(57)));
+        make.height.equalTo(@(SizeHeight(44)));
         
     }];
     
@@ -128,10 +133,10 @@
     priceLabel = [[UILabel alloc] init];
     [headImgView addSubview:priceLabel];
     [priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headImgView).offset(20);
-        make.bottom.equalTo(headImgView).offset(-20);
-        make.width.equalTo(@200);
-        make.height.equalTo(@13);
+        make.left.equalTo(headImgView).offset(SizeWidth(20));
+        make.bottom.equalTo(headImgView).offset(SizeHeight(-20));
+        make.width.equalTo(@(SizeWidth(200)));
+        make.height.equalTo(@(SizeHeight(13)));
         
     }];
     priceLabel.text = @"单价: 0.80元/kg";
@@ -144,17 +149,17 @@
     UIView *sepaView = [[UIView alloc] init];
     sepaView.backgroundColor = UIColorFromHex(0xf1f2f2);
     [TBheadView addSubview:sepaView];
-    sepaView.frame = CGRectMake(0, 339, kScreenW, 10);
+    sepaView.frame = CGRectMake(0, SizeHeight(339), kScreenW, SizeHeight(10));
     
     
     UIButton *nearbyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     nearbyBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [nearbyBtn setTitleColor:UIColorFromHex(0x333333) forState:UIControlStateNormal];
     nearbyBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [nearbyBtn setImageEdgeInsets:UIEdgeInsetsMake(15, kScreenW-20, 15, 10)];
+    [nearbyBtn setImageEdgeInsets:UIEdgeInsetsMake(SizeHeight(15), kScreenW-SizeWidth(20), SizeHeight(15), SizeWidth(10))];
     [nearbyBtn setImage:[[UIImage imageNamed:@"icon_gds"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     nearbyBtn.backgroundColor = [UIColor whiteColor];
-    nearbyBtn.frame = CGRectMake(0, 349, kScreenW, 42);
+    nearbyBtn.frame = CGRectMake(0, SizeHeight(349), kScreenW, SizeHeight(42));
     [nearbyBtn setTitle:@"附近的回收点" forState:UIControlStateNormal];
     [nearbyBtn addTarget:self action:@selector(calculateMoneyBtn) forControlEvents:UIControlEventTouchUpInside];;
     [TBheadView addSubview:nearbyBtn];
@@ -162,7 +167,7 @@
     UIView *seView = [[UIView alloc] init];
     seView.backgroundColor = UIColorFromHex(0xf1f2f2);
     [TBheadView addSubview:seView];
-    seView.frame = CGRectMake(0, 391, kScreenW, 1);
+    seView.frame = CGRectMake(0, SizeHeight(391), kScreenW, 1);
 }
 
 
@@ -171,7 +176,7 @@
 }
 
 - (void)initTableView{
-    AbandonTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreenW, kScreenH-64) style:UITableViewStylePlain];
+    AbandonTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH-64) style:UITableViewStylePlain];
     AbandonTableView.delegate = self;
     AbandonTableView.dataSource = self;
     [self.view addSubview:AbandonTableView];

@@ -30,8 +30,14 @@
     [self initTableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.translucent = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
 - (void)initTableView{
-    GoodsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreenW, kScreenH) style:UITableViewStylePlain];
+    GoodsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH-64) style:UITableViewStylePlain];
     GoodsTableView.delegate = self;
     GoodsTableView.dataSource = self;
     [self.view addSubview:GoodsTableView];
@@ -48,7 +54,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return 8;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
