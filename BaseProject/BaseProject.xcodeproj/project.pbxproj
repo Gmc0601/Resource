@@ -84,6 +84,9 @@
 		6B01662E1F2DB03C002071E2 /* ProtocolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B01661E1F2DB03C002071E2 /* ProtocolViewController.m */; };
 		6B01662F1F2DB03C002071E2 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166201F2DB03C002071E2 /* SettingViewController.m */; };
 		6B0166301F2DB03C002071E2 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B0166211F2DB03C002071E2 /* SettingViewController.xib */; };
+		6B0166331F2DB10F002071E2 /* KitingGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166321F2DB10F002071E2 /* KitingGoodsModel.m */; };
+		6B0166361F2DB170002071E2 /* KitingGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166351F2DB170002071E2 /* KitingGoodsViewController.m */; };
+		6B01663A1F2DB208002071E2 /* KitingGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166391F2DB208002071E2 /* KitingGoodCell.m */; };
 		6B12E47C1F2B762B008C4A3F /* IntegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */; };
 		6B12E47F1F2B810D008C4A3F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B12E4821F2B8157008C4A3F /* FactorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4811F2B8157008C4A3F /* FactorySet.m */; };
@@ -267,6 +270,12 @@
 		6B01661F1F2DB03C002071E2 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		6B0166201F2DB03C002071E2 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		6B0166211F2DB03C002071E2 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		6B0166311F2DB10F002071E2 /* KitingGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingGoodsModel.h; sourceTree = "<group>"; };
+		6B0166321F2DB10F002071E2 /* KitingGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingGoodsModel.m; sourceTree = "<group>"; };
+		6B0166341F2DB170002071E2 /* KitingGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingGoodsViewController.h; sourceTree = "<group>"; };
+		6B0166351F2DB170002071E2 /* KitingGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingGoodsViewController.m; sourceTree = "<group>"; };
+		6B0166381F2DB208002071E2 /* KitingGoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingGoodCell.h; sourceTree = "<group>"; };
+		6B0166391F2DB208002071E2 /* KitingGoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingGoodCell.m; sourceTree = "<group>"; };
 		6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegalViewController.h; sourceTree = "<group>"; };
 		6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegalViewController.m; sourceTree = "<group>"; };
 		6B12E47D1F2B810D008C4A3F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = BaseProject/Classes/Commen/ViewController/BaseViewController.h; sourceTree = SOURCE_ROOT; };
@@ -376,6 +385,8 @@
 				6B0165F81F2CD7D0002071E2 /* BankCardModel.m */,
 				6B0165FA1F2CD812002071E2 /* KitingModel.h */,
 				6B0165FB1F2CD812002071E2 /* KitingModel.m */,
+				6B0166311F2DB10F002071E2 /* KitingGoodsModel.h */,
+				6B0166321F2DB10F002071E2 /* KitingGoodsModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -383,16 +394,11 @@
 		4295583D1F248A6E000B2BB2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6B0166371F2DB17E002071E2 /* Integral */,
 				6BBCE7DC1F262F0F006B6DA4 /* HomeViewController.h */,
 				6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */,
 				6B5900051F2A4C7100874676 /* RecycleDetailViewController.h */,
 				6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */,
-				6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */,
-				6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */,
-				6B0165F41F2CD700002071E2 /* KitingViewController.h */,
-				6B0165F51F2CD700002071E2 /* KitingViewController.m */,
-				6B0166041F2D8016002071E2 /* BankCarInfoViewController.h */,
-				6B0166051F2D8016002071E2 /* BankCarInfoViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -742,6 +748,21 @@
 			path = CDZPicker;
 			sourceTree = "<group>";
 		};
+		6B0166371F2DB17E002071E2 /* Integral */ = {
+			isa = PBXGroup;
+			children = (
+				6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */,
+				6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */,
+				6B0165F41F2CD700002071E2 /* KitingViewController.h */,
+				6B0165F51F2CD700002071E2 /* KitingViewController.m */,
+				6B0166041F2D8016002071E2 /* BankCarInfoViewController.h */,
+				6B0166051F2D8016002071E2 /* BankCarInfoViewController.m */,
+				6B0166341F2DB170002071E2 /* KitingGoodsViewController.h */,
+				6B0166351F2DB170002071E2 /* KitingGoodsViewController.m */,
+			);
+			name = Integral;
+			sourceTree = "<group>";
+		};
 		6BBCE7DF1F2630DB006B6DA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,6 +774,8 @@
 				6B0165FF1F2CEEB7002071E2 /* KitingCell.m */,
 				6B0166011F2D7677002071E2 /* BankCardCell.h */,
 				6B0166021F2D7677002071E2 /* BankCardCell.m */,
+				6B0166381F2DB208002071E2 /* KitingGoodCell.h */,
+				6B0166391F2DB208002071E2 /* KitingGoodCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1004,7 +1027,9 @@
 				42C84F131EF2EA140008189D /* UITextView+placeholder.m in Sources */,
 				42C84F091EF2E97D0008189D /* UIControl+ResponseTime.m in Sources */,
 				6B0166271F2DB03C002071E2 /* CollectionViewController.m in Sources */,
+				6B0166331F2DB10F002071E2 /* KitingGoodsModel.m in Sources */,
 				6B01662E1F2DB03C002071E2 /* ProtocolViewController.m in Sources */,
+				6B0166361F2DB170002071E2 /* KitingGoodsViewController.m in Sources */,
 				42C84F021EF2E97D0008189D /* NSString+Category.m in Sources */,
 				6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */,
 				6B01662F1F2DB03C002071E2 /* SettingViewController.m in Sources */,
@@ -1016,6 +1041,7 @@
 				42C84EFB1EF2E97D0008189D /* NSAttributedString+Category.m in Sources */,
 				4295584A1F248A9B000B2BB2 /* LoginViewController.m in Sources */,
 				42C84EAF1EF2DB060008189D /* ViewController.m in Sources */,
+				6B01663A1F2DB208002071E2 /* KitingGoodCell.m in Sources */,
 				429558351F2488CA000B2BB2 /* TBRefreshHeadView.m in Sources */,
 				42C84EB91EF2DCD90008189D /* MainApi.m in Sources */,
 				42C84F051EF2E97D0008189D /* NSString+Predicate.m in Sources */,

@@ -13,6 +13,7 @@
 #import "IntegralRecordModel.h"
 #include "FactorySet.h"
 #include "PublicClass.h"
+#import "KitingGoodsViewController.h"
 
 
 @interface IntegalViewController ()
@@ -253,7 +254,8 @@
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 -(void) tapConvertButton{
-    
+    KitingGoodsViewController *newViewController = [KitingGoodsViewController new];
+    [self.navigationController pushViewController:newViewController animated:YES];
 }
 -(void) tapSend{
     

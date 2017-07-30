@@ -63,7 +63,7 @@
     [border1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lblUserName.mas_bottom).offset(SizeHeight(34/2));
         make.centerX.equalTo(self.view.mas_centerX);
-        make.width.equalTo(@(SizeWidth(730)));
+        make.width.equalTo(@(SizeWidth(730/2)));
         make.height.equalTo(@(SizeHeight(1)));
     }];
     
@@ -89,7 +89,7 @@
     [border2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lblCardName.mas_bottom).offset(SizeHeight(20));
         make.centerX.equalTo(self.view.mas_centerX);
-        make.width.equalTo(@(SizeWidth(730)));
+        make.width.equalTo(@(SizeWidth(730/2)));
         make.height.equalTo(@(SizeHeight(1)));
     }];
     
