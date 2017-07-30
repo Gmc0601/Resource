@@ -56,6 +56,8 @@
     model5.money = @"100";
     model5.integral = @"100";
     [_models addObject:model5];
+    
+    
 }
 
 -(void) addSubviews{
@@ -104,9 +106,6 @@
 
 -(void) addCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    layout.itemSize = CGSizeMake(SizeWidth(113), SizeHeight(113));
-    
-//    layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
     
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [_collectionView registerClass:[BankCardCell class] forCellWithReuseIdentifier:@"cell"];
@@ -164,10 +163,6 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-//        NSIndexPath *newIndex = [NSIndexPath indexPathForRow:_selectIndex inSection:1 ];
-//        UICollectionViewCell * cell = [collectionView cellForItemAtIndexPath: newIndex];
-//        [cell setSelected:YES];
-//        [cell setNeedsLayout];
     }else{
         _selectIndex = indexPath.row;
     }
@@ -189,7 +184,6 @@
     
     if (indexPath.section == 0) {
        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-//        cell.userInteractionEnabled = NO;
         if (cell.subviews.count < 3) {
             [self setCell:cell];
         }
@@ -228,6 +222,12 @@
         make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(@(SizeHeight(15)));
     }];
+    
+    
+    BankCardModel *bank = [BankCardModel new];
+    bank.cardNumber = @"**** **** **** 1177";
+    bank.bankName = @"招商银行";
+    [self setBankCard:bank];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -265,6 +265,60 @@
 }
 
 -(void) tapKitingButton{
+    
+}
+
+-(void) setBankCard:(BankCardModel *) bankCard{
+    _bankCardView.backgroundColor = [ColorContants BlueFontColor];
+    for (UIView *v in _bankCardView.subviews) {
+        [v removeFromSuperview];
+        [v setHidden:YES];
+    }
+    
+    UILabel *cardName = [[UILabel alloc] init];
+    cardName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    cardName.textColor = [ColorContants whiteFontColor];
+    cardName.textAlignment = NSTextAlignmentLeft;
+    cardName.text = bankCard.bankName;
+    [_bankCardView addSubview:cardName];
+    
+    [cardName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_bankCardView.mas_top).offset(SizeHeight(20));
+        make.left.equalTo(_bankCardView.mas_left).offset(SizeWidth(15));
+        make.width.equalTo(@(SizeWidth(200)));
+        make.height.equalTo(@(SizeHeight(15)));
+    }];
+    
+    UILabel *cardNumber = [[UILabel alloc] init];
+    cardNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:17];
+    cardNumber.textColor = [ColorContants whiteFontColor];
+    cardNumber.textAlignment = NSTextAlignmentRight;
+    cardNumber.text = bankCard.cardNumber;
+    [_bankCardView addSubview:cardNumber];
+    
+    [cardNumber mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_bankCardView.mas_right).offset(SizeWidth(-20));
+        make.bottom.equalTo(_bankCardView.mas_bottom).offset(SizeHeight(-15));
+        make.width.equalTo(@(SizeWidth(400)));
+        make.height.equalTo(@(SizeHeight(17)));
+    }];
+    
+    UIButton *btnEdit = [[UIButton alloc] init];
+    btnEdit.backgroundColor = [ColorContants BlueFontColor];
+    [btnEdit setBackgroundImage:[UIImage imageNamed:@"tx_icon_bj"] forState:UIControlStateNormal];
+    [btnEdit addTarget:self action:@selector(gotoEditView) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_bankCardView addSubview:btnEdit];
+    
+    [btnEdit mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_bankCardView.mas_right).offset(SizeWidth(-20));
+        make.top.equalTo(_bankCardView.mas_top).offset(SizeHeight(10));
+        make.width.equalTo(@(SizeWidth(27/2)));
+        make.height.equalTo(@(SizeHeight(34/2)));
+    }];
+}
+
+-(void) gotoEditView{
     
 }
 

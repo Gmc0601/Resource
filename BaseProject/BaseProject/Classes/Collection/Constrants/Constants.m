@@ -65,7 +65,7 @@
 }
 
 +(UIColor *) BlueFontColor{
-    return [UIColor colorWithHexString:@"#78b4f7"];
+    return [UIColor colorWithHexString:@"#78b4f8"];
 }
 
 +(UIColor *) kitingFontColor{
