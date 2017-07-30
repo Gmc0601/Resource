@@ -93,10 +93,6 @@
         make.width.equalTo(@(SizeWidth(200)));
         make.height.equalTo(@(SizeHeight(13)));
     }];
-    
-//    _scrollView = [UIScrollView new];
-//    
-//    [self.view addSubview:_scrollView];
 //    
     [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(SizeHeight(64));

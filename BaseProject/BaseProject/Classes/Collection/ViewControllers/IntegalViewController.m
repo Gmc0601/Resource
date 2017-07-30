@@ -14,7 +14,7 @@
 #include "FactorySet.h"
 #include "PublicClass.h"
 #import "KitingGoodsViewController.h"
-
+#import "SendIntegralViewController.h"
 
 @interface IntegalViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -258,7 +258,9 @@
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 -(void) tapSend{
+    SendIntegralViewController *newViewController = [SendIntegralViewController new];
     
+    [self.navigationController pushViewController:newViewController animated:NO];
 }
 
 @end

@@ -89,6 +89,7 @@
 		6B01663A1F2DB208002071E2 /* KitingGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166391F2DB208002071E2 /* KitingGoodCell.m */; };
 		6B01663D1F2E38CC002071E2 /* KitingGoodsRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B01663C1F2E38CC002071E2 /* KitingGoodsRecordViewController.m */; };
 		6B0166401F2E39A7002071E2 /* KitingGoodsRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B01663F1F2E39A7002071E2 /* KitingGoodsRecordCell.m */; };
+		6B0166461F2E3EFC002071E2 /* SendIntegralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0166451F2E3EFC002071E2 /* SendIntegralViewController.m */; };
 		6B12E47C1F2B762B008C4A3F /* IntegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */; };
 		6B12E47F1F2B810D008C4A3F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E47E1F2B810D008C4A3F /* BaseViewController.m */; };
 		6B12E4821F2B8157008C4A3F /* FactorySet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4811F2B8157008C4A3F /* FactorySet.m */; };
@@ -282,6 +283,8 @@
 		6B01663C1F2E38CC002071E2 /* KitingGoodsRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingGoodsRecordViewController.m; sourceTree = "<group>"; };
 		6B01663E1F2E39A7002071E2 /* KitingGoodsRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingGoodsRecordCell.h; sourceTree = "<group>"; };
 		6B01663F1F2E39A7002071E2 /* KitingGoodsRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingGoodsRecordCell.m; sourceTree = "<group>"; };
+		6B0166441F2E3EFC002071E2 /* SendIntegralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendIntegralViewController.h; sourceTree = "<group>"; };
+		6B0166451F2E3EFC002071E2 /* SendIntegralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendIntegralViewController.m; sourceTree = "<group>"; };
 		6B12E47A1F2B762B008C4A3F /* IntegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegalViewController.h; sourceTree = "<group>"; };
 		6B12E47B1F2B762B008C4A3F /* IntegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegalViewController.m; sourceTree = "<group>"; };
 		6B12E47D1F2B810D008C4A3F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = BaseProject/Classes/Commen/ViewController/BaseViewController.h; sourceTree = SOURCE_ROOT; };
@@ -767,6 +770,8 @@
 				6B0166351F2DB170002071E2 /* KitingGoodsViewController.m */,
 				6B01663B1F2E38CC002071E2 /* KitingGoodsRecordViewController.h */,
 				6B01663C1F2E38CC002071E2 /* KitingGoodsRecordViewController.m */,
+				6B0166441F2E3EFC002071E2 /* SendIntegralViewController.h */,
+				6B0166451F2E3EFC002071E2 /* SendIntegralViewController.m */,
 			);
 			name = Integral;
 			sourceTree = "<group>";
@@ -1078,6 +1083,7 @@
 				42C84EFD1EF2E97D0008189D /* NSData+CommonCryptor.m in Sources */,
 				6B12E4851F2B8201008C4A3F /* TBNavigationController.m in Sources */,
 				6B12E47F1F2B810D008C4A3F /* BaseViewController.m in Sources */,
+				6B0166461F2E3EFC002071E2 /* SendIntegralViewController.m in Sources */,
 				6B01663D1F2E38CC002071E2 /* KitingGoodsRecordViewController.m in Sources */,
 				42C84F0A1EF2E97D0008189D /* UIImage+Category.m in Sources */,
 				6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */,

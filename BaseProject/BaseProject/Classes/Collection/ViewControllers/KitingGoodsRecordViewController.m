@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNavTitle:@"积分兑换记录"];
     [self addTableView];
     _models = [NSMutableArray arrayWithCapacity:0];
     
