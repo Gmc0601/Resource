@@ -71,6 +71,7 @@
 
 -(void) addCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.sectionHeadersPinToVisibleBounds = YES;
     layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, SizeHeight(74));
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, [self getNavBarHeight], self.view.bounds.size.width, self.view.bounds.size.height - [self getNavBarHeight]) collectionViewLayout:layout];
     [_collectionView registerClass:[KitingGoodCell class] forCellWithReuseIdentifier:@"cell"];
@@ -130,6 +131,7 @@
     UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];;
     
     if (header.subviews.count < 1) {
+        header.backgroundColor = [UIColor whiteColor];
         UIView *subView = [UIView new];
         subView.backgroundColor = [ColorContants gray];
         subView.layer.cornerRadius = SizeHeight(5);
