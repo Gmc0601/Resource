@@ -104,7 +104,7 @@
 		6BB129861F24F696004D9A24 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB129851F24F696004D9A24 /* UserModel.m */; };
 		6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */; };
 		6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7E51F26437F006B6DA4 /* Constants.m */; };
-		DEE86F8D590A34D62A756C78 /* libPods-BaseProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D836558F5998980F797B67 /* libPods-BaseProject.a */; };
+		B93E0916E8B66730A11BDE29 /* Pods_BaseProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24806B1609D8B88C3B3A80FA /* Pods_BaseProject.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +125,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		24806B1609D8B88C3B3A80FA /* Pods_BaseProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaseProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		429558221F248874000B2BB2 /* BaseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableView.h; sourceTree = "<group>"; };
 		429558231F248874000B2BB2 /* BaseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableView.m; sourceTree = "<group>"; };
 		429558241F248874000B2BB2 /* CCBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBaseViewController.h; sourceTree = "<group>"; };
@@ -314,7 +315,6 @@
 		6BBCE7E41F26437F006B6DA4 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Constrants/Constants.h; sourceTree = "<group>"; };
 		6BBCE7E51F26437F006B6DA4 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Constrants/Constants.m; sourceTree = "<group>"; };
 		A2BC379B4929E517CCEBBD81 /* Pods-BaseProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.release.xcconfig"; sourceTree = "<group>"; };
-		D0D836558F5998980F797B67 /* libPods-BaseProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BaseProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -323,7 +323,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEE86F8D590A34D62A756C78 /* libPods-BaseProject.a in Frameworks */,
+				B93E0916E8B66730A11BDE29 /* Pods_BaseProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,7 +807,7 @@
 		7F5FE81AF3930B1D8AB68F96 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D0D836558F5998980F797B67 /* libPods-BaseProject.a */,
+				24806B1609D8B88C3B3A80FA /* Pods_BaseProject.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

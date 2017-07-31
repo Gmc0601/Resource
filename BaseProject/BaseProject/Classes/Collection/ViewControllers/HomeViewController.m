@@ -16,6 +16,7 @@
 #import "GoodsCategoryModel.h"
 #import "RecycleDetailViewController.h"
 #import "IntegalViewController.h"
+#import "PublicClass.h"
 
 @interface HomeViewController ()
     @property(retain,atomic) NSMutableArray *models;
@@ -74,15 +75,15 @@
     [_models addObject:model10];
 }
     
-//-(void) viewWillAppear:(BOOL)animated{
-//    [super viewWillAppear:animated];
-//    [self.navigationController setNavigationBarHidden:YES];
-//}
-//    
-//-(void) viewWillDisappear:(BOOL)animated{
-//    [super viewWillDisappear:animated];
-//    self.navigationController.navigationBar.hidden = NO;
-//}
+    //-(void) viewWillAppear:(BOOL)animated{
+    //    [super viewWillAppear:animated];
+    //    [self.navigationController setNavigationBarHidden:YES];
+    //}
+    //
+    //-(void) viewWillDisappear:(BOOL)animated{
+    //    [super viewWillDisappear:animated];
+    //    self.navigationController.navigationBar.hidden = NO;
+    //}
     
 -(void) addCallButton{
     UIButton *btnShowCall = [[UIButton alloc] init];
@@ -104,24 +105,6 @@
         make.height.equalTo(@(SizeHeight(52)));
         make.width.equalTo(@(SizeWidth(52)));
     }];
-}
-    
--(void)  showCallView{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拨打平台电话"
-                                                    message:@"400-800-1234"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"拨打"
-                                          otherButtonTitles:@"取消",nil];
-    
-    alert.delegate = self;
-    [alert show];
-}
-    
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",@"13377892977"];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-    }
 }
     
 #pragma UICollection Delegate
@@ -318,7 +301,7 @@
     UITapGestureRecognizer *tapIntegral = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showIntegralDetail:)];
     tapIntegral.numberOfTapsRequired = 1;
     [_lblIntegral addGestureRecognizer:tapIntegral];
-
+    
     
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(btnCheck.mas_centerY).offset(0);
@@ -409,10 +392,14 @@
 -(void) tapCheckButton{
     
 }
-
+    
+-(void) showCallView{
+    [PublicClass showCallPopupWithTelNo:@"400-800-2123" inViewController:self];
+}
+    
 -(void) showIntegralDetail:(UITapGestureRecognizer *) sender{
     IntegalViewController *newViewController = [[IntegalViewController alloc] init];
     [self.navigationController pushViewController:newViewController animated:YES];
-
+    
 }
-@end
+    @end

@@ -22,4 +22,5 @@
  判断颜色是够相同
  */
 +(BOOL)firstColor:(UIColor*)firstColor secondColor:(UIColor*)secondColor;
+    +(void) showCallPopupWithTelNo:(NSString *) telNo inViewController:(UIViewController*) viewController;
 @end

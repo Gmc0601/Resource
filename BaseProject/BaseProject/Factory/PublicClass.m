@@ -7,6 +7,8 @@
 //
 
 #import "PublicClass.h"
+#import <PopupDialog/PopupDialog-Swift.h>
+#import "Constants.h"
 
 @implementation PublicClass
 + (UIButton *)setRightTitleOnTargetNav:(id)controller action:(SEL)action Title:(NSString *)title{
@@ -44,7 +46,7 @@
     
     return theImage;
 }
-//中间文字
+    //中间文字
 + (UILabel *)seTitleViewOnTargetNav:(id)controller UIFont:(UIFont *)font title:(NSString *)title textColor:(UIColor *)color{
     UILabel * lab = [[UILabel alloc]init];
     lab.text = title;
@@ -55,16 +57,59 @@
     return lab;
 }
 +(BOOL)firstColor:(UIColor*)firstColor secondColor:(UIColor*)secondColor
-{
-    if (CGColorEqualToColor(firstColor.CGColor, secondColor.CGColor))
     {
-        NSLog(@"颜色相同");
-        return YES;
+        if (CGColorEqualToColor(firstColor.CGColor, secondColor.CGColor))
+        {
+            NSLog(@"颜色相同");
+            return YES;
+        }
+        else
+        {
+            NSLog(@"颜色不同");
+            return NO;
+        }
     }
-    else
-    {
-        NSLog(@"颜色不同");
-        return NO;
+    
+    +(void) showCallPopupWithTelNo:(NSString *) telNo inViewController:(UIViewController*) viewController{
+        PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@"拨打平台电话"
+                                                        message:telNo
+                                                          image:nil
+                                                buttonAlignment:UILayoutConstraintAxisHorizontal
+                                                transitionStyle:PopupDialogTransitionStyleBounceUp
+                                               gestureDismissal:YES
+                                                     completion:nil];
+        
+        PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
+        
+        popupViewController.titleColor = [ColorContants userNameFontColor];
+        popupViewController.titleFont = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+        
+        popupViewController.messageColor = [ColorContants kitingFontColor];
+        popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:13];
+        
+        
+        CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{
+            [popup dismiss:^{
+                
+            }];
+        }];
+        
+        cancel.titleColor = popupViewController.titleColor;
+        
+        DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"拨打" height:50 dismissOnTap:NO action:^{
+            NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",telNo];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+            [popup dismiss:^{
+                
+            }];
+        }];
+        
+        ok.titleColor = popupViewController.titleColor;
+        
+        [popup addButtons: @[ok, cancel]];
+        
+        [viewController presentViewController:popup animated:YES completion:nil];
+        
     }
-}
-@end
+    
+    @end

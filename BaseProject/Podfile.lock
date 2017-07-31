@@ -27,6 +27,7 @@ PODS:
   - IQKeyboardManager (4.0.9)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
+  - PopupDialog (0.5.4)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - IQKeyboardManager
   - Masonry
   - MBProgressHUD
+  - PopupDialog (~> 0.5)
   - SDWebImage
   - YYKit
 
@@ -56,9 +58,10 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 322c7405df3eb5f7e50dede32ea937bf3d4364e0
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 25c3c6404a002102142ffd6e80712a4df48f1df6
+PODFILE CHECKSUM: fb438c80bf7e1393454974f32543eb16baa9df69
 
 COCOAPODS: 1.2.1.beta.1

@@ -10,6 +10,7 @@
 #import "HomeViewController.h"
 #import "TBNavigationController.h"
 #import "TempViewController.h"
+#import <IQKeyboardManager/IQKeyboardManager.h>
 @interface AppDelegate ()
 
 @end
@@ -30,7 +31,8 @@
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [UINavigationBar appearance].shadowImage = [UIImage new];
-    
+    [IQKeyboardManager sharedManager].enable = YES;
+
     return YES;
 }
 
