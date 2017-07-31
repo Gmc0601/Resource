@@ -17,6 +17,7 @@
 #import "RecycleDetailViewController.h"
 #import "IntegalViewController.h"
 #import "PublicClass.h"
+#import "RegisterInfoViewController.h"
 
 @interface HomeViewController ()
     @property(retain,atomic) NSMutableArray *models;
@@ -32,7 +33,7 @@
     [super viewDidLoad];
     _models = [NSMutableArray arrayWithCapacity:0];
     [self addCollectionView];
-    [self addCallButton];
+    [PublicClass addCallButtonInViewContrller:self];
     GoodsCategoryModel *model1 = [GoodsCategoryModel new];
     model1.name = @"废纸";
     [_models addObject:model1];
@@ -74,6 +75,12 @@
     model10.name = @"汽车";
     [_models addObject:model10];
 }
+
+-(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+}
     
     //-(void) viewWillAppear:(BOOL)animated{
     //    [super viewWillAppear:animated];
@@ -85,27 +92,6 @@
     //    self.navigationController.navigationBar.hidden = NO;
     //}
     
--(void) addCallButton{
-    UIButton *btnShowCall = [[UIButton alloc] init];
-    [btnShowCall setImage:[UIImage imageNamed:@"icon_nav_dh"] forState:UIControlStateNormal];
-    [btnShowCall addTarget:self action:@selector(showCallView) forControlEvents:UIControlEventTouchUpInside];
-    [btnShowCall setTitle:@"平台" forState:UIControlStateNormal];
-    [btnShowCall setTitleColor:[ColorContants userNameFontColor] forState:UIControlStateNormal];
-    btnShowCall.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
-    btnShowCall.titleLabel.textAlignment = NSTextAlignmentCenter;
-    btnShowCall.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    btnShowCall.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-    btnShowCall.imageEdgeInsets = UIEdgeInsetsMake(0, 0, SizeHeight(20), SizeWidth(-40));
-    btnShowCall.contentEdgeInsets = UIEdgeInsetsMake(0, SizeWidth(-20), SizeHeight(5), 0);
-    [self.view addSubview:btnShowCall];
-    
-    [btnShowCall mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.view.mas_right).offset(SizeWidth(-30));
-        make.bottom.equalTo(self.view.mas_bottom).offset(SizeHeight(-45));
-        make.height.equalTo(@(SizeHeight(52)));
-        make.width.equalTo(@(SizeWidth(52)));
-    }];
-}
     
 #pragma UICollection Delegate
     
@@ -263,7 +249,7 @@
     
     UIButton *btnSetting = [[UIButton alloc] init];
     [btnSetting setBackgroundImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
-    [btnSetting addTarget:self action:@selector(tapMessageButton) forControlEvents:UIControlEventTouchUpInside];
+    [btnSetting addTarget:self action:@selector(tapSettingButton) forControlEvents:UIControlEventTouchUpInside];
     
     [headerView addSubview:btnSetting];
     [btnSetting mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -386,7 +372,8 @@
 }
     
 -(void) tapSettingButton{
-    
+    RegisterInfoViewController *newViewContrller = [RegisterInfoViewController new];
+    [self.navigationController pushViewController:newViewContrller animated:YES];
 }
     
 -(void) tapCheckButton{

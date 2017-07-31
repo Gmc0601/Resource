@@ -118,6 +118,7 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forBarMetrics:UIBarMetricsDefault];
 }
+
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     

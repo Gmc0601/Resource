@@ -9,6 +9,7 @@
 #import "PublicClass.h"
 #import <PopupDialog/PopupDialog-Swift.h>
 #import "Constants.h"
+#import <Masonry/Masonry.h>
 
 @implementation PublicClass
 + (UIButton *)setRightTitleOnTargetNav:(id)controller action:(SEL)action Title:(NSString *)title{
@@ -46,7 +47,7 @@
     
     return theImage;
 }
-    //中间文字
+//中间文字
 + (UILabel *)seTitleViewOnTargetNav:(id)controller UIFont:(UIFont *)font title:(NSString *)title textColor:(UIColor *)color{
     UILabel * lab = [[UILabel alloc]init];
     lab.text = title;
@@ -57,59 +58,81 @@
     return lab;
 }
 +(BOOL)firstColor:(UIColor*)firstColor secondColor:(UIColor*)secondColor
+{
+    if (CGColorEqualToColor(firstColor.CGColor, secondColor.CGColor))
     {
-        if (CGColorEqualToColor(firstColor.CGColor, secondColor.CGColor))
-        {
-            NSLog(@"颜色相同");
-            return YES;
-        }
-        else
-        {
-            NSLog(@"颜色不同");
-            return NO;
-        }
+        NSLog(@"颜色相同");
+        return YES;
     }
-    
-    +(void) showCallPopupWithTelNo:(NSString *) telNo inViewController:(UIViewController*) viewController{
-        PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@"拨打平台电话"
-                                                        message:telNo
-                                                          image:nil
-                                                buttonAlignment:UILayoutConstraintAxisHorizontal
-                                                transitionStyle:PopupDialogTransitionStyleBounceUp
-                                               gestureDismissal:YES
-                                                     completion:nil];
-        
-        PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
-        
-        popupViewController.titleColor = [ColorContants userNameFontColor];
-        popupViewController.titleFont = [UIFont fontWithName:[FontConstrants pingFang] size:15];
-        
-        popupViewController.messageColor = [ColorContants kitingFontColor];
-        popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:13];
-        
-        
-        CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{
-            [popup dismiss:^{
-                
-            }];
-        }];
-        
-        cancel.titleColor = popupViewController.titleColor;
-        
-        DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"拨打" height:50 dismissOnTap:NO action:^{
-            NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",telNo];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-            [popup dismiss:^{
-                
-            }];
-        }];
-        
-        ok.titleColor = popupViewController.titleColor;
-        
-        [popup addButtons: @[ok, cancel]];
-        
-        [viewController presentViewController:popup animated:YES completion:nil];
-        
+    else
+    {
+        NSLog(@"颜色不同");
+        return NO;
     }
+}
+
++(void) addCallButtonInViewContrller:(UIViewController *) viewController{
+    UIButton *btnShowCall = [[UIButton alloc] init];
+    [btnShowCall setImage:[UIImage imageNamed:@"icon_nav_dh"] forState:UIControlStateNormal];
     
-    @end
+    [btnShowCall addTarget:viewController action:@selector(showCallView) forControlEvents:UIControlEventTouchUpInside];
+    [btnShowCall setTitle:@"平台" forState:UIControlStateNormal];
+    [btnShowCall setTitleColor:[ColorContants userNameFontColor] forState:UIControlStateNormal];
+    btnShowCall.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
+    btnShowCall.titleLabel.textAlignment = NSTextAlignmentCenter;
+    btnShowCall.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    btnShowCall.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+    btnShowCall.imageEdgeInsets = UIEdgeInsetsMake(0, 0, SizeHeight(20), SizeWidth(-40));
+    btnShowCall.contentEdgeInsets = UIEdgeInsetsMake(0, SizeWidth(-20), SizeHeight(5), 0);
+    [viewController.view addSubview:btnShowCall];
+    
+    [btnShowCall mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(viewController.view.mas_right).offset(SizeWidth(-30));
+        make.bottom.equalTo(viewController.view.mas_bottom).offset(SizeHeight(-45));
+        make.height.equalTo(@(SizeHeight(52)));
+        make.width.equalTo(@(SizeWidth(52)));
+    }];
+}
+
++(void) showCallPopupWithTelNo:(NSString *) telNo inViewController:(UIViewController*) viewController{
+    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@"拨打平台电话"
+                                                    message:telNo
+                                                      image:nil
+                                            buttonAlignment:UILayoutConstraintAxisHorizontal
+                                            transitionStyle:PopupDialogTransitionStyleBounceUp
+                                           gestureDismissal:YES
+                                                 completion:nil];
+    
+    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
+    
+    popupViewController.titleColor = [ColorContants userNameFontColor];
+    popupViewController.titleFont = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    
+    popupViewController.messageColor = [ColorContants kitingFontColor];
+    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:13];
+    
+    
+    CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{
+        [popup dismiss:^{
+            
+        }];
+    }];
+    
+    cancel.titleColor = popupViewController.titleColor;
+    
+    DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"拨打" height:50 dismissOnTap:NO action:^{
+        NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",telNo];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+        [popup dismiss:^{
+            
+        }];
+    }];
+    
+    ok.titleColor = popupViewController.titleColor;
+    
+    [popup addButtons: @[ok, cancel]];
+    
+    [viewController presentViewController:popup animated:YES completion:nil];
+}
+
+@end

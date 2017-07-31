@@ -99,6 +99,7 @@
 		6B12E48E1F2B8D45008C4A3F /* IntegralHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E48D1F2B8D45008C4A3F /* IntegralHeaderCell.m */; };
 		6B12E4911F2B941F008C4A3F /* IntegralRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4901F2B941F008C4A3F /* IntegralRecordModel.m */; };
 		6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */; };
+		6B88760E1F2F68BE00EF5E4F /* RegisterInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B88760D1F2F68BE00EF5E4F /* RegisterInfoViewController.m */; };
 		6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */; };
 		6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D8B1F29E02400F413F2 /* GoodsCategoryModel.m */; };
 		6BB129861F24F696004D9A24 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB129851F24F696004D9A24 /* UserModel.m */; };
@@ -304,6 +305,8 @@
 		6B12E4901F2B941F008C4A3F /* IntegralRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegralRecordModel.m; sourceTree = "<group>"; };
 		6B5900051F2A4C7100874676 /* RecycleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecycleDetailViewController.h; sourceTree = "<group>"; };
 		6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecycleDetailViewController.m; sourceTree = "<group>"; };
+		6B88760C1F2F68BE00EF5E4F /* RegisterInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterInfoViewController.h; sourceTree = "<group>"; };
+		6B88760D1F2F68BE00EF5E4F /* RegisterInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterInfoViewController.m; sourceTree = "<group>"; };
 		6B8F8D871F29BCEF00F413F2 /* GoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoodsModel.h; path = BaseProject/Classes/Collection/Views/GoodsModel.h; sourceTree = SOURCE_ROOT; };
 		6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoodsModel.m; path = BaseProject/Classes/Collection/Views/GoodsModel.m; sourceTree = SOURCE_ROOT; };
 		6B8F8D8A1F29E02400F413F2 /* GoodsCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsCategoryModel.h; sourceTree = "<group>"; };
@@ -403,6 +406,7 @@
 		4295583D1F248A6E000B2BB2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6B88760B1F2F688C00EF5E4F /* register */,
 				6B0166371F2DB17E002071E2 /* Integral */,
 				6BBCE7DC1F262F0F006B6DA4 /* HomeViewController.h */,
 				6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */,
@@ -776,6 +780,15 @@
 			name = Integral;
 			sourceTree = "<group>";
 		};
+		6B88760B1F2F688C00EF5E4F /* register */ = {
+			isa = PBXGroup;
+			children = (
+				6B88760C1F2F68BE00EF5E4F /* RegisterInfoViewController.h */,
+				6B88760D1F2F68BE00EF5E4F /* RegisterInfoViewController.m */,
+			);
+			name = register;
+			sourceTree = "<group>";
+		};
 		6BBCE7DF1F2630DB006B6DA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1033,6 +1046,7 @@
 				42C84EFF1EF2E97D0008189D /* NSMutableArray+Category.m in Sources */,
 				6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */,
 				6BB129861F24F696004D9A24 /* UserModel.m in Sources */,
+				6B88760E1F2F68BE00EF5E4F /* RegisterInfoViewController.m in Sources */,
 				6B0166001F2CEEB7002071E2 /* KitingCell.m in Sources */,
 				42C84F0F1EF2E97D0008189D /* UIView+BGFrame.m in Sources */,
 				429558261F248874000B2BB2 /* BaseTableView.m in Sources */,
