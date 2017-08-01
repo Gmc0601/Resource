@@ -9,6 +9,7 @@
 #import "RegisterInfoViewController.h"
 #import "NSString+Category.h"
 #import "LocationViewController.h"
+#import "RegisterResultViewController.h"
 
 @interface RegisterInfoViewController ()
 @property(retain,atomic) UITextField *txtName;
@@ -262,7 +263,8 @@
 }
 
 -(void) tapConfirmButton{
-    
+    RegisterResultViewController *newVC = [RegisterResultViewController new];
+    [self.navigationController pushViewController:newVC animated:YES];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "BankCarInfoViewController.h"
+#import "RegisterResultViewController.h"
 
 @interface BankCarInfoViewController ()
 @property(retain,atomic) UITextField *txtUserName;

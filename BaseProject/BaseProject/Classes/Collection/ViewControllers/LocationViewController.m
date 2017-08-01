@@ -10,11 +10,19 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
+#import "LocationCell.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
-@interface LocationViewController()<CLLocationManagerDelegate,UIAlertViewDelegate,AMapSearchDelegate>
+@interface LocationViewController()<CLLocationManagerDelegate,
+UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property(retain,atomic) AMapSearchAPI *search;
 @property(retain,atomic) AMapPOIAroundSearchRequest *request;
+@property(retain,atomic) NSMutableArray *orginalDataSource;
+@property(retain,atomic) NSMutableArray *dataSource;
+@property(retain,atomic) UITableView *tb;
+@property(retain,atomic) UIView *header;
+@property(retain,atomic) UITextField *txtKeyword;
 @end
 
 @implementation LocationViewController
@@ -25,11 +33,132 @@
     [AMapServices sharedServices].apiKey = API_KEY;
     _search = [[AMapSearchAPI alloc] init];
     _search.delegate = self;
+    _orginalDataSource =[NSMutableArray arrayWithCapacity:0];
+    [self addHeaderView];
 }
 
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self initLocation];
+}
+
+-(void) addHeaderView{
+    _header = [UIView new];
+    _header.backgroundColor = [ColorContants gray];
+    [self.view addSubview:_header];
+    
+    [_header mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset([self getNavBarHeight]);
+        make.right.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.height.equalTo(@(SizeHeight(96/2)));
+    }];
+    
+    UIFont *placeHolderFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
+    UIColor *placeHolderColor = [ColorContants integralWhereFontColor];
+    UIFont *font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+    UIColor *color = [ColorContants userNameFontColor];
+    
+    _txtKeyword = [UITextField new];
+    _txtKeyword.font = font;
+    _txtKeyword.textColor = color;
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    style.alignment = NSTextAlignmentCenter;
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:@"搜索附近位置" attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont,
+                                                                                                 NSParagraphStyleAttributeName:style}];
+    _txtKeyword.attributedPlaceholder = str;
+    _txtKeyword.backgroundColor = [UIColor whiteColor];
+    
+    [_header addSubview:_txtKeyword];
+    [_txtKeyword mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_header.mas_centerY);
+        make.left.equalTo(_header.mas_left).offset(SizeWidth(16));
+        make.width.equalTo(@(SizeWidth(574/2)));
+        make.height.equalTo(@(SizeHeight(56/2)));
+    }];
+    
+    UIButton *btnSearch = [[UIButton alloc] init];
+    btnSearch.backgroundColor = [ColorContants BlueFontColor];
+    btnSearch.layer.cornerRadius = SizeHeight(3);
+    [btnSearch setTitle:@"搜索" forState:UIControlStateNormal];
+    [btnSearch setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forState:UIControlStateNormal];
+    [btnSearch setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
+    btnSearch.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
+    
+    [btnSearch addTarget:self action:@selector(tapSearchButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_header addSubview:btnSearch];
+    [btnSearch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_header.mas_centerY);
+        make.left.equalTo(_txtKeyword.mas_right).offset(SizeWidth(8));
+        make.width.equalTo(@(SizeWidth(96/2)));
+        make.height.equalTo(@(SizeHeight(56/2)));
+    }];
+}
+
+-(void) addTableView{
+    _tb = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tb.backgroundColor = [UIColor whiteColor];
+    _tb.separatorColor = [ColorContants integralSeperatorColor];
+    [_tb registerClass:[LocationCell class] forCellReuseIdentifier:@"LocationCell"];
+    [_tb registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    _tb.allowsSelection = NO;
+    _tb.clipsToBounds=YES;
+    _tb.dataSource = self;
+    _tb.delegate = self;
+    _tb.tableFooterView = [UIView new];
+    
+    [self.view addSubview:_tb];
+    
+    [_tb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_header.mas_bottom);
+        make.left.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.right.equalTo(self.view);
+    }];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_dataSource.count == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        
+        UILabel *lblMsg = [[UILabel alloc]init];
+        lblMsg.textColor = [ColorContants phoneNumerFontColor];
+        lblMsg.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
+        lblMsg.textAlignment = NSTextAlignmentCenter;
+        lblMsg.text = @"没有找到该位置，请重新搜索";
+        [cell addSubview:lblMsg];
+        
+        [lblMsg mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(cell.mas_centerX);
+            make.centerY.equalTo(cell.mas_centerY).offset(SizeHeight(-50));
+            make.height.equalTo(@(SizeHeight(15)));
+            make.width.equalTo(@(SizeWidth(250)));
+        }];
+        return cell;
+    }else{
+        LocationCell *cell = (LocationCell *)[tableView dequeueReusableCellWithIdentifier:@"LocationCell"];
+        AMapPOI *p = _dataSource[indexPath.row];
+        cell.name = p.name;
+        cell.address = p.address;
+        
+        return cell;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_dataSource.count == 0) {
+        return 1;
+    }
+    return  _dataSource.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_dataSource.count == 0) {
+        return CGRectGetHeight(tableView.bounds);
+    }
+    return  SizeHeight(52);
 }
 
 -(void)initLocation{
@@ -47,12 +176,13 @@
         [alertView show];
     }else{
         [_locationManager startUpdatingLocation];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
 }
 
--(void) viewDidDisappear:(BOOL)animated{
-    [self viewDidDisappear:animated];
-    //    [_locationManager stopUpdatingLocation];
+-(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [_locationManager stopUpdatingLocation];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -80,14 +210,29 @@
 
 - (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response
 {
-    if (response.pois.count == 0)
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if (response.pois.count != 0)
     {
-        return;
+        for (AMapPOI *p in response.pois) {
+            [_dataSource addObject:p];
+        }
     }
     
-    for (AMapPOI *p in response.pois) {
-        NSLog(@"%@",p.address);
+    _dataSource = _orginalDataSource;
+    if (_tb == nil) {
+        [self addTableView];
     }
+    
+    [_tb reloadData];
+}
+
+-(void) tapSearchButton{
+    _dataSource = _orginalDataSource;
+    NSString *keyword = _txtKeyword.text;
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"name CONTAINS %@ || address CONTAINS %@",keyword,keyword]];
+    
+    [_dataSource filterUsingPredicate:predicate];
+    [_tb reloadData];
 }
 
 @end

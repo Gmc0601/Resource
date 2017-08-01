@@ -107,6 +107,8 @@
 		6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7E51F26437F006B6DA4 /* Constants.m */; };
 		6BE806651F30170F005133C8 /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE806641F30170F005133C8 /* LocationHelper.m */; };
 		6BE806681F301ADD005133C8 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE806671F301ADD005133C8 /* LocationViewController.m */; };
+		6BFE65661F30BE9100EC4B40 /* LocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE65651F30BE9100EC4B40 /* LocationCell.m */; };
+		6BFE65691F30D2D600EC4B40 /* RegisterResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE65681F30D2D600EC4B40 /* RegisterResultViewController.m */; };
 		B93E0916E8B66730A11BDE29 /* Pods_BaseProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24806B1609D8B88C3B3A80FA /* Pods_BaseProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -324,6 +326,10 @@
 		6BE806661F301ADD005133C8 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		6BE806671F301ADD005133C8 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		6BE806D31F30324F005133C8 /* MAMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MAMapKit.framework; path = BaseProject/Classes/Collection/ViewControllers/Loaction/Class/MAMapKit.framework; sourceTree = "<group>"; };
+		6BFE65641F30BE9100EC4B40 /* LocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationCell.h; sourceTree = "<group>"; };
+		6BFE65651F30BE9100EC4B40 /* LocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationCell.m; sourceTree = "<group>"; };
+		6BFE65671F30D2D600EC4B40 /* RegisterResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterResultViewController.h; sourceTree = "<group>"; };
+		6BFE65681F30D2D600EC4B40 /* RegisterResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterResultViewController.m; sourceTree = "<group>"; };
 		A2BC379B4929E517CCEBBD81 /* Pods-BaseProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.release.xcconfig"; sourceTree = "<group>"; };
 		F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -796,6 +802,8 @@
 				6B88760D1F2F68BE00EF5E4F /* RegisterInfoViewController.m */,
 				6BE806661F301ADD005133C8 /* LocationViewController.h */,
 				6BE806671F301ADD005133C8 /* LocationViewController.m */,
+				6BFE65671F30D2D600EC4B40 /* RegisterResultViewController.h */,
+				6BFE65681F30D2D600EC4B40 /* RegisterResultViewController.m */,
 			);
 			name = register;
 			sourceTree = "<group>";
@@ -815,6 +823,8 @@
 				6B0166391F2DB208002071E2 /* KitingGoodCell.m */,
 				6B01663E1F2E39A7002071E2 /* KitingGoodsRecordCell.h */,
 				6B01663F1F2E39A7002071E2 /* KitingGoodsRecordCell.m */,
+				6BFE65641F30BE9100EC4B40 /* LocationCell.h */,
+				6BFE65651F30BE9100EC4B40 /* LocationCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1044,6 +1054,7 @@
 				42C84F101EF2E97D0008189D /* UIView+Category.m in Sources */,
 				6B01662B1F2DB03C002071E2 /* NearbyTableViewCell.m in Sources */,
 				42C84F0C1EF2E97D0008189D /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
+				6BFE65661F30BE9100EC4B40 /* LocationCell.m in Sources */,
 				6B0166231F2DB03C002071E2 /* AboutUsViewController.m in Sources */,
 				42C84F061EF2E97D0008189D /* NSTimer+Category.m in Sources */,
 				6B0166261F2DB03C002071E2 /* CDZPickerComponentObject.m in Sources */,
@@ -1057,6 +1068,7 @@
 				42C84EFF1EF2E97D0008189D /* NSMutableArray+Category.m in Sources */,
 				6BE806681F301ADD005133C8 /* LocationViewController.m in Sources */,
 				6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */,
+				6BFE65691F30D2D600EC4B40 /* RegisterResultViewController.m in Sources */,
 				6BB129861F24F696004D9A24 /* UserModel.m in Sources */,
 				6B88760E1F2F68BE00EF5E4F /* RegisterInfoViewController.m in Sources */,
 				6B0166001F2CEEB7002071E2 /* KitingCell.m in Sources */,
