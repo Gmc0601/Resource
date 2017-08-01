@@ -37,38 +37,47 @@
 }
 
 -(void) addSubviews{
+    UIImageView *bImg = [[UIImageView alloc] initWithFrame:self.bounds];
+    bImg.image = [UIImage imageNamed:@"bg_jfdh_sp.png"];
+    [self addSubview:bImg];
+    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - 3.5)];
+    backView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:backView];
+
+    
     _img = [UIImageView new];
     _img.backgroundColor = [UIColor redColor];
-    [self addSubview:_img];
+    [backView addSubview:_img];
     
     [_img mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SizeHeight(10));
-        make.left.equalTo(self.mas_left);
-        make.right.equalTo(self.mas_right);
+        make.top.equalTo(backView.mas_top).offset(SizeHeight(10));
+        make.left.equalTo(backView.mas_left);
+        make.right.equalTo(backView.mas_right);
         make.height.equalTo(@(SizeHeight(111)));
     }];
     
     _lblGoodsName = [[UILabel alloc] init];
     _lblGoodsName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
     _lblGoodsName.textColor = [ColorContants userNameFontColor];
-    [self addSubview:_lblGoodsName];
+    [backView addSubview:_lblGoodsName];
     
     [_lblGoodsName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_img.mas_bottom).offset(SizeHeight(11));
-        make.left.equalTo(self.mas_left).offset(SizeWidth(10));
-        make.right.equalTo(self.mas_right);
+        make.left.equalTo(backView.mas_left).offset(SizeWidth(10));
+        make.right.equalTo(backView.mas_right);
         make.height.equalTo(@(SizeHeight(15)));
     }];
     
     _lblIntegral = [[UILabel alloc] init];
     _lblIntegral.font = [UIFont fontWithName:[FontConstrants pingFang] size:13];
     _lblIntegral.textColor = [ColorContants BlueFontColor];
-    [self addSubview:_lblIntegral];
+    [backView addSubview:_lblIntegral];
     
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_lblGoodsName.mas_bottom).offset(SizeHeight(11));
         make.left.equalTo(_lblGoodsName.mas_left);
-        make.right.equalTo(self.mas_right);
+        make.right.equalTo(backView.mas_right);
         make.height.equalTo(@(SizeHeight(13)));
     }];
 }
