@@ -13,6 +13,7 @@
 #import "ConfigModel.h"
 #import "MainApi.h"
 //#import "JumpFactory.h"
+#define API_KEY @"292c0fdfe3e1facb67a1e743303426bb"
 
 #define UIColorFromHex(s)  [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:1.0]
 

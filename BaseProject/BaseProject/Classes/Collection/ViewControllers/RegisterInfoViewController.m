@@ -8,13 +8,14 @@
 
 #import "RegisterInfoViewController.h"
 #import "NSString+Category.h"
+#import "LocationViewController.h"
 
 @interface RegisterInfoViewController ()
 @property(retain,atomic) UITextField *txtName;
 @property(retain,atomic) UITextField *txtTelNo;
 @property(retain,atomic) UITextField *txtCardId;
 @property(retain,atomic) UITextField *txtPointName;
-@property(retain,atomic) UITextField *txtAddress;
+@property(retain,atomic) UIButton *btnAddress;
 @property(retain,atomic) UITextField *txtDetailAddress;
 @property(retain,atomic) UIImage *imgCardFront;
 @property(retain,atomic) UIImage *imgCardBack;
@@ -58,14 +59,14 @@
     UILabel *lblPointAddress = [self addTitleLable:titleFont withTitleColor:titleColor with:@"收购点地址:" withTopView:border4];
     UIView *border5 = [self addBorder:lblPointAddress];
     
-    UILabel *lblDetailAddress = [self addTitleLable:titleFont withTitleColor:titleColor with:@"收购点详细地址:" withTopView:border5];
+    UILabel *lblDetailAddress = [self addTitleLable:titleFont withTitleColor:titleColor with:@"详细地址:" withTopView:border5];
     UIView *border6 = [self addBorder:lblDetailAddress];
     _txtName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入姓名" withLeftView:lblName];
 
     _txtTelNo = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入手机号" withLeftView:lblTelNo];
     _txtCardId = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入身份证号" withLeftView:lblCardId];
      _txtPointName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入收购点名称" withLeftView:lblPointName];
-     _txtAddress = [self addTextField:titleFont withTitleColor:titleColor with:@"单击选择" withLeftView:lblPointAddress];
+     _btnAddress = [self addLocationButton:lblPointAddress];
      _txtDetailAddress = [self addTextField:titleFont withTitleColor:titleColor with:@"例：16号楼234室" withLeftView:lblDetailAddress];
 
     UILabel *lblImageTitle = [self addTitleLable:titleFont withTitleColor:titleColor with:@"证件上传：" withTopView:border6];
@@ -147,8 +148,8 @@
     UIColor *placeHolderColor = [ColorContants integralWhereFontColor];
     
     UITextField *txt = [UITextField new];
-    txt.font = placeHolderFont;
-    txt.textColor = [ColorContants kitingFontColor];
+    txt.font = font;
+    txt.textColor = color;
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:text attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont}];
     txt.attributedPlaceholder = str;
     
@@ -156,7 +157,7 @@
     [txt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(leftView.mas_centerY);
         make.left.equalTo(leftView.mas_right).offset(SizeWidth(15));
-        make.right.equalTo(_superView.mas_right).offset(SizeWidth(15));
+        make.right.equalTo(_superView.mas_right).offset(SizeWidth(-15));
         make.height.equalTo(@(SizeHeight(15)));
     }];
     
@@ -208,6 +209,56 @@
     }];
     
     return background;
+}
+
+-(UIButton *) addLocationButton:(UIView *)leftView{
+    UIFont *placeHolderFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(14)];
+    UIColor *placeHolderColor = [ColorContants integralWhereFontColor];
+    
+    _btnAddress = [UIButton new];
+    [_btnAddress setImage:[UIImage imageNamed:@"fpxq_icon_dw"] forState:UIControlStateNormal];
+    _btnAddress.titleLabel.font = placeHolderFont;
+    [_btnAddress setTitleColor:placeHolderColor forState:UIControlStateNormal];
+    [_btnAddress setTitle:@"单击选择" forState:UIControlStateNormal];
+    [_btnAddress addTarget:self action:@selector(tapLocationButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_superView addSubview:_btnAddress];
+    [_btnAddress mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(leftView.mas_centerY);
+        make.left.equalTo(leftView.mas_right).offset(SizeWidth(15));
+        make.right.equalTo(_superView.mas_right).offset(SizeWidth(-16));
+        make.height.equalTo(@(SizeHeight(30)));
+    }];
+    
+    _btnAddress.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _btnAddress.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    _btnAddress.titleEdgeInsets = UIEdgeInsetsMake(0, SizeWidth(10), 0, 0);
+    
+    UIImageView *rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_gds"]];
+    [_btnAddress addSubview:rightView];
+    
+    [rightView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_btnAddress.mas_centerY);
+        make.right.equalTo(_btnAddress.mas_right);
+        make.height.equalTo(@(SizeHeight(14)));
+        make.width.equalTo(@(SizeWidth(7)));
+    }];
+    
+    return _btnAddress;
+}
+
+-(void) setLocationButtonTitle:(NSString *) title{
+    UIFont *titleFont = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    UIColor *titleColor = [ColorContants userNameFontColor];
+    
+    _btnAddress.titleLabel.font = titleFont;
+    [_btnAddress setTitleColor:titleColor forState:UIControlStateNormal];
+    [_btnAddress setTitle:@"单击选择" forState:UIControlStateNormal];
+}
+
+-(void) tapLocationButton{
+    LocationViewController *newViewCotroller = [LocationViewController new];
+    [self.navigationController pushViewController:newViewCotroller animated:YES];
 }
 
 -(void) tapConfirmButton{
