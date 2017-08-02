@@ -20,7 +20,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *thirdHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *thirdSepaHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *qqHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *personBTNHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logginBtnHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logginBtnTop;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logginBottomBtn;
 
 @end
 
@@ -29,13 +33,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self CreateUI];
+    self.personBTNHeight.constant = SizeHeight(29);
+    self.personBtnHeight.constant = SizeHeight(64);
+    self.sepaViewHeight.constant = SizeHeight(153);
+    self.thirdHeight.constant = SizeHeight(73);
+    self.thirdSepaHeight.constant = SizeHeight(83.5);
+    self.qqHeight.constant = SizeHeight(48);
     
-    self.personBtnHeight.constant = 64*kScreenH/667;
-    self.sepaViewHeight.constant = 153*kScreenH/667;
-    self.thirdHeight.constant = 73*kScreenH/667;
-    self.thirdSepaHeight.constant = 83.5*kScreenH/667;
-    self.qqHeight.constant = 48*kScreenH/667;
     
+     self.logginBtnHeight.constant = SizeHeight(44);
+     self.logginBtnTop.constant = SizeHeight(20);
+     self.logginBottomBtn.constant = SizeHeight(20);
     NSLog(@"%f", self.personBtnHeight.constant);
     // Do any additional setup after loading the view from its nib.
 }
@@ -48,11 +56,11 @@
 }
 
 - (void)CreateUI{
-    self.PersonBtn.layer.cornerRadius = 14.5;
+    self.PersonBtn.layer.cornerRadius = SizeHeight(14.5);
     self.PersonBtn.layer.borderWidth = 1;
     self.PersonBtn.layer.borderColor = UIColorFromHex(0x79b4f8).CGColor;
     
-    self.shopBtn.layer.cornerRadius = 14.5;
+    self.shopBtn.layer.cornerRadius = SizeHeight(14.5);
     self.shopBtn.layer.borderWidth = 1;
     self.shopBtn.layer.borderColor = UIColorFromHex(0xcccccc).CGColor;
     
@@ -60,7 +68,7 @@
     self.getCodeBtn.layer.borderWidth = 1;
     self.getCodeBtn.layer.borderColor = UIColorFromHex(0x79b4f8).CGColor;
     
-    self.loginBtn.layer.cornerRadius = 22;
+    self.loginBtn.layer.cornerRadius = SizeHeight(22);
 
 }
 
