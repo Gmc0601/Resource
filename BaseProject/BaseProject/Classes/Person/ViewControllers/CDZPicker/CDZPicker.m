@@ -31,8 +31,6 @@ static const int toolBarHeight = 44;
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UIView *containerView;
 
-@property (nonatomic, strong) UILabel *titleLabel;
-
 @end
 
 @implementation CDZPicker
@@ -121,8 +119,6 @@ static const int toolBarHeight = 44;
     [self.containerView addSubview:self.pickerView];
     [self.containerView addSubview:self.confirmButton];
     [self.containerView addSubview:self.cancelButton];
-    
-    [self.containerView addSubview:self.titleLabel];
     [self.pickerView selectRow:0 inComponent:0 animated:NO];
 }
 
@@ -227,7 +223,7 @@ static const int toolBarHeight = 44;
     //设置分割线的颜色
     for(UIView *singleLine in pickerView.subviews){
         if (singleLine.frame.size.height < 1){
-            singleLine.backgroundColor = [UIColor lightGrayColor];
+            singleLine.backgroundColor = [UIColor clearColor];
         }
     }
     //设置文字的属性
@@ -264,24 +260,13 @@ static const int toolBarHeight = 44;
 }
 
 
-- (UILabel*)titleLabel{
-    if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, kScreenW-160, 40)];
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.backgroundColor = RGBColor(245, 245, 245);
-        _titleLabel.text = @"切换身份";
-    }
-    return _titleLabel;
-}
-
 
 - (UIButton *)confirmButton{
     if (!_confirmButton) {
-        _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH -80, 0, 80, 40)];
+        _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH -70, 10, 40, 30)];
         _confirmButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
         [_confirmButton setTitle:@"确定" forState:UIControlStateNormal];
-        _confirmButton.backgroundColor = RGBColor(245, 245, 245);
-        [_confirmButton setTitleColor:UIColorFromHex(0x35a2f1) forState:UIControlStateNormal];
+        [_confirmButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         [_confirmButton addTarget:self action:@selector(confirm:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirmButton;
@@ -290,11 +275,10 @@ static const int toolBarHeight = 44;
 
 - (UIButton *)cancelButton{
     if (!_cancelButton) {
-        _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(30, 10, 40, 30)];
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
         [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        _cancelButton.backgroundColor = RGBColor(245, 245, 245);
-        [_cancelButton setTitleColor:UIColorFromHex(0x35a2f1) forState:UIControlStateNormal];
+        [_cancelButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         [_cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _cancelButton;

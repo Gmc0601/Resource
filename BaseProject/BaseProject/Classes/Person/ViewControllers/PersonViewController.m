@@ -24,6 +24,10 @@
 #import "GoodsListViewController.h"
 #import "CollectionViewController.h"
 #import "SettingViewController.h"
+
+#import "fixPhoneViewController.h"
+#import "PersonMessageViewController.h"
+#import "MessageViewController.h"
 @interface PersonViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UITableView *myTableView;
@@ -42,6 +46,8 @@
 @property(retain,atomic) UILabel *lblTelNumber;
 @property(retain,atomic) UICollectionView *collectionView;
 
+
+@property(retain,atomic) UIButton *avatarBtn;
 @end
 
 @implementation PersonViewController
@@ -232,15 +238,28 @@ NSString *identifier = @"cell";
     }];
     
     
-    _avatar  = [[UIImageView alloc] init];
-    _avatar.image = [UIImage imageNamed:@"mrtx144"];
-    [headerView addSubview:_avatar];
-    [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
+    _avatarBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_avatarBtn setBackgroundImage:[UIImage imageNamed:@"mrtx144"] forState:UIControlStateNormal];
+    [_avatarBtn addTarget:self action:@selector(pushPersonMessBtn) forControlEvents:UIControlEventTouchUpInside];
+//    _avatar.image = [UIImage imageNamed:@"mrtx144"];
+    [headerView addSubview:_avatarBtn];
+    [_avatarBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(header.mas_centerX).offset(0);
         make.bottom.equalTo(_lblName.mas_top).offset(SizeHeight(-36));
         make.width.equalTo(@(SizeWidth(72)));
         make.height.equalTo(@(SizeHeight(72)));
     }];
+    
+    
+//    _avatar  = [[UIImageView alloc] init];
+//    _avatar.image = [UIImage imageNamed:@"mrtx144"];
+//    [headerView addSubview:_avatar];
+//    [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(header.mas_centerX).offset(0);
+//        make.bottom.equalTo(_lblName.mas_top).offset(SizeHeight(-36));
+//        make.width.equalTo(@(SizeWidth(72)));
+//        make.height.equalTo(@(SizeHeight(72)));
+//    }];
     
     
     UIView *topView = [[UIView alloc] init];
@@ -384,7 +403,11 @@ NSString *identifier = @"cell";
 
 
 
-
+- (void)pushPersonMessBtn{
+    
+    PersonMessageViewController *personMessVC = [[PersonMessageViewController alloc ] init];
+    [self.navigationController pushViewController:personMessVC animated:YES];
+}
 
 
 
@@ -394,7 +417,10 @@ NSString *identifier = @"cell";
 }
 
 -(void) ClickMessageButton{
-
+    MessageViewController *personMessVC = [[MessageViewController alloc ] init];
+    [self.navigationController pushViewController:personMessVC animated:YES];
+//    fixPhoneViewController *fixVC = [[fixPhoneViewController alloc ] init];
+//    [self.navigationController pushViewController:fixVC animated:YES];
 }
 
 -(void) ClickSettingButton{
