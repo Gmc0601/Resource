@@ -10,13 +10,19 @@
 
 #import "HomeViewController.h"
 #import "TBNavigationController.h"
-
+#import "LoginViewController.h"
 @interface TempViewController ()
 
 @end
 
 @implementation TempViewController
 - (IBAction)tapPerson:(id)sender {
+    LoginViewController *logVC = [[LoginViewController alloc] init];
+    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:logVC];
+    //    LoginViewController *logVC = [[LoginViewController alloc] init];
+    //    [self.navigationController pushViewController:logVC animated:YES];
+    [self presentViewController:navc animated:YES completion:nil];
+    
 }
 
 - (IBAction)tapPoint:(id)sender {
