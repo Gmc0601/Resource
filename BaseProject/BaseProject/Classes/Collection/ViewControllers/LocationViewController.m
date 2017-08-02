@@ -29,7 +29,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setNavTitle:@"定位"];
     [AMapServices sharedServices].apiKey = API_KEY;
     _search = [[AMapSearchAPI alloc] init];
     _search.delegate = self;
@@ -214,7 +214,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
     if (response.pois.count != 0)
     {
         for (AMapPOI *p in response.pois) {
-            [_dataSource addObject:p];
+            [_orginalDataSource addObject:p];
         }
     }
     
@@ -227,11 +227,12 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 }
 
 -(void) tapSearchButton{
-    _dataSource = _orginalDataSource;
-    NSString *keyword = _txtKeyword.text;
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"name CONTAINS %@ || address CONTAINS %@",keyword,keyword]];
-    
-    [_dataSource filterUsingPredicate:predicate];
+    _dataSource = [NSMutableArray arrayWithCapacity:0];
+    for (AMapPOI *p in _orginalDataSource) {
+        if ([_txtKeyword.text isEqualToString:@""] ||[p.name containsString:_txtKeyword.text] || [p.address containsString:_txtKeyword.text]) {
+            [_dataSource addObject:p];
+        }
+    }
     [_tb reloadData];
 }
 

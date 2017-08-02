@@ -26,6 +26,9 @@
     @property(retain,atomic) UIImageView *avatar;
     @property(retain,atomic) UILabel *lblTelNumber;
     @property(retain,atomic) UICollectionView *collectionView;
+@property(retain,atomic) UIView *backgroundView;
+@property(retain,atomic) UIButton *btnMessage;
+@property(retain,atomic) UIButton *btnSetting;
     @end
 
 @implementation HomeViewController
@@ -33,6 +36,7 @@
     [super viewDidLoad];
     _models = [NSMutableArray arrayWithCapacity:0];
     [self addCollectionView];
+    [self addSubviews];
     [PublicClass addCallButtonInViewContrller:self];
     GoodsCategoryModel *model1 = [GoodsCategoryModel new];
     model1.name = @"废纸";
@@ -81,17 +85,38 @@
     
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 }
+
+-(void) addSubviews{
+    _backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetHeight(self.view.bounds), [self getNavBarHeight])];
+    _backgroundView.backgroundColor = [UIColor whiteColor];
+    _backgroundView.alpha  = 0;
+    [self.view addSubview:_backgroundView];
     
-    //-(void) viewWillAppear:(BOOL)animated{
-    //    [super viewWillAppear:animated];
-    //    [self.navigationController setNavigationBarHidden:YES];
-    //}
-    //
-    //-(void) viewWillDisappear:(BOOL)animated{
-    //    [super viewWillDisappear:animated];
-    //    self.navigationController.navigationBar.hidden = NO;
-    //}
+    _btnMessage = [[UIButton alloc] init];
+    [_btnMessage setBackgroundImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
+    [_btnMessage addTarget:self action:@selector(tapMessageButton) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.view  addSubview:_btnMessage];
+    [_btnMessage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view .mas_top).offset(SizeHeight(31.5));
+        make.leading.equalTo(self.view .mas_leading).offset(SizeWidth(16));
+        make.width.equalTo(@(SizeWidth(22)));
+        make.height.equalTo(@(SizeHeight(19)));
+    }];
+    
+    _btnSetting = [[UIButton alloc] init];
+    [_btnSetting setBackgroundImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
+    [_btnSetting addTarget:self action:@selector(tapSettingButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view  addSubview:_btnSetting];
+    [_btnSetting mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view .mas_top).offset(SizeHeight(30));
+        make.right.equalTo(self.view .mas_right).offset(SizeWidth(-16));
+        make.width.equalTo(@(SizeWidth(20.4)));
+        make.height.equalTo(@(SizeHeight(22)));
+    }];
+}
+
     
 #pragma UICollection Delegate
     
@@ -115,21 +140,21 @@
     //设置每个item垂直间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
     {
-        return 7;
+        return SizeHeight(7);
     }
     
     
 -(void) setCell:(UICollectionViewCell *)cell withMode:(GoodsModel *)model{
     int tag = 1001;
     //    cell.backgroundView = [UIImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
-    cell.backgroundColor = [UIColor blueColor];
+    cell.backgroundColor = [UIColor brownColor];
     UILabel *lblName = [cell viewWithTag:tag];
     
     cell.layer.cornerRadius = SizeHeight(5);
     
     if (lblName == nil) {
         lblName = [[UILabel alloc] init];
-        lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+        lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
         lblName.textColor = [ColorContants whiteFontColor];
         lblName.textAlignment = NSTextAlignmentCenter;
         lblName.tag = tag;
@@ -162,6 +187,7 @@
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.backgroundColor = [UIColor whiteColor];
+    ((UIScrollView *) _collectionView).delegate = self;
     
     [self.view addSubview:self.collectionView];
 }
@@ -182,15 +208,15 @@
             if (headerView.subviews.count == 0) {
                 UILabel *lblTitile = [[UILabel alloc] init];
                 lblTitile.text = @"回收商品种类";
-                lblTitile.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+                lblTitile.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
                 lblTitile.textColor = [ColorContants userNameFontColor];
                 headerView.backgroundColor = self.collectionView.backgroundColor;
                 [headerView addSubview:lblTitile];
                 
                 [lblTitile mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.equalTo(headerView.mas_left).offset(16);
-                    make.top.equalTo(headerView.mas_top).offset(15);
-                    make.bottom.equalTo(headerView.mas_bottom).offset(-15);
+                    make.left.equalTo(headerView.mas_left).offset(SizeWidth(16));
+                    make.top.equalTo(headerView.mas_top).offset(SizeHeight(15));
+                    make.bottom.equalTo(headerView.mas_bottom).offset(SizeHeight(-15));
                     make.right.equalTo(headerView.mas_right).offset(0);
                 }];
             }
@@ -203,7 +229,7 @@
     if (section == 0) {
         return CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
     }else{
-        return CGSizeMake(self.view.bounds.size.width, 40);;
+        return CGSizeMake(self.view.bounds.size.width, SizeHeight(40));;
     }
 }
     
@@ -235,40 +261,16 @@
     
     [headerView addSubview:header];
     
-    UIButton *btnMessage = [[UIButton alloc] init];
-    [btnMessage setBackgroundImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
-    [btnMessage addTarget:self action:@selector(tapMessageButton) forControlEvents:UIControlEventTouchUpInside];
-    
-    [headerView addSubview:btnMessage];
-    [btnMessage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_top).offset(SizeHeight(31.5));
-        make.leading.equalTo(headerView.mas_leading).offset(SizeWidth(16));
-        make.width.equalTo(@(SizeWidth(22)));
-        make.height.equalTo(@(SizeHeight(19)));
-    }];
-    
-    UIButton *btnSetting = [[UIButton alloc] init];
-    [btnSetting setBackgroundImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
-    [btnSetting addTarget:self action:@selector(tapSettingButton) forControlEvents:UIControlEventTouchUpInside];
-    
-    [headerView addSubview:btnSetting];
-    [btnSetting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_top).offset(SizeHeight(30));
-        make.right.equalTo(headerView.mas_right).offset(SizeWidth(-16));
-        make.width.equalTo(@(SizeWidth(20.4)));
-        make.height.equalTo(@(SizeHeight(22)));
-    }];
-    
     
     UIButton *btnCheck = [[UIButton alloc] init];
     [btnCheck setTitle:@"点击查看" forState:UIControlStateNormal];
     [btnCheck setTitleColor:[ColorContants orange] forState:UIControlStateNormal];
-    btnCheck.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:11];
+    btnCheck.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(11)];
     btnCheck.layer.borderColor = [ColorContants orange].CGColor;
     btnCheck.layer.borderWidth = 1;
     btnCheck.layer.cornerRadius = SizeHeight(9.5);
     
-    [btnCheck addTarget:self action:@selector(tapCheckButton) forControlEvents:UIControlEventTouchUpInside];
+    [btnCheck addTarget:self action:@selector(showIntegralDetail) forControlEvents:UIControlEventTouchUpInside];
     
     [headerView addSubview:btnCheck];
     [btnCheck mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -284,9 +286,9 @@
     _lblIntegral.userInteractionEnabled = YES;
     [headerView addSubview:_lblIntegral];
     
-    UITapGestureRecognizer *tapIntegral = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showIntegralDetail:)];
-    tapIntegral.numberOfTapsRequired = 1;
-    [_lblIntegral addGestureRecognizer:tapIntegral];
+//    UITapGestureRecognizer *tapIntegral = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showIntegralDetail:)];
+//    tapIntegral.numberOfTapsRequired = 1;
+//    [_lblIntegral addGestureRecognizer:tapIntegral];
     
     
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -303,7 +305,7 @@
     lblTag.layer.borderColor = [ColorContants red].CGColor;
     lblTag.layer.borderWidth = 1;
     lblTag.layer.cornerRadius = SizeHeight(7);
-    lblTag.font = [UIFont fontWithName:[FontConstrants pingFang] size:11];
+    lblTag.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(11)];
     [headerView addSubview:lblTag];
     
     [lblTag mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -318,7 +320,7 @@
     _lblTelNumber.text = @"18192061844";
     _lblTelNumber.textAlignment = NSTextAlignmentCenter;
     _lblTelNumber.textColor = [ColorContants phoneNumerFontColor];
-    _lblTelNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:13];
+    _lblTelNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:SizeWidth(13)];
     [headerView addSubview:_lblTelNumber];
     
     [_lblTelNumber mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -333,7 +335,7 @@
     _lblName.textAlignment = NSTextAlignmentCenter;
     
     _lblName.textColor = [ColorContants userNameFontColor];
-    _lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    _lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
     [headerView addSubview:_lblName];
     
     [_lblName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -357,8 +359,8 @@
 }
     
 -(void) setIntergral:(NSString *) strIntegral{
-    UIFont *font1 = [UIFont fontWithName:[FontConstrants helveticaNeue] size:15];
-    UIFont *font2 = [UIFont fontWithName:[FontConstrants pingFang] size:12];
+    UIFont *font1 = [UIFont fontWithName:[FontConstrants helveticaNeue] size:SizeWidth(15)];
+    UIFont *font2 = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
     _lblIntegral.attributedText = [NSMutableAttributedString attributeString:strIntegral prefixFont:font1 prefixColor:[ColorContants orange] suffixString:@" 积分" suffixFont:font2 suffixColor:[ColorContants orange] ];
     [_lblIntegral sizeToFit];
 }
@@ -384,9 +386,25 @@
     [PublicClass showCallPopupWithTelNo:@"400-800-2123" inViewController:self];
 }
     
--(void) showIntegralDetail:(UITapGestureRecognizer *) sender{
+-(void) showIntegralDetail{
     IntegalViewController *newViewController = [[IntegalViewController alloc] init];
     [self.navigationController pushViewController:newViewController animated:YES];
     
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if (scrollView.contentOffset.y > SizeHeight(60)) {
+        [UIView animateWithDuration:1 animations:^{
+            _backgroundView.alpha = 1;
+            [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zxh"] forState:UIControlStateNormal];
+            [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_szh"] forState:UIControlStateNormal];
+        }];
+    }else{
+        [UIView animateWithDuration:1 animations:^{
+            _backgroundView.alpha = 0;
+            [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
+            [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
+        }];
+    }
 }
     @end
