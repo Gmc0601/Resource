@@ -93,10 +93,9 @@
     [self addImagePickerWithTopView:border7 withCenterXOffSet:SizeWidth(pickMargin) withRemaindText:@"门面照片"];
     
     UIButton *btnConfirm = [[UIButton alloc] init];
-    btnConfirm.backgroundColor = [ColorContants BlueFontColor];
+    btnConfirm.backgroundColor = [ColorContants BlueButtonColor];
     btnConfirm.layer.cornerRadius = SizeHeight(3);
     [btnConfirm setTitle:@"提交" forState:UIControlStateNormal];
-    [btnConfirm setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forState:UIControlStateNormal];
     [btnConfirm setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
     btnConfirm.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:16];
     
@@ -195,7 +194,7 @@
     UIButton *btnUpload = [[UIButton alloc] init];
     btnUpload.layer.cornerRadius = SizeHeight(3);
     [btnUpload setTitle:@"上传" forState:UIControlStateNormal];
-    [btnUpload setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forState:UIControlStateNormal];
+    btnUpload.backgroundColor=[ColorContants BlueButtonColor];
     [btnUpload setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
     btnUpload.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
     

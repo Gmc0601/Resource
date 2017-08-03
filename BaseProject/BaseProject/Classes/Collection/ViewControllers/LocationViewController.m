@@ -78,10 +78,9 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
     }];
     
     UIButton *btnSearch = [[UIButton alloc] init];
-    btnSearch.backgroundColor = [ColorContants BlueFontColor];
+    btnSearch.backgroundColor = [ColorContants BlueButtonColor];
     btnSearch.layer.cornerRadius = SizeHeight(3);
     [btnSearch setTitle:@"搜索" forState:UIControlStateNormal];
-    [btnSearch setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forState:UIControlStateNormal];
     [btnSearch setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
     btnSearch.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
     

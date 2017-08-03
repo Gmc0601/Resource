@@ -40,7 +40,7 @@
     
     _lblType = [[UILabel alloc]init];
     _lblType.textColor = [ColorContants userNameFontColor];
-    _lblType.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    _lblType.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
     _lblType.textAlignment = NSTextAlignmentLeft;
     [self addSubview:_lblType];
     
@@ -53,7 +53,7 @@
     
     _lblSum = [[UILabel alloc]init];
     _lblSum.textColor = [ColorContants userNameFontColor];
-    _lblSum.font = [UIFont fontWithName:[FontConstrants pingFangBold] size:15];
+    _lblSum.font = [UIFont fontWithName:[FontConstrants pingFangBold] size:SizeWidth(15)];
     _lblSum.textAlignment = NSTextAlignmentRight;
     [self addSubview:_lblSum];
     
@@ -66,7 +66,7 @@
     
     _lblDate = [[UILabel alloc]init];
     _lblDate.textColor = [ColorContants phoneNumerFontColor];
-    _lblDate.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
+    _lblDate.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
     _lblDate.textAlignment = NSTextAlignmentLeft;
     [self addSubview:_lblDate];
     
@@ -79,7 +79,7 @@
     
     _lblSummery = [[UILabel alloc]init];
     _lblSummery.textColor = [ColorContants integralWhereFontColor];
-    _lblSummery.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
+    _lblSummery.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
     _lblSummery.textAlignment = NSTextAlignmentRight;
     [self addSubview:_lblSummery];
     

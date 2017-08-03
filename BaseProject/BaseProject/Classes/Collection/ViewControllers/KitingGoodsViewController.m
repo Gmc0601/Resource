@@ -12,7 +12,7 @@
 #import "KitingGoodCell.h"
 #import "PublicClass.h"
 #import "KitingGoodsRecordViewController.h"
-
+#import <PopupDialog/PopupDialog-Swift.h>
 @interface KitingGoodsViewController ()
 @property(retain,atomic) NSMutableArray *models;
 @property(retain,atomic) UILabel *lblIntergal;
@@ -93,7 +93,40 @@
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@""
+                                                    message:@"兑换会减掉相应的积分哟\n确定兑换码？"
+                                                      image:nil
+                                            buttonAlignment:UILayoutConstraintAxisHorizontal
+                                            transitionStyle:PopupDialogTransitionStyleBounceUp
+                                           gestureDismissal:YES
+                                                 completion:nil];
+
+    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
     
+    popupViewController.messageColor = [ColorContants userNameFontColor];
+    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+    
+    
+    CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{
+        [popup dismiss:^{
+            
+        }];
+    }];
+    
+    cancel.titleColor = popupViewController.titleColor;
+    
+    DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"确认" height:50 dismissOnTap:NO action:^{
+       //TODO:
+        [popup dismiss:^{
+            
+        }];
+    }];
+    
+    ok.titleColor = popupViewController.titleColor;
+    
+    [popup addButtons: @[cancel,ok]];
+    
+    [self presentViewController:popup animated:YES completion:nil];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -134,7 +167,7 @@
         header.backgroundColor = [UIColor whiteColor];
         UIView *subView = [UIView new];
         subView.backgroundColor = [ColorContants gray];
-        subView.layer.cornerRadius = SizeHeight(5);
+        subView.layer.cornerRadius = SizeHeight(3);
         [header addSubview:subView];
         
         [subView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -157,7 +190,7 @@
 
         
         UILabel *lblMsg = [[UILabel alloc] init];
-        lblMsg.font = [UIFont fontWithName:[FontConstrants pingFang] size:13];
+        lblMsg.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
         lblMsg.textColor = [ColorContants userNameFontColor];
         lblMsg.textAlignment = NSTextAlignmentRight;
         lblMsg.text = @"我的积分:";
@@ -171,7 +204,7 @@
         }];
         
         _lblIntergal = [[UILabel alloc] init];
-        _lblIntergal.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:18];
+        _lblIntergal.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:SizeWidth(18)];
         _lblIntergal.textColor = [ColorContants userNameFontColor];
         _lblIntergal.textAlignment = NSTextAlignmentLeft;
         _lblIntergal.text = @"1000";

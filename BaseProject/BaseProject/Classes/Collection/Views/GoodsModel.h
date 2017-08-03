@@ -12,4 +12,5 @@
 @property(retain,atomic) NSString *name;
 @property(retain,atomic) NSString *imgUrl;
 @property(retain,atomic) NSString *_id;
+@property(assign,nonatomic) CGFloat price;
 @end

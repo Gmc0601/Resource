@@ -28,6 +28,9 @@
 @end
 
 @implementation ColorContants
++(UIColor *) blueBackgroundColor{
+    return [UIColor colorWithHexString:@"#34a2f1"];
+}
 +(UIColor *) red{
     return [UIColor colorWithHexString:@"#f45d7a"];
 }
@@ -65,7 +68,15 @@
 }
 
 +(UIColor *) BlueFontColor{
-    return [UIColor colorWithHexString:@"#78b4f8"];
+    return [UIColor colorWithHexString:@"#78b4f7"];
+}
+
++(UIColor *) bankCardColor{
+    return [UIColor colorWithHexString:@"#79b4f8"];
+}
+
++(UIColor *) BlueButtonColor{
+    return [UIColor colorWithHexString:@"#369ff2"];
 }
 
 +(UIColor *) kitingFontColor{

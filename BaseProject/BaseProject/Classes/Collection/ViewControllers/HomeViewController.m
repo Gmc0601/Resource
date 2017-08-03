@@ -131,8 +131,30 @@
     return _models.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    [self setCell:cell withMode:_models[indexPath.row]];
+    UICollectionViewCell *cell;
+    if(indexPath.row != (_models.count - 1)){
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+        [self setCell:cell withMode:_models[indexPath.row]];
+    }else{
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"otherCell" forIndexPath:indexPath];
+        
+        cell.backgroundColor = [ColorContants gray];
+        UILabel *lblName = [[UILabel alloc] init];
+        lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+        lblName.textColor = [ColorContants otherFontColor];
+        lblName.textAlignment = NSTextAlignmentCenter;
+        lblName.text = @"其他";
+        [cell addSubview:lblName];
+
+        [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
+            CGFloat height = SizeHeight(15);
+            make.width.equalTo(cell.mas_width);
+            make.height.equalTo(@(height));
+            make.centerY.equalTo(cell.mas_centerY);
+            make.left.equalTo(cell.mas_left);
+        }];
+        
+    }
     return cell;
 }
     
@@ -180,6 +202,7 @@
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"otherCell"];
     [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header1"];
     
     [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2"];
@@ -252,6 +275,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     {
         RecycleDetailViewController *newViewController = [[RecycleDetailViewController alloc] init];
+        newViewController.model = _models[indexPath.row];
         [self.navigationController pushViewController:newViewController animated:YES];
     }
     
@@ -393,7 +417,15 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if (scrollView.contentOffset.y > SizeHeight(60)) {
+    [self changeBackground:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    [self changeBackground:scrollView];
+}
+
+-(void) changeBackground:(UIScrollView *) scrollView{
+    if (scrollView.contentOffset.y > SizeHeight(20)) {
         [UIView animateWithDuration:1 animations:^{
             _backgroundView.alpha = 1;
             [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zxh"] forState:UIControlStateNormal];

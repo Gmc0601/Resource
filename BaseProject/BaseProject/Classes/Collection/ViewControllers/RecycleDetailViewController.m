@@ -26,13 +26,23 @@
 @end
 
 @implementation RecycleDetailViewController
-//392
+
+@synthesize model = _model;
+-(void) setModel:(GoodsModel *)model{
+    [self setNavTitle:_model.name];
+    moneyLabel.text = [NSString stringWithFormat:@"￥%f", _model.price];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"废报纸";
     
     [self CreateUI];
     [PublicClass addCallButtonInViewContrller:self];
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [self viewWillAppear:animated];
 }
 
 
@@ -78,7 +88,6 @@
     [attString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:range];
     [attString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
     moneyLabel.attributedText = attString;
-    
     
     
     UILabel *unitLabel = [[UILabel alloc]init];

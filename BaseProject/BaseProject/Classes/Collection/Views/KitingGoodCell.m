@@ -58,7 +58,7 @@
     }];
     
     _lblGoodsName = [[UILabel alloc] init];
-    _lblGoodsName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    _lblGoodsName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
     _lblGoodsName.textColor = [ColorContants userNameFontColor];
     [backView addSubview:_lblGoodsName];
     
@@ -70,7 +70,7 @@
     }];
     
     _lblIntegral = [[UILabel alloc] init];
-    _lblIntegral.font = [UIFont fontWithName:[FontConstrants pingFang] size:13];
+    _lblIntegral.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
     _lblIntegral.textColor = [ColorContants BlueFontColor];
     [backView addSubview:_lblIntegral];
     

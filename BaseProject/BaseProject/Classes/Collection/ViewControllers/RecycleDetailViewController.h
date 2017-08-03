@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-
+#import "GoodsModel.h"
 @interface RecycleDetailViewController : BaseViewController
-
+@property(retain,nonatomic) GoodsModel *model;
 @end

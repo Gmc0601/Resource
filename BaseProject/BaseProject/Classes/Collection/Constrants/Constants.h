@@ -34,4 +34,7 @@
 +(UIColor *) kitingFontColor;
 +(UIColor *) integralWhereFontColor;
 +(UIColor *) integralSeperatorColor;
++(UIColor *) blueBackgroundColor;
++(UIColor *) BlueButtonColor;
++(UIColor *) bankCardColor;
 @end

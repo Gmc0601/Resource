@@ -35,28 +35,28 @@
     _models = [NSMutableArray arrayWithCapacity:0];
     
     KitingModel *model1 = [KitingModel new];
-    model1.money = @"100";
-    model1.integral = @"100";
+    model1.money = 102;
+    model1.integral = 100;
     [_models addObject:model1];
     
     KitingModel *model2 = [KitingModel new];
-    model2.money = @"100";
-    model2.integral = @"100";
+    model2.money = 102;
+    model2.integral = 102;
     [_models addObject:model2];
     
     KitingModel *model3 = [KitingModel new];
-    model3.money = @"100";
-    model3.integral = @"100";
+    model3.money = 102;
+    model3.integral = 102;
     [_models addObject:model3];
     
     KitingModel *model4 = [KitingModel new];
-    model4.money = @"100";
-    model4.integral = @"100";
+    model4.money = 102;
+    model4.integral = 102;
     [_models addObject:model4];
     
     KitingModel *model5 = [KitingModel new];
-    model5.money = @"100";
-    model5.integral = @"100";
+    model5.money = 102;
+    model5.integral = 102;
     [_models addObject:model5];
     
     
@@ -64,9 +64,8 @@
 
 -(void) addSubviews{
     UIButton *btnKiting = [[UIButton alloc] init];
-    btnKiting.backgroundColor = [ColorContants BlueFontColor];
+    btnKiting.backgroundColor = [ColorContants BlueButtonColor];
     [btnKiting setTitle:@"提现" forState:UIControlStateNormal];
-    [btnKiting setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forState:UIControlStateNormal];
     [btnKiting setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
     btnKiting.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:16];
     
@@ -265,11 +264,15 @@
 }
 
 -(void) tapKitingButton{
+    KitingModel *mode = _models[_selectIndex];
     
+    if (self.integral > mode.integral) {
+        
+    }
 }
 
 -(void) setBankCard:(BankCardModel *) bankCard{
-    _bankCardView.backgroundColor = [ColorContants BlueFontColor];
+    _bankCardView.backgroundColor = [ColorContants bankCardColor];
     for (UIView *v in _bankCardView.subviews) {
         [v removeFromSuperview];
         [v setHidden:YES];

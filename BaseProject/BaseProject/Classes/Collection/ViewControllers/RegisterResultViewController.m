@@ -87,7 +87,7 @@
     UIButton *btnBack = [[UIButton alloc] init];
     btnBack.layer.cornerRadius = SizeHeight(5);
     [btnBack setTitle:@"重新注册" forState:UIControlStateNormal];
-    [btnBack setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forState:UIControlStateNormal];
+    btnBack.backgroundColor = [ColorContants BlueButtonColor];
     [btnBack setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
     btnBack.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeHeight(15)];
     
