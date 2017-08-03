@@ -28,6 +28,8 @@
 #import "fixPhoneViewController.h"
 #import "PersonMessageViewController.h"
 #import "MessageViewController.h"
+
+#import "MapViewController.h"
 @interface PersonViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UITableView *myTableView;
@@ -115,7 +117,7 @@ NSString *identifier = @"cell";
     [GoodsBtn setImage:[[UIImage imageNamed:@"icon_gds"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     GoodsBtn.backgroundColor = [UIColor whiteColor];
     [GoodsBtn setTitle:@"附近的回收点" forState:UIControlStateNormal];
-    [GoodsBtn addTarget:self action:@selector(calculateMoneyBtn) forControlEvents:UIControlEventTouchUpInside];;
+    [GoodsBtn addTarget:self action:@selector(calculateBtn) forControlEvents:UIControlEventTouchUpInside];;
     [headerView addSubview:GoodsBtn];
     [GoodsBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headerView.mas_left).offset(0);
@@ -204,7 +206,7 @@ NSString *identifier = @"cell";
     [lblTag mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(header.mas_centerX).offset(40);
         make.bottom.equalTo(header.mas_bottom).offset(SizeWidth(-18));
-        make.height.equalTo(@(SizeHeight(14)));
+        make.height.equalTo(@(SizeHeight(16)));
         make.width.equalTo(@(SizeWidth(44)));
         
     }];
@@ -319,8 +321,9 @@ NSString *identifier = @"cell";
 
 
 
-- (void)calculateMoneyBtn{
-    
+- (void)calculateBtn{
+    MapViewController *mapVC = [[MapViewController alloc] init];
+    [self.navigationController pushViewController:mapVC animated:YES];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
