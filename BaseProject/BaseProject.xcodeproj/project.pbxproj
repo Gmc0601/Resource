@@ -121,6 +121,7 @@
 		CA1A01FE1F31DA2500C88313 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA1A01E21F31DA2500C88313 /* MessageTableViewCell.xib */; };
 		CA1A01FF1F31DA2500C88313 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A01E41F31DA2500C88313 /* MessageViewController.m */; };
 		CA1A02001F31DA2500C88313 /* NewsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A01E61F31DA2500C88313 /* NewsWebViewController.m */; };
+		CA1A02031F31F34200C88313 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A02021F31F34200C88313 /* MapViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -360,6 +361,8 @@
 		CA1A01E41F31DA2500C88313 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		CA1A01E51F31DA2500C88313 /* NewsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsWebViewController.h; sourceTree = "<group>"; };
 		CA1A01E61F31DA2500C88313 /* NewsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsWebViewController.m; sourceTree = "<group>"; };
+		CA1A02011F31F34200C88313 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		CA1A02021F31F34200C88313 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -858,10 +861,10 @@
 		CA1A01B61F31DA2500C88313 /* setting */ = {
 			isa = PBXGroup;
 			children = (
+				CA1A01BA1F31DA2500C88313 /* CDZPicker */,
 				CA1A01B71F31DA2500C88313 /* AboutUsViewController.h */,
 				CA1A01B81F31DA2500C88313 /* AboutUsViewController.m */,
 				CA1A01B91F31DA2500C88313 /* AboutUsViewController.xib */,
-				CA1A01BA1F31DA2500C88313 /* CDZPicker */,
 				CA1A01BF1F31DA2500C88313 /* ProtocolViewController.h */,
 				CA1A01C01F31DA2500C88313 /* ProtocolViewController.m */,
 				CA1A01C11F31DA2500C88313 /* SettingViewController.h */,
@@ -898,6 +901,8 @@
 		CA1A01CB1F31DA2500C88313 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				CA1A01DD1F31DA2500C88313 /* PersonViewController.h */,
+				CA1A01DE1F31DA2500C88313 /* PersonViewController.m */,
 				CA1A01CC1F31DA2500C88313 /* AbandonGoodsViewController.h */,
 				CA1A01CD1F31DA2500C88313 /* AbandonGoodsViewController.m */,
 				CA1A01CE1F31DA2500C88313 /* CollectionViewController.h */,
@@ -915,8 +920,8 @@
 				CA1A01DA1F31DA2500C88313 /* NearbyTableViewCell.xib */,
 				CA1A01DB1F31DA2500C88313 /* PagegeCollectionViewCell.h */,
 				CA1A01DC1F31DA2500C88313 /* PagegeCollectionViewCell.m */,
-				CA1A01DD1F31DA2500C88313 /* PersonViewController.h */,
-				CA1A01DE1F31DA2500C88313 /* PersonViewController.m */,
+				CA1A02011F31F34200C88313 /* MapViewController.h */,
+				CA1A02021F31F34200C88313 /* MapViewController.m */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -1225,6 +1230,7 @@
 				6B0165F21F2C9098002071E2 /* TempViewController.m in Sources */,
 				6B12E4911F2B941F008C4A3F /* IntegralRecordModel.m in Sources */,
 				6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */,
+				CA1A02031F31F34200C88313 /* MapViewController.m in Sources */,
 				42C84F011EF2E97D0008189D /* NSMutableDictionary+Category.m in Sources */,
 				CA1A01FB1F31DA2500C88313 /* PagegeCollectionViewCell.m in Sources */,
 			);
