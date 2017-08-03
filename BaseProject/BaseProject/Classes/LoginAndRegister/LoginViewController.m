@@ -8,6 +8,8 @@
 
 #import "LoginViewController.h"
 #import "PersonViewController.h"
+
+#import <UMSocialCore/UMSocialCore.h>
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *PersonBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shopBtn;
@@ -38,7 +40,7 @@
     self.sepaViewHeight.constant = SizeHeight(153);
     self.thirdHeight.constant = SizeHeight(73);
     self.thirdSepaHeight.constant = SizeHeight(83.5);
-    self.qqHeight.constant = SizeHeight(48);
+    self.qqHeight.constant = SizeHeight(44);
     
     
      self.logginBtnHeight.constant = SizeHeight(44);
@@ -89,6 +91,67 @@
 
 }
 
+- (IBAction)weixinBtn:(id)sender {
+     [self getAuthWithUserInfoFromWechat];
+}
+
+- (IBAction)qqBtn:(id)sender {
+    [self getAuthWithUserInfoFromQQ];
+}
+
+- (void)getAuthWithUserInfoFromQQ
+{
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_QQ currentViewController:nil completion:^(id result, NSError *error) {
+        if (error) {
+            
+        } else {
+            UMSocialUserInfoResponse *resp = result;
+            
+            // 授权信息
+            NSLog(@"QQ uid: %@", resp.uid);
+            NSLog(@"QQ openid: %@", resp.openid);
+            NSLog(@"QQ unionid: %@", resp.unionId);
+            NSLog(@"QQ accessToken: %@", resp.accessToken);
+            NSLog(@"QQ expiration: %@", resp.expiration);
+            
+            // 用户信息
+            NSLog(@"QQ name: %@", resp.name);
+            NSLog(@"QQ iconurl: %@", resp.iconurl);
+            NSLog(@"QQ gender: %@", resp.unionGender);
+            
+            // 第三方平台SDK源数据
+            NSLog(@"QQ originalResponse: %@", resp.originalResponse);
+        }
+    }];
+}
 
 
+
+
+- (void)getAuthWithUserInfoFromWechat
+{
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
+        if (error) {
+            
+        } else {
+            UMSocialUserInfoResponse *resp = result;
+            
+            // 授权信息
+            NSLog(@"Wechat uid: %@", resp.uid);
+            NSLog(@"Wechat openid: %@", resp.openid);
+            NSLog(@"Wechat unionid: %@", resp.unionId);
+            NSLog(@"Wechat accessToken: %@", resp.accessToken);
+            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
+            NSLog(@"Wechat expiration: %@", resp.expiration);
+            
+            // 用户信息
+            NSLog(@"Wechat name: %@", resp.name);
+            NSLog(@"Wechat iconurl: %@", resp.iconurl);
+            NSLog(@"Wechat gender: %@", resp.unionGender);
+            
+            // 第三方平台SDK源数据
+            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+        }
+    }];
+}
 @end

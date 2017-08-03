@@ -173,6 +173,9 @@
                         <constraint firstAttribute="height" constant="18" id="vdX-fN-qoh"/>
                     </constraints>
                     <state key="normal" image="icon_wx"/>
+                    <connections>
+                        <action selector="weixinBtn:" destination="-1" eventType="touchUpInside" id="vpG-g1-Xr2"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFF-mY-Kw1">
                     <rect key="frame" x="278" y="592" width="21" height="22"/>
@@ -181,6 +184,9 @@
                         <constraint firstAttribute="height" constant="22" id="uaw-L3-aH2"/>
                     </constraints>
                     <state key="normal" image="icon_qq"/>
+                    <connections>
+                        <action selector="qqBtn:" destination="-1" eventType="touchUpInside" id="rhj-Wh-x89"/>
+                    </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_sjh" translatesAutoresizingMaskIntoConstraints="NO" id="sCK-ck-1yd">
                     <rect key="frame" x="43" y="282.5" width="10.5" height="16"/>
