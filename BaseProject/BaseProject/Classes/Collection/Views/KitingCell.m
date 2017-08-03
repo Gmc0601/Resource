@@ -20,8 +20,8 @@
 @synthesize model = _model;
 -(void) setModel:(KitingModel *)model{
     _model = model;
-    _lblMoney.text = [NSString stringWithFormat:@"兑换 ￥%@",_model.money];
-    _lblIntegral.text = [NSString stringWithFormat:@"积分 %@",_model.money];
+    _lblMoney.text = [NSString stringWithFormat:@"兑换 ￥%d",_model.money];
+    _lblIntegral.text = [NSString stringWithFormat:@"积分 %d",_model.money];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame

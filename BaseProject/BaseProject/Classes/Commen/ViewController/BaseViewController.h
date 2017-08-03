@@ -9,6 +9,7 @@
 #import <Masonry/Masonry.h>
 #import "UIColor+BGHexColor.h"
 #import "Constants.h"
+#import <PopupDialog/PopupDialog-Swift.h>
 @interface BaseViewController : UIViewController
 
 - (void)backAction;

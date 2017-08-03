@@ -86,6 +86,7 @@
 		6B88760E1F2F68BE00EF5E4F /* RegisterInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B88760D1F2F68BE00EF5E4F /* RegisterInfoViewController.m */; };
 		6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */; };
 		6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D8B1F29E02400F413F2 /* GoodsCategoryModel.m */; };
+		6B9E6C121F33216B00B387BE /* ImagePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9E6C111F33216B00B387BE /* ImagePickerView.m */; };
 		6BB129861F24F696004D9A24 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB129851F24F696004D9A24 /* UserModel.m */; };
 		6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */; };
 		6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7E51F26437F006B6DA4 /* Constants.m */; };
@@ -297,6 +298,8 @@
 		6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoodsModel.m; path = BaseProject/Classes/Collection/Views/GoodsModel.m; sourceTree = SOURCE_ROOT; };
 		6B8F8D8A1F29E02400F413F2 /* GoodsCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsCategoryModel.h; sourceTree = "<group>"; };
 		6B8F8D8B1F29E02400F413F2 /* GoodsCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsCategoryModel.m; sourceTree = "<group>"; };
+		6B9E6C101F33216B00B387BE /* ImagePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerView.h; sourceTree = "<group>"; };
+		6B9E6C111F33216B00B387BE /* ImagePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerView.m; sourceTree = "<group>"; };
 		6BB129841F24F696004D9A24 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		6BB129851F24F696004D9A24 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		6BBCE7DC1F262F0F006B6DA4 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -819,6 +822,8 @@
 				6B01663F1F2E39A7002071E2 /* KitingGoodsRecordCell.m */,
 				6BFE65641F30BE9100EC4B40 /* LocationCell.h */,
 				6BFE65651F30BE9100EC4B40 /* LocationCell.m */,
+				6B9E6C101F33216B00B387BE /* ImagePickerView.h */,
+				6B9E6C111F33216B00B387BE /* ImagePickerView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1208,6 +1213,7 @@
 				6B0166461F2E3EFC002071E2 /* SendIntegralViewController.m in Sources */,
 				6B01663D1F2E38CC002071E2 /* KitingGoodsRecordViewController.m in Sources */,
 				CA1A01EB1F31DA2500C88313 /* ProtocolViewController.m in Sources */,
+				6B9E6C121F33216B00B387BE /* ImagePickerView.m in Sources */,
 				42C84F0A1EF2E97D0008189D /* UIImage+Category.m in Sources */,
 				6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */,
 				CA1A01FD1F31DA2500C88313 /* MessageTableViewCell.m in Sources */,

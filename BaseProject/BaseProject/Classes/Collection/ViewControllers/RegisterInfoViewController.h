@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "ImagePickerView.h"
 
-@interface RegisterInfoViewController : BaseViewController
+@interface RegisterInfoViewController : BaseViewController<ImagePickerViewDelegate,UIImagePickerControllerDelegate>
 
 @end

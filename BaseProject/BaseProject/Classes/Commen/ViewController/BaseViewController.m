@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #include "FactorySet.h"
 #include "PublicClass.h"
-
+#import "ConfigModel.h"
 
 #define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
 #define ViewController_BackGround [UIColor colorWithRed:243.0/255.0 green:243.0/255.0 blue:243.0/255.0 alpha:1.0]//视图控制器背景颜色

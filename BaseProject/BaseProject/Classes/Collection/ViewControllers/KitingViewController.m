@@ -264,11 +264,46 @@
 }
 
 -(void) tapKitingButton{
-    KitingModel *mode = _models[_selectIndex];
-    
-    if (self.integral > mode.integral) {
-        
+    if (_selectIndex < 0) {
+        [ConfigModel mbProgressHUD:@"请选择要兑换的积分" andView:self.view];
+        return;
     }
+    
+    KitingModel *model = _models[_selectIndex];
+    
+    if (self.integral > model.integral) {
+        [ConfigModel mbProgressHUD:@"积分不够，请努赚取。" andView:self.view];
+        
+        return;
+    }
+    
+    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@""
+                                                    message:@"提现已提交，正在审核中..."
+                                                      image:nil
+                                            buttonAlignment:UILayoutConstraintAxisHorizontal
+                                            transitionStyle:PopupDialogTransitionStyleBounceUp
+                                           gestureDismissal:YES
+                                                 completion:nil];
+    
+    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
+    
+    popupViewController.messageColor = [ColorContants userNameFontColor];
+    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+    
+    
+    CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"知道了" height:50 dismissOnTap:NO action:^{
+        [popup dismiss:^{
+            
+        }];
+    }];
+    
+    cancel.titleColor = popupViewController.titleColor;
+    [popup addButtons: @[cancel]];
+    
+    [self presentViewController:popup animated:YES completion:nil];
+    
+    self.integral = self.integral - model.integral;
+    _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
 }
 
 -(void) setBankCard:(BankCardModel *) bankCard{

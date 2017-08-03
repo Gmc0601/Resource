@@ -165,7 +165,8 @@
 }
 
 -(UIView *) addImagePickerWithTopView:(UIView *) top withCenterXOffSet:(CGFloat) xOffset withRemaindText:remaindText{
-    UIView *background = [UIView new];
+    ImagePickerView *background = [[ImagePickerView alloc] initWithImage:nil withRemaindText:remaindText];
+    background.delegate = self;
     background.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     background.layer.cornerRadius = SizeWidth(2.5);
     [_superView addSubview:background];
@@ -177,36 +178,36 @@
         make.height.equalTo(@(SizeHeight(234/2)));
     }];
     
-    UILabel *lbl = [[UILabel alloc] init];
-    lbl.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
-    lbl.textColor = [ColorContants integralWhereFontColor];
-    lbl.text = remaindText;
-    lbl.textAlignment = NSTextAlignmentCenter;
-    [background addSubview:lbl];
-    
-    [lbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(background.mas_centerX);
-        make.bottom.equalTo(background.mas_centerY).offset(SizeHeight(-15));
-        make.width.equalTo(@(SizeWidth(100)));
-        make.height.equalTo(@(SizeHeight(13)));
-    }];
-    
-    UIButton *btnUpload = [[UIButton alloc] init];
-    btnUpload.layer.cornerRadius = SizeHeight(3);
-    [btnUpload setTitle:@"上传" forState:UIControlStateNormal];
-    btnUpload.backgroundColor=[ColorContants BlueButtonColor];
-    [btnUpload setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
-    btnUpload.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
-    
-    [btnUpload addTarget:self action:@selector(tapConfirmButton) forControlEvents:UIControlEventTouchUpInside];
-    
-    [background addSubview:btnUpload];
-    [btnUpload mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(background.mas_centerX);
-        make.top.equalTo(background.mas_centerY).offset(SizeHeight(5));
-        make.width.equalTo(@(SizeWidth(98)));
-        make.height.equalTo(@(SizeHeight(32)));
-    }];
+//    UILabel *lbl = [[UILabel alloc] init];
+//    lbl.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
+//    lbl.textColor = [ColorContants integralWhereFontColor];
+//    lbl.text = remaindText;
+//    lbl.textAlignment = NSTextAlignmentCenter;
+//    [background addSubview:lbl];
+//    
+//    [lbl mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(background.mas_centerX);
+//        make.bottom.equalTo(background.mas_centerY).offset(SizeHeight(-15));
+//        make.width.equalTo(@(SizeWidth(100)));
+//        make.height.equalTo(@(SizeHeight(13)));
+//    }];
+//    
+//    UIButton *btnUpload = [[UIButton alloc] init];
+//    btnUpload.layer.cornerRadius = SizeHeight(3);
+//    [btnUpload setTitle:@"上传" forState:UIControlStateNormal];
+//    btnUpload.backgroundColor=[ColorContants BlueButtonColor];
+//    [btnUpload setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
+//    btnUpload.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
+//    
+//    [btnUpload addTarget:self action:@selector(tapConfirmButton) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [background addSubview:btnUpload];
+//    [btnUpload mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(background.mas_centerX);
+//        make.top.equalTo(background.mas_centerY).offset(SizeHeight(5));
+//        make.width.equalTo(@(SizeWidth(98)));
+//        make.height.equalTo(@(SizeHeight(32)));
+//    }];
     
     return background;
 }
@@ -264,6 +265,25 @@
 -(void) tapConfirmButton{
     RegisterResultViewController *newVC = [RegisterResultViewController new];
     [self.navigationController pushViewController:newVC animated:YES];
+}
+
+-(NSData *) chooseImage{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePickerController.delegate = self;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+    
+    return nil;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    //You can retrieve the actual UIImage
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    //Or you can get the image url from AssetsLibrary
+    NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
