@@ -11,6 +11,11 @@
 #import "LocationViewController.h"
 #import "RegisterResultViewController.h"
 
+#define Card_Front_Tag 10001
+#define Card_Back_Tag 10002
+#define License_Tag 10003
+#define Facade_Tag 10004
+
 @interface RegisterInfoViewController ()
 @property(retain,atomic) UITextField *txtName;
 @property(retain,atomic) UITextField *txtTelNo;
@@ -23,6 +28,7 @@
 @property(retain,atomic) UIImage *imgLicense;
 @property(retain,atomic) UIImage *imgfacade;
 @property(retain,atomic) UIView *superView;
+@property(retain,atomic) ImagePickerView *currentPicker;
 @end
 
 @implementation RegisterInfoViewController
@@ -74,9 +80,9 @@
     
     CGFloat pickMargin = SizeWidth(172/2);
     
-    [self addImagePickerWithTopView:lblImageTitle withCenterXOffSet:SizeWidth(-pickMargin) withRemaindText:@"身份证正面"];
+    [self addImagePickerWithTopView:lblImageTitle withCenterXOffSet:SizeWidth(-pickMargin) withRemaindText:@"身份证正面" withTag:Card_Front_Tag];
     
-    UIView *picker2 = [self addImagePickerWithTopView:lblImageTitle withCenterXOffSet:SizeWidth(pickMargin) withRemaindText:@"身份证反面"];
+    UIView *picker2 = [self addImagePickerWithTopView:lblImageTitle withCenterXOffSet:SizeWidth(pickMargin) withRemaindText:@"身份证反面" withTag:Card_Back_Tag];
     
     UIView *border7 = [UIView new];
     border7.backgroundColor = [ColorContants otherFontColor];
@@ -89,8 +95,8 @@
         make.height.equalTo(@(SizeHeight(1)));
     }];
     
-    [self addImagePickerWithTopView:border7 withCenterXOffSet:SizeWidth(-pickMargin) withRemaindText:@"营业执照"];
-    [self addImagePickerWithTopView:border7 withCenterXOffSet:SizeWidth(pickMargin) withRemaindText:@"门面照片"];
+    [self addImagePickerWithTopView:border7 withCenterXOffSet:SizeWidth(-pickMargin) withRemaindText:@"营业执照" withTag:License_Tag];
+    [self addImagePickerWithTopView:border7 withCenterXOffSet:SizeWidth(pickMargin) withRemaindText:@"门面照片" withTag:Facade_Tag];
     
     UIButton *btnConfirm = [[UIButton alloc] init];
     btnConfirm.backgroundColor = [ColorContants BlueButtonColor];
@@ -164,8 +170,9 @@
     return txt;
 }
 
--(UIView *) addImagePickerWithTopView:(UIView *) top withCenterXOffSet:(CGFloat) xOffset withRemaindText:remaindText{
+-(UIView *) addImagePickerWithTopView:(UIView *) top withCenterXOffSet:(CGFloat) xOffset withRemaindText:remaindText withTag:(int) tag{
     ImagePickerView *background = [[ImagePickerView alloc] initWithImage:nil withRemaindText:remaindText];
+    background.tag = tag;
     background.delegate = self;
     background.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     background.layer.cornerRadius = SizeWidth(2.5);
@@ -267,22 +274,22 @@
     [self.navigationController pushViewController:newVC animated:YES];
 }
 
--(NSData *) chooseImage{
+-(void) chooseImage:(ImagePickerView *) sender{
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePickerController.delegate = self;
+    _currentPicker = sender;
     [self presentViewController:imagePickerController animated:YES completion:nil];
-    
-    return nil;
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     //You can retrieve the actual UIImage
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    //Or you can get the image url from AssetsLibrary
-    NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
+   UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     
+//    NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
+//    NSData *data = [NSData dataWithContentsOfFile:path.absoluteString];
+    [_currentPicker setImage:UIImageJPEGRepresentation(image, 1)];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

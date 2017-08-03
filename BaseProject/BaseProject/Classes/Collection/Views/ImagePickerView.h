@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class ImagePickerView;
 @protocol ImagePickerViewDelegate <NSObject>
 
--(NSData *) chooseImage;
+-(void) chooseImage:(ImagePickerView *) sender;
 
 @end
 
 @interface ImagePickerView : UIView
 @property(weak,nonatomic) id<ImagePickerViewDelegate> delegate;
 -(NSData *) getImage;
+-(void) setImage:(NSData *) img;
 - (instancetype)initWithImage:(NSData *) img withRemaindText:(NSString *) remmaindText;
 @end

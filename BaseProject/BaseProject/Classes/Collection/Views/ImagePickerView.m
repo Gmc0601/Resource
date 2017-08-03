@@ -85,18 +85,31 @@
             make.height.equalTo(self);
             make.width.equalTo(self);
         }];
+        
+        [self addtapGuesture];
     }
     
     _backgroundImageView.image = [UIImage imageWithData:imgData];
 }
 
 -(void) tapUploadButton{
-    _imgData = [self.delegate chooseImage];
-    
+    [self.delegate chooseImage:self];
+}
+
+-(void) setImage:(NSData *)img{
+    _imgData = img;
     [self addImage:_imgData];
 }
 
 -(NSData *) getImage{
     return  _imgData;
+}
+
+-(void) addtapGuesture{
+    UITapGestureRecognizer *re = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUploadButton)];
+    
+    re.numberOfTapsRequired = 1;
+    
+    [self addGestureRecognizer:re];
 }
 @end
