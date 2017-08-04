@@ -17,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNavTitle:@"资料审核"];
+
     [self addApprovingView];
 }
 

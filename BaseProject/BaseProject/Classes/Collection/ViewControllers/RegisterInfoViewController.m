@@ -35,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNavTitle:@"注册信息"];
     [self addSubviews];
 }
 

@@ -20,6 +20,7 @@
     _txtCardNo.text = model.cardNumber;
     _txtUserName.text = model.userName;
     _model = model;
+    [self setNavTitle:@"编辑银行卡"];
 }
 
 - (void)viewDidLoad {
