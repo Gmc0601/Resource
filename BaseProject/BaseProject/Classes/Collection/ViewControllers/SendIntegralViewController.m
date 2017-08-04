@@ -11,9 +11,19 @@
 @interface SendIntegralViewController ()
 @property(retain,atomic) UITextField *txtPhoneNo;
 @property(retain,atomic) UITextField *txtIntegral;
+@property(assign,nonatomic) int *integral;
 @end
 
 @implementation SendIntegralViewController
+
+- (instancetype)initWithIntegral:(int) integral
+{
+    self = [super init];
+    if (self) {
+        _integral = integral;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -125,6 +135,46 @@
 }
 
 -(void) tapConfirmButton{
+    NSString* number=@"^[0-9]+$";
+    NSPredicate *numberPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",number];
+    BOOL numberValidates = [numberPre evaluateWithObject:_txtIntegral.text];
     
+    if (!numberValidates){
+        [ConfigModel mbProgressHUD:@"请输入正确的赠送积分" andView:self.view];
+        
+        return;
+    }
+    
+    NSString *phoneRegex = @"^((\\+)|(00))[0-9]{6,14}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    
+    BOOL phoneValidates = [phoneTest evaluateWithObject:_txtIntegral.text];
+    
+    if (!phoneValidates){
+        [ConfigModel mbProgressHUD:@"请输入正确的手机号" andView:self.view];
+        
+        return;
+    }
+    
+    if(_txtIntegral.text.intValue > _integral) {
+        [ConfigModel mbProgressHUD:@"输入的积分大于可使用积分，请重新输入。" andView:self.view];
+        return;
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [params setObject:_txtIntegral.text forKey:@"amount"];
+    [params setObject:_txtPhoneNo.text forKey:@"mobile"];
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_getnum_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        NSString *info = datadic[@"info"];
+        [ConfigModel mbProgressHUD:info andView:nil];
+        NSLog(@"error>>>>%@", error);
+    }];
+
 }
 @end

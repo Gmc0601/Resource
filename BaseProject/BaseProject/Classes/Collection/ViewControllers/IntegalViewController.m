@@ -21,7 +21,6 @@
 @end
 
 @implementation IntegalViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -149,6 +148,7 @@
     if(indexPath.section == 0){
         cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         ((IntegralHeaderCell *) cell).delegate = self;
+        ((IntegralHeaderCell *) cell).integral = self.integral;
     }else{
         cell = [tableView dequeueReusableCellWithIdentifier:@"integralCell"];
         ((IntegralCell *) cell).model = _models[indexPath.row];
@@ -251,7 +251,7 @@
 }
 
 -(void) tapKitingButton{
-    KitingViewController *newViewController = [KitingViewController new];
+    KitingViewController *newViewController = [[KitingViewController alloc] initWithIntegral:_integral.intValue];
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 -(void) tapConvertButton{
@@ -263,5 +263,70 @@
     
     [self.navigationController pushViewController:newViewController animated:NO];
 }
+
+
+-(void) loadData{
+//    NSMutableDictionary *params = [NSMutableDictionary new];
+//    [params setObject:@"5" forKey:@"real_id"];
+//    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+//    [params setObject:userTokenStr forKey:@"userToken"];
+//    [ConfigModel showHud:self];
+//    
+//    [HttpRequest postPath:@"_homepage_001" params:params resultBlock:^(id responseObject, NSError *error) {
+//        [ConfigModel hideHud:self];
+//        NSDictionary *datadic = responseObject;
+//        if ([datadic[@"error"] intValue] == 0) {
+//            NSDictionary *infoDic = responseObject[@"info"];
+//            NSDictionary *userInfo = infoDic[@"userinfo"];
+//            
+//            UserModel *userModel = [UserModel new];
+//            userModel.name =  userInfo[@"nickname"];
+//            userModel.avatarUrl =  userInfo[@"avatar_url"];
+//            userModel.telNumber =  userInfo[@"mobile"];
+//            userModel.type =  userInfo[@"user_type"];
+//            userModel.integral =  userInfo[@"integral"];
+//            
+//            NSDictionary *goodsList = infoDic[@"goodlist"];
+//            for (NSDictionary *dict in goodsList) {
+//                GoodsModel *model = [GoodsModel new];
+//                model._id = dict[@"id"];
+//                model.name = dict[@"good"];
+//                model.imgUrl = dict[@"img"];
+//                model.sequence = [dict[@"sort_num"] intValue];
+//                
+//                [_models addObject:model];
+//            }
+//            
+//            [self setUser:userModel];
+//            [_collectionView reloadData];
+//            
+//        }else {
+//            NSString *info = datadic[@"info"];
+//            [ConfigModel mbProgressHUD:info andView:nil];
+//        }
+//        NSLog(@"error>>>>%@", error);
+//    }];
+}
+
+-(void) getIntegral{
+        NSMutableDictionary *params = [NSMutableDictionary new];
+        NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+        [params setObject:userTokenStr forKey:@"userToken"];
+        [ConfigModel showHud:self];
+    
+        [HttpRequest postPath:@"_usernum_001" params:params resultBlock:^(id responseObject, NSError *error) {
+            [ConfigModel hideHud:self];
+            NSDictionary *datadic = responseObject;
+            if ([datadic[@"error"] intValue] == 0) {
+                NSDictionary *infoDic = responseObject[@"info"];
+                self.integral =  infoDic[@"jifen"];
+            }else {
+                NSString *info = datadic[@"info"];
+                [ConfigModel mbProgressHUD:info andView:nil];
+            }
+            NSLog(@"error>>>>%@", error);
+        }];
+}
+
 
 @end

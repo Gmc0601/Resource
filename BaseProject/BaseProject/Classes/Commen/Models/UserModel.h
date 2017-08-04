@@ -18,4 +18,5 @@
 @property(retain,atomic) NSArray *credentialImages;
 @property(retain,atomic) NSString *avatarUrl;
 @property(retain,atomic) NSString *integral;
+@property(retain,atomic) NSString *type;
 @end

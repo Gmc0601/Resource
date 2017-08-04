@@ -118,6 +118,7 @@
     _txtUserName = [UITextField new];
     _txtUserName.font = placeHolderFont;
     _txtUserName.textColor = [ColorContants kitingFontColor];
+    
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:@"请填写持卡人姓名" attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont}];
     _txtUserName.attributedPlaceholder = str;
     
@@ -151,5 +152,41 @@
 
 -(void) tapConfirmButton{
     
+    if ([_txtCardNo isEqual:@""]){
+        [ConfigModel mbProgressHUD:@"请输入持卡人姓名" andView:self.view];
+        
+        return;
+    }
+    
+    NSString *regex2 = @"^(\\d{15,30})";
+    NSPredicate *bankCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
+    BOOL backCardValidates =  [bankCardPredicate evaluateWithObject:_txtCardNo.text];
+    
+    if (!backCardValidates){
+        [ConfigModel mbProgressHUD:@"请输入正确的银行卡号" andView:self.view];
+        
+        return;
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [params setObject:_txtCardNo.text forKey:@"banknumber"];
+    [params setObject:_txtUserName.text forKey:@"real_name"];
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_boundcard_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        NSString *info = datadic[@"info"];
+        
+        if ([datadic[@"error"] intValue] == 0) {
+            [ConfigModel mbProgressHUD:@"提交成功！" andView:nil];
+        }else{
+            [ConfigModel mbProgressHUD:@"提交失败，请重新填写。" andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+
 }
 @end

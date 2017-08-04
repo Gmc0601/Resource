@@ -12,5 +12,7 @@
 @property(retain,atomic) NSString *name;
 @property(retain,atomic) NSString *imgUrl;
 @property(retain,atomic) NSString *_id;
+@property(retain,atomic) NSString *unit;
 @property(assign,nonatomic) CGFloat price;
+@property(assign,nonatomic) int sequence;
 @end

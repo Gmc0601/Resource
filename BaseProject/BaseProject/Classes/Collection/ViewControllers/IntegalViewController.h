@@ -11,5 +11,5 @@
 #import "IntegralHeaderCell.h"
 
 @interface IntegalViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource,IntegralHeaderCellDelegate>
-
+@property(retain,nonatomic) NSString *integral;
 @end

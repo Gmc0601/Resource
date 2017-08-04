@@ -20,7 +20,7 @@
     UILabel *moneyLabel;
     UITextField *AmountTF;
     UIButton *sureBtn;
-    
+    UILabel *unitLabel;
     UILabel *priceLabel;
 }
 @end
@@ -31,6 +31,7 @@
 -(void) setModel:(GoodsModel *)model{
     [self setNavTitle:_model.name];
     moneyLabel.text = [NSString stringWithFormat:@"￥%f", _model.price];
+    
 }
 
 - (void)viewDidLoad {
@@ -42,9 +43,8 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    [self viewWillAppear:animated];
+    [super viewWillAppear:animated];
 }
-
 
 - (void)CreateUI{
     TBheadView = [[UIView alloc] initWithFrame:CGRectMake(0, [self getNavBarHeight], kScreenW, SizeHeight(392))];
@@ -90,7 +90,7 @@
     moneyLabel.attributedText = attString;
     
     
-    UILabel *unitLabel = [[UILabel alloc]init];
+    unitLabel = [[UILabel alloc]init];
     [headImgView addSubview:unitLabel];
     [unitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headImgView).offset(SizeWidth(20));
@@ -163,5 +163,6 @@
 -(void) showCallView{
     [PublicClass showCallPopupWithTelNo:@"400-800-2123" inViewController:self];
 }
+
 
 @end

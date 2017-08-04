@@ -10,5 +10,5 @@
 #import "BaseViewController.h"
 
 @interface KitingViewController : BaseViewController<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
-@property(assign,nonatomic) int integral;
+- (instancetype)initWithIntegral:(int) intergal;
 @end

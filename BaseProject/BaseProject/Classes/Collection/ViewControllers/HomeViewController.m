@@ -18,18 +18,20 @@
 #import "IntegalViewController.h"
 #import "PublicClass.h"
 #import "RegisterInfoViewController.h"
+#import "UIImageView+WebCache.h"
+#import "GoodsListViewController.h";
 
 @interface HomeViewController ()
-    @property(retain,atomic) NSMutableArray *models;
-    @property(retain,atomic) UILabel *lblIntegral;
-    @property(retain,atomic) UILabel *lblName;
-    @property(retain,atomic) UIImageView *avatar;
-    @property(retain,atomic) UILabel *lblTelNumber;
-    @property(retain,atomic) UICollectionView *collectionView;
+@property(retain,atomic) NSMutableArray *models;
+@property(retain,atomic) UILabel *lblIntegral;
+@property(retain,atomic) UILabel *lblName;
+@property(retain,atomic) UIImageView *avatar;
+@property(retain,atomic) UILabel *lblTelNumber;
+@property(retain,atomic) UICollectionView *collectionView;
 @property(retain,atomic) UIView *backgroundView;
 @property(retain,atomic) UIButton *btnMessage;
 @property(retain,atomic) UIButton *btnSetting;
-    @end
+@end
 
 @implementation HomeViewController
 - (void)viewDidLoad {
@@ -38,46 +40,47 @@
     [self addCollectionView];
     [self addSubviews];
     [PublicClass addCallButtonInViewContrller:self];
-    GoodsCategoryModel *model1 = [GoodsCategoryModel new];
-    model1.name = @"废纸";
-    [_models addObject:model1];
-    
-    
-    GoodsCategoryModel *model2 = [GoodsCategoryModel new];
-    model2.name = @"废塑料";
-    [_models addObject:model2];
-    
-    GoodsCategoryModel *model3 = [GoodsCategoryModel new];
-    model3.name = @"废品车辆";
-    [_models addObject:model3];
-    
-    GoodsCategoryModel *model4 = [GoodsCategoryModel new];
-    model4.name = @"小家电";
-    [_models addObject:model4];
-    
-    GoodsCategoryModel *model5 = [GoodsCategoryModel new];
-    model5.name = @"电视机";
-    [_models addObject:model5];
-    
-    GoodsCategoryModel *model6 = [GoodsCategoryModel new];
-    model6.name = @"冰箱";
-    [_models addObject:model6];
-    
-    GoodsCategoryModel *model7 = [GoodsCategoryModel new];
-    model7.name = @"空调";
-    [_models addObject:model7];
-    
-    GoodsCategoryModel *model8 = [GoodsCategoryModel new];
-    model8.name = @"电脑";
-    [_models addObject:model8];
-    
-    GoodsCategoryModel *model9 = [GoodsCategoryModel new];
-    model9.name = @"手机";
-    [_models addObject:model9];
-    
-    GoodsCategoryModel *model10 = [GoodsCategoryModel new];
-    model10.name = @"汽车";
-    [_models addObject:model10];
+    //    GoodsCategoryModel *model1 = [GoodsCategoryModel new];
+    //    model1.name = @"废纸";
+    //    [_models addObject:model1];
+    //
+    //
+    //    GoodsCategoryModel *model2 = [GoodsCategoryModel new];
+    //    model2.name = @"废塑料";
+    //    [_models addObject:model2];
+    //
+    //    GoodsCategoryModel *model3 = [GoodsCategoryModel new];
+    //    model3.name = @"废品车辆";
+    //    [_models addObject:model3];
+    //
+    //    GoodsCategoryModel *model4 = [GoodsCategoryModel new];
+    //    model4.name = @"小家电";
+    //    [_models addObject:model4];
+    //
+    //    GoodsCategoryModel *model5 = [GoodsCategoryModel new];
+    //    model5.name = @"电视机";
+    //    [_models addObject:model5];
+    //
+    //    GoodsCategoryModel *model6 = [GoodsCategoryModel new];
+    //    model6.name = @"冰箱";
+    //    [_models addObject:model6];
+    //
+    //    GoodsCategoryModel *model7 = [GoodsCategoryModel new];
+    //    model7.name = @"空调";
+    //    [_models addObject:model7];
+    //
+    //    GoodsCategoryModel *model8 = [GoodsCategoryModel new];
+    //    model8.name = @"电脑";
+    //    [_models addObject:model8];
+    //
+    //    GoodsCategoryModel *model9 = [GoodsCategoryModel new];
+    //    model9.name = @"手机";
+    //    [_models addObject:model9];
+    //
+    //    GoodsCategoryModel *model10 = [GoodsCategoryModel new];
+    //    model10.name = @"汽车";
+    //    [_models addObject:model10];
+    [self loadData];
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
@@ -117,59 +120,67 @@
     }];
 }
 
-    
+
 #pragma UICollection Delegate
-    
+
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 2;
 }
-    
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
     }
-    return _models.count;
+    return _models.count + 1;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
-    if(indexPath.row != (_models.count - 1)){
+    if(_models.count > 0 && (indexPath.row + 1) <= _models.count){
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
         [self setCell:cell withMode:_models[indexPath.row]];
     }else{
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"otherCell" forIndexPath:indexPath];
         
+        int tag = 30011;
         cell.backgroundColor = [ColorContants gray];
-        UILabel *lblName = [[UILabel alloc] init];
-        lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
-        lblName.textColor = [ColorContants otherFontColor];
-        lblName.textAlignment = NSTextAlignmentCenter;
-        lblName.text = @"其他";
-        [cell addSubview:lblName];
+        if ([cell viewWithTag:tag] == nil) {
+            UILabel *lblName = [[UILabel alloc] init];
+            lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+            lblName.textColor = [ColorContants otherFontColor];
+            lblName.textAlignment = NSTextAlignmentCenter;
+            lblName.text = @"其他";
+            lblName.tag = tag;
+            [cell addSubview:lblName];
+            
+            [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
+                CGFloat height = SizeHeight(15);
+                make.width.equalTo(cell.mas_width);
+                make.height.equalTo(@(height));
+                make.centerY.equalTo(cell.mas_centerY);
+                make.left.equalTo(cell.mas_left);
+            }];
 
-        [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
-            CGFloat height = SizeHeight(15);
-            make.width.equalTo(cell.mas_width);
-            make.height.equalTo(@(height));
-            make.centerY.equalTo(cell.mas_centerY);
-            make.left.equalTo(cell.mas_left);
-        }];
-        
+        }
     }
+    
     return cell;
 }
-    
-    
-    //设置每个item垂直间距
+
+
+//设置每个item垂直间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-    {
-        return SizeHeight(7);
-    }
-    
-    
+{
+    return SizeHeight(7);
+}
+
+
 -(void) setCell:(UICollectionViewCell *)cell withMode:(GoodsModel *)model{
     int tag = 1001;
-    //    cell.backgroundView = [UIImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
-    cell.backgroundColor = [UIColor brownColor];
+    UIImageView *bg = [UIImageView new];
+    [bg sd_setImageWithURL:[NSURL URLWithString:model.imgUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        cell.backgroundView = bg;
+    }];
+    
     UILabel *lblName = [cell viewWithTag:tag];
     
     cell.layer.cornerRadius = SizeHeight(5);
@@ -193,7 +204,7 @@
     
     lblName.text = model.name;
 }
-    
+
 -(void) addCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(SizeWidth(113), SizeHeight(113));
@@ -214,40 +225,40 @@
     
     [self.view addSubview:self.collectionView];
 }
-    
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-    {
-        UICollectionReusableView *headerView;
-        
-        if (indexPath.section == 0) {
-            headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header1" forIndexPath:indexPath];
-            if (headerView.subviews.count == 0) {
-                headerView.backgroundColor = [ColorContants gray];
-                [self setHeaderView:headerView];
-            }
-        }else{
-            headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2" forIndexPath:indexPath];
+{
+    UICollectionReusableView *headerView;
+    
+    if (indexPath.section == 0) {
+        headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header1" forIndexPath:indexPath];
+        if (headerView.subviews.count == 0) {
             headerView.backgroundColor = [ColorContants gray];
-            if (headerView.subviews.count == 0) {
-                UILabel *lblTitile = [[UILabel alloc] init];
-                lblTitile.text = @"回收商品种类";
-                lblTitile.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
-                lblTitile.textColor = [ColorContants userNameFontColor];
-                headerView.backgroundColor = self.collectionView.backgroundColor;
-                [headerView addSubview:lblTitile];
-                
-                [lblTitile mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.equalTo(headerView.mas_left).offset(SizeWidth(16));
-                    make.top.equalTo(headerView.mas_top).offset(SizeHeight(15));
-                    make.bottom.equalTo(headerView.mas_bottom).offset(SizeHeight(-15));
-                    make.right.equalTo(headerView.mas_right).offset(0);
-                }];
-            }
+            [self setHeaderView:headerView];
         }
-        
-        return headerView;
+    }else{
+        headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2" forIndexPath:indexPath];
+        headerView.backgroundColor = [UIColor whiteColor];
+        if (headerView.subviews.count == 0) {
+            UILabel *lblTitile = [[UILabel alloc] init];
+            lblTitile.text = @"回收商品种类";
+            lblTitile.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+            lblTitile.textColor = [ColorContants userNameFontColor];
+            headerView.backgroundColor = self.collectionView.backgroundColor;
+            [headerView addSubview:lblTitile];
+            
+            [lblTitile mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(headerView.mas_left).offset(SizeWidth(16));
+                make.top.equalTo(headerView.mas_top).offset(SizeHeight(15));
+                make.bottom.equalTo(headerView.mas_bottom).offset(SizeHeight(-15));
+                make.right.equalTo(headerView.mas_right).offset(0);
+            }];
+        }
     }
     
+    return headerView;
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
@@ -255,30 +266,30 @@
         return CGSizeMake(self.view.bounds.size.width, SizeHeight(40));;
     }
 }
-    
+
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-    {
-        if (section == 1) {
-            return UIEdgeInsetsMake(0, SizeWidth(10), SizeHeight(10), SizeWidth(10));
-        }
-        
-        return UIEdgeInsetsZero;
+{
+    if (section == 1) {
+        return UIEdgeInsetsMake(0, SizeWidth(10), SizeHeight(10), SizeWidth(10));
     }
     
-    //设置每个item水平间距
+    return UIEdgeInsetsZero;
+}
+
+//设置每个item水平间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-    {
-        return SizeWidth(8);
-    }
-    
-    //点击item方法
+{
+    return SizeWidth(8);
+}
+
+//点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-    {
-        RecycleDetailViewController *newViewController = [[RecycleDetailViewController alloc] init];
-        newViewController.model = _models[indexPath.row];
-        [self.navigationController pushViewController:newViewController animated:YES];
-    }
-    
+{
+    RecycleDetailViewController *newViewController = [[RecycleDetailViewController alloc] init];
+    newViewController.model = _models[indexPath.row];
+    [self.navigationController pushViewController:newViewController animated:YES];
+}
+
 -(void) setHeaderView:(UICollectionReusableView *) headerView{
     UIImageView *header = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, headerView.bounds.size.width, headerView.bounds.size.height-SizeHeight(10))];
     header.image = [UIImage imageNamed:@"sgd_bg_sy"];
@@ -310,9 +321,9 @@
     _lblIntegral.userInteractionEnabled = YES;
     [headerView addSubview:_lblIntegral];
     
-//    UITapGestureRecognizer *tapIntegral = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showIntegralDetail:)];
-//    tapIntegral.numberOfTapsRequired = 1;
-//    [_lblIntegral addGestureRecognizer:tapIntegral];
+    //    UITapGestureRecognizer *tapIntegral = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showIntegralDetail:)];
+    //    tapIntegral.numberOfTapsRequired = 1;
+    //    [_lblIntegral addGestureRecognizer:tapIntegral];
     
     
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -381,37 +392,38 @@
         make.height.equalTo(@(SizeHeight(72)));
     }];
 }
-    
+
 -(void) setIntergral:(NSString *) strIntegral{
     UIFont *font1 = [UIFont fontWithName:[FontConstrants helveticaNeue] size:SizeWidth(15)];
     UIFont *font2 = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
     _lblIntegral.attributedText = [NSMutableAttributedString attributeString:strIntegral prefixFont:font1 prefixColor:[ColorContants orange] suffixString:@" 积分" suffixFont:font2 suffixColor:[ColorContants orange] ];
     [_lblIntegral sizeToFit];
 }
-    
+
 -(void) addGoodsList{
     
 }
-    
+
 -(void) tapMessageButton{
     
 }
-    
+
 -(void) tapSettingButton{
     RegisterInfoViewController *newViewContrller = [RegisterInfoViewController new];
     [self.navigationController pushViewController:newViewContrller animated:YES];
 }
-    
+
 -(void) tapCheckButton{
     
 }
-    
+
 -(void) showCallView{
     [PublicClass showCallPopupWithTelNo:@"400-800-2123" inViewController:self];
 }
-    
+
 -(void) showIntegralDetail{
     IntegalViewController *newViewController = [[IntegalViewController alloc] init];
+    newViewController.integral = _lblIntegral.text;
     [self.navigationController pushViewController:newViewController animated:YES];
     
 }
@@ -439,4 +451,64 @@
         }];
     }
 }
-    @end
+
+-(void) loadData{
+    NSMutableDictionary *params = [NSMutableDictionary new];
+//    [params setObject:@"5" forKey:@"real_id"];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_homepage_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            NSDictionary *userInfo = infoDic[@"userinfo"];
+            
+            UserModel *userModel = [UserModel new];
+            userModel.name =  userInfo[@"nickname"];
+            userModel.avatarUrl =  userInfo[@"avatar_url"];
+            userModel.telNumber =  userInfo[@"mobile"];
+            userModel.type =  userInfo[@"user_type"];
+            if (userInfo[@"integral"] == nil) {
+                userModel.integral = @"0";
+            }else{
+                userModel.integral =  userInfo[@"integral"];
+            }
+            
+            NSDictionary *goodsList = infoDic[@"goodlist"];
+            for (NSDictionary *dict in goodsList) {
+                GoodsModel *model = [GoodsModel new];
+                model._id = dict[@"id"];
+                model.name = dict[@"good"];
+                model.imgUrl = dict[@"img"];
+                model.sequence = [dict[@"sort_num"] intValue];
+                
+                [_models addObject:model];
+            }
+            
+            [_models sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                GoodsModel *model1 = (GoodsModel *) obj1;
+                GoodsModel *model2 = (GoodsModel *) obj2;
+                return model1.sequence < model2.sequence;
+            }];
+            
+            [self setUser:userModel];
+            [_collectionView reloadData];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+}
+
+-(void) setUser:(UserModel *) user{
+    _lblName.text = user.name;
+    _lblTelNumber.text = user.telNumber;
+    [self setIntergral:user.integral];
+}
+
+@end

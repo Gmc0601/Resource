@@ -10,6 +10,8 @@
 #import "UIColor+BGHexColor.h"
 #import "Constants.h"
 #import <PopupDialog/PopupDialog-Swift.h>
+#import "UIImageView+WebCache.h"
+
 @interface BaseViewController : UIViewController
 
 - (void)backAction;

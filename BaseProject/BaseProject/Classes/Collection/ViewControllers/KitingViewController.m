@@ -22,9 +22,19 @@
 @property(retain,atomic) UILabel *lblIntergal;
 @property(retain,atomic)  UICollectionView *collectionView;
 @property(nonatomic,assign)  NSInteger selectIndex;
+@property(assign,nonatomic) int integral;
 @end
 
 @implementation KitingViewController
+
+- (instancetype)initWithIntegral:(int) intergal
+{
+    self = [super init];
+    if (self) {
+        _integral = intergal;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,8 +68,11 @@
     model5.money = 102;
     model5.integral = 102;
     [_models addObject:model5];
-    
-    
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self loadBankCardInfo];
 }
 
 -(void) addSubviews{
@@ -83,7 +96,7 @@
     _lblIntergal.font = [UIFont fontWithName:[FontConstrants pingFang] size:13];
     _lblIntergal.textColor = [ColorContants phoneNumerFontColor];
     _lblIntergal.textAlignment = NSTextAlignmentLeft;
-    _lblIntergal.text = @"我的积分：1000";
+    _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",_integral];
     [self.view addSubview:_lblIntergal];
     
     [_lblIntergal mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -92,7 +105,7 @@
         make.width.equalTo(@(SizeWidth(200)));
         make.height.equalTo(@(SizeHeight(13)));
     }];
-//    
+    
     [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(SizeHeight(64));
         make.bottom.equalTo(_lblIntergal.mas_top).offset(SizeHeight(-20));
@@ -106,7 +119,7 @@
     
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [_collectionView registerClass:[BankCardCell class] forCellWithReuseIdentifier:@"cell"];
-     [_collectionView registerClass:[KitingCell class] forCellWithReuseIdentifier:@"KitingCell"];
+    [_collectionView registerClass:[KitingCell class] forCellWithReuseIdentifier:@"KitingCell"];
     
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
@@ -180,7 +193,7 @@
     UICollectionViewCell *cell;
     
     if (indexPath.section == 0) {
-       cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
         if (cell.subviews.count < 3) {
             [self setCell:cell];
         }
@@ -219,13 +232,6 @@
         make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(@(SizeHeight(15)));
     }];
-    
-    
-    _bankCard = [BankCardModel new];
-    _bankCard.cardNumber = @"**** **** **** 1177";
-    _bankCard.bankName = @"招商银行";
-    _bankCard.userName = @"招商银行";
-    [self setBankCard:_bankCard];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -331,7 +337,7 @@
     cardNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:17];
     cardNumber.textColor = [ColorContants whiteFontColor];
     cardNumber.textAlignment = NSTextAlignmentRight;
-    cardNumber.text = bankCard.cardNumber;
+    cardNumber.text = [bankCard.cardNumber stringByReplacingCharactersInRange:NSMakeRange(0, 12) withString:@"**** **** **** "];
     [_bankCardView addSubview:cardNumber];
     
     [cardNumber mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -358,9 +364,36 @@
 
 -(void) gotoEditView{
     BankCarInfoViewController *newViewController = [BankCarInfoViewController new];
-    [self.navigationController pushViewController:newViewController animated:YES];
     newViewController.model = _bankCard;
+    [self.navigationController pushViewController:newViewController animated:YES];
+}
 
+-(void) loadBankCardInfo{
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_usercard_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            _bankCard = [BankCardModel new];
+            
+            if (infoDic[@"banknumber"] != nil) {
+                _bankCard.bankName = infoDic[@"real_name"];
+                _bankCard.cardNumber = infoDic[@"banknumber"];
+                _bankCard.userName = infoDic[@"real_name"];
+                [self setBankCard:_bankCard];
+            }
+
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
 }
 
 @end
