@@ -145,12 +145,7 @@
         return;
     }
     
-    NSString *phoneRegex = @"^((\\+)|(00))[0-9]{6,14}$";
-    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
-    
-    BOOL phoneValidates = [phoneTest evaluateWithObject:_txtIntegral.text];
-    
-    if (!phoneValidates){
+    if (![_txtIntegral.text isTelNumber]){
         [ConfigModel mbProgressHUD:@"请输入正确的手机号" andView:self.view];
         
         return;

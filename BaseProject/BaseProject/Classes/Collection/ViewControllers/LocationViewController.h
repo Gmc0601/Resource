@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-@interface LocationViewController : BaseViewController
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
 
+@protocol LocationViewControllerDelegate<NSObject>
+-(void) chooseAddress:(AMapGeoPoint *) point;
+@end
+
+
+@interface LocationViewController : BaseViewController
+@property(atomic,weak) id<LocationViewControllerDelegate> delegate;
 @end

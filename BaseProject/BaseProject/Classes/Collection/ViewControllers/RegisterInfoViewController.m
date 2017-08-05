@@ -10,25 +10,27 @@
 #import "NSString+Category.h"
 #import "LocationViewController.h"
 #import "RegisterResultViewController.h"
+#import "GTMBase64.h"
 
 #define Card_Front_Tag 10001
 #define Card_Back_Tag 10002
 #define License_Tag 10003
 #define Facade_Tag 10004
 
-@interface RegisterInfoViewController ()
+@interface RegisterInfoViewController ()<LocationViewControllerDelegate>
 @property(retain,atomic) UITextField *txtName;
 @property(retain,atomic) UITextField *txtTelNo;
 @property(retain,atomic) UITextField *txtCardId;
 @property(retain,atomic) UITextField *txtPointName;
 @property(retain,atomic) UIButton *btnAddress;
 @property(retain,atomic) UITextField *txtDetailAddress;
-@property(retain,atomic) UIImage *imgCardFront;
-@property(retain,atomic) UIImage *imgCardBack;
-@property(retain,atomic) UIImage *imgLicense;
-@property(retain,atomic) UIImage *imgfacade;
+@property(retain,atomic) NSData *imgCardFront;
+@property(retain,atomic) NSData *imgCardBack;
+@property(retain,atomic) NSData *imgLicense;
+@property(retain,atomic) NSData *imgfacade;
 @property(retain,atomic) UIView *superView;
 @property(retain,atomic) ImagePickerView *currentPicker;
+@property(retain,atomic) AMapGeoPoint *location;
 @end
 
 @implementation RegisterInfoViewController
@@ -72,6 +74,7 @@
     _txtName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入姓名" withLeftView:lblName];
 
     _txtTelNo = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入手机号" withLeftView:lblTelNo];
+    _txtTelNo.keyboardType = UIKeyboardTypePhonePad;
     _txtCardId = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入身份证号" withLeftView:lblCardId];
      _txtPointName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入收购点名称" withLeftView:lblPointName];
      _btnAddress = [self addLocationButton:lblPointAddress];
@@ -185,38 +188,6 @@
         make.width.equalTo(@(SizeWidth(339/2)));
         make.height.equalTo(@(SizeHeight(234/2)));
     }];
-    
-//    UILabel *lbl = [[UILabel alloc] init];
-//    lbl.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
-//    lbl.textColor = [ColorContants integralWhereFontColor];
-//    lbl.text = remaindText;
-//    lbl.textAlignment = NSTextAlignmentCenter;
-//    [background addSubview:lbl];
-//    
-//    [lbl mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(background.mas_centerX);
-//        make.bottom.equalTo(background.mas_centerY).offset(SizeHeight(-15));
-//        make.width.equalTo(@(SizeWidth(100)));
-//        make.height.equalTo(@(SizeHeight(13)));
-//    }];
-//    
-//    UIButton *btnUpload = [[UIButton alloc] init];
-//    btnUpload.layer.cornerRadius = SizeHeight(3);
-//    [btnUpload setTitle:@"上传" forState:UIControlStateNormal];
-//    btnUpload.backgroundColor=[ColorContants BlueButtonColor];
-//    [btnUpload setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
-//    btnUpload.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
-//    
-//    [btnUpload addTarget:self action:@selector(tapConfirmButton) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [background addSubview:btnUpload];
-//    [btnUpload mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(background.mas_centerX);
-//        make.top.equalTo(background.mas_centerY).offset(SizeHeight(5));
-//        make.width.equalTo(@(SizeWidth(98)));
-//        make.height.equalTo(@(SizeHeight(32)));
-//    }];
-    
     return background;
 }
 
@@ -271,8 +242,74 @@
 }
 
 -(void) tapConfirmButton{
+    NSMutableString *strMsg = [[NSMutableString alloc] initWithString:@"请输入正确的"];
+    if (_txtName.text == nil || _txtName.text.length == 0) {
+        [strMsg appendString:@"姓名"];
+    }
+    
+    if (_txtTelNo.text == nil || ![_txtTelNo.text isTelNumber]) {
+        [strMsg appendString:@",手机号码"];
+    }
+    
+    if (_txtCardId.text == nil || ![_txtCardId.text isIdCardNo]) {
+        [strMsg appendString:@",身份证号码"];
+    }
+    
+    if (_txtPointName.text == nil || _txtPointName.text.length == 0) {
+        [strMsg appendString:@",收购点名称"];
+    }
+    
+    if (_txtDetailAddress.text == nil || _txtDetailAddress.text.length == 0) {
+        [strMsg appendString:@",详细地址"];
+    }
+    
+    if (_location == nil) {
+        [strMsg appendString:@"\n请选择收购点地址"];
+    }
+    
+    if (_imgfacade == nil || _imgLicense == nil || _imgCardBack == nil || _imgCardFront == nil) {
+         [strMsg appendString:@"\n请上传全部图片"];
+    }
+    
+    if (strMsg.length > 0) {
+        NSString *msg = strMsg;
+        NSString *str = [strMsg substringWithRange:NSMakeRange(6, 1)];
+        if ([str  isEqual: @","]) {
+            msg = [strMsg stringByReplacingCharactersInRange:NSMakeRange(6, 1) withString:@""];
+        }
+        [ConfigModel mbProgressHUD:msg andView:self.view];
+        return;
+    }
+    
     RegisterResultViewController *newVC = [RegisterResultViewController new];
-    [self.navigationController pushViewController:newVC animated:YES];
+    [ConfigModel showHud:self];
+
+    NSMutableDictionary *params = [NSMutableDictionary new];
+
+    [params setObject:_txtName.text forKey:@"nickname"];
+    [params setObject:_txtTelNo.text forKey:@"mobile"];
+    [params setObject:_txtCardId.text forKey:@"id_num"];
+    [params setObject:_txtPointName forKey:@"good_name"];
+    [params setObject:_txtDetailAddress.text forKey:@"address"];
+    [params setObject:[NSString stringWithFormat:@"%f",_location.longitude] forKey:@"long"];
+    [params setObject:[NSString stringWithFormat:@"%f",_location.latitude] forKey:@"lat"];
+    [params setObject:[GTMBase64 encodeBase64Data:_imgCardFront] forKey:@"front_img"];
+    [params setObject:_txtDetailAddress.text forKey:@"verso_img"];
+    [params setObject:_txtDetailAddress.text forKey:@"permit"];
+    [params setObject:_txtDetailAddress.text forKey:@"good_img"];
+    
+    [HttpRequest postPath:@"_register_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        
+        if ([datadic[@"error"] intValue] == 0) {
+            [self.navigationController pushViewController:newVC animated:YES];
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+    }];
+
 }
 
 -(void) chooseImage:(ImagePickerView *) sender{
@@ -287,11 +324,23 @@
 {
     //You can retrieve the actual UIImage
    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    NSData *data = UIImageJPEGRepresentation(image, 1);
+    if (_currentPicker.tag == Card_Front_Tag) {
+        _imgCardFront = data;
+    }else if (_currentPicker.tag == Card_Back_Tag){
+        _imgCardBack = data;
+    }else if (_currentPicker.tag == License_Tag){
+        _imgLicense = data;
+    }else{
+        _imgfacade = data;
+    }
     
-//    NSURL *path = [info valueForKey:UIImagePickerControllerReferenceURL];
-//    NSData *data = [NSData dataWithContentsOfFile:path.absoluteString];
     [_currentPicker setImage:UIImageJPEGRepresentation(image, 1)];
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void) chooseAddress:(AMapGeoPoint *)point{
+    
 }
 
 @end

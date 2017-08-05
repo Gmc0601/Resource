@@ -8,8 +8,6 @@
 
 #import "LocationViewController.h"
 #import <CoreLocation/CoreLocation.h>
-#import <AMapFoundationKit/AMapFoundationKit.h>
-#import <AMapSearchKit/AMapSearchKit.h>
 #import "LocationCell.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
@@ -158,6 +156,12 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
         return CGRectGetHeight(tableView.bounds);
     }
     return  SizeHeight(52);
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    AMapGeoPoint *point = ((AMapPOI *) _dataSource[indexPath.row]).location;
+    [self.delegate chooseAddress:point];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)initLocation{

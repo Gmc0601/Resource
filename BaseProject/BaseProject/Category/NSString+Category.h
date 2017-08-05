@@ -27,7 +27,8 @@
 
 //去掉前后空格
 - (NSString *) trimmedString;
-
+-(BOOL) isTelNumber;
+-(BOOL) isIdCardNo;
 @end
 
 

@@ -18,6 +18,7 @@
 
 @interface IntegalViewController ()
 @property(retain,atomic) NSMutableArray *models;
+@property(retain,atomic)  UITableView *tb;
 @end
 
 @implementation IntegalViewController
@@ -33,83 +34,7 @@
     [self addTableView];
     
     _models = [NSMutableArray arrayWithCapacity:0];
-    
-    IntegralRecordModel *model1 = [IntegralRecordModel new];
-    model1.type = @"提现";
-    model1.sum = @"-1000";
-    model1.summery = @"提现";
-    model1.date = @"2019-10-01";
-    [_models addObject:model1];
-    
-    IntegralRecordModel *model2 = [IntegralRecordModel new];
-    model2.type = @"提现";
-    model2.sum = @"-1000";
-    model2.summery = @"提现";
-    model2.date = @"2019-10-01";
-    [_models addObject:model2];
-    
-    IntegralRecordModel *model3 = [IntegralRecordModel new];
-    model3.type = @"提现";
-    model3.sum = @"-1000";
-    model3.summery = @"提现";
-    model3.date = @"2019-10-01";
-    [_models addObject:model3];
-    
-    IntegralRecordModel *model4 = [IntegralRecordModel new];
-    model4.type = @"提现";
-    model4.sum = @"-1000";
-    model4.summery = @"提现";
-    model4.date = @"2019-10-01";
-    [_models addObject:model4];
-    
-    IntegralRecordModel *model5 = [IntegralRecordModel new];
-    model5.type = @"提现";
-    model5.sum = @"-1000";
-    model5.summery = @"提现";
-    model5.date = @"2019-10-01";
-    [_models addObject:model5];
-    
-    IntegralRecordModel *model6 = [IntegralRecordModel new];
-    model6.type = @"提现";
-    model6.sum = @"-1000";
-    model6.summery = @"提现";
-    model6.date = @"2019-10-01";
-    [_models addObject:model6];
-    
-    IntegralRecordModel *model7 = [IntegralRecordModel new];
-    model7.type = @"提现";
-    model7.sum = @"-1000";
-    model7.summery = @"提现";
-    model7.date = @"2019-10-01";
-    [_models addObject:model7];
-    
-    IntegralRecordModel *model8 = [IntegralRecordModel new];
-    model8.type = @"提现";
-    model8.sum = @"-1000";
-    model8.summery = @"提现";
-    model8.date = @"2019-10-01";
-    [_models addObject:model8];
-    
-    IntegralRecordModel *model9 = [IntegralRecordModel new];
-    model9.type = @"提现";
-    model9.sum = @"-1000";
-    model9.summery = @"提现";
-    model9.date = @"2019-10-01";
-    [_models addObject:model9];
-    
-    IntegralRecordModel *model16 = [IntegralRecordModel new];
-    model16.type = @"提现";
-    model16.sum = @"-1000";
-    model16.summery = @"提现";
-    model16.date = @"2019-10-01";
-    [_models addObject:model16];
-    
-    IntegralRecordModel *model10 = [IntegralRecordModel new];
-    model10.type = @"提现";
-    model10.sum = @"-1000";
-    model10.summery = @"提现";
-    model10.date = @"2019-10-01";
-    [_models addObject:model10];
+    [self loadData];
     [self.navigationItem setLeftBarButtonItem:nil];
      [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];}
 
@@ -125,20 +50,20 @@
 }
 
 -(void) addTableView{
-    UITableView *tb = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64) style:UITableViewStylePlain];
-    tb.backgroundColor = [UIColor whiteColor];
-    tb.separatorColor = [ColorContants integralSeperatorColor];
-    tb.separatorInset = UIEdgeInsetsMake(0, SizeWidth(12), 0, SizeWidth(12));
-    [tb registerClass:[IntegralHeaderCell class] forCellReuseIdentifier:@"cell"];
-    [tb registerClass:[IntegralCell class] forCellReuseIdentifier:@"integralCell"];
-    [tb registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"header"];
-    tb.allowsSelection = NO;
-    tb.clipsToBounds=YES;
+    _tb = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64) style:UITableViewStylePlain];
+    _tb.backgroundColor = [UIColor whiteColor];
+    _tb.separatorColor = [ColorContants integralSeperatorColor];
+    _tb.separatorInset = UIEdgeInsetsMake(0, SizeWidth(12), 0, SizeWidth(12));
+    [_tb registerClass:[IntegralHeaderCell class] forCellReuseIdentifier:@"cell"];
+    [_tb registerClass:[IntegralCell class] forCellReuseIdentifier:@"integralCell"];
+    [_tb registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"header"];
+    _tb.allowsSelection = NO;
+    _tb.clipsToBounds=YES;
 
-    tb.dataSource = self;
-    tb.delegate = self;
+    _tb.dataSource = self;
+    _tb.delegate = self;
     
-    [self.view addSubview:tb];
+    [self.view addSubview:_tb];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -266,46 +191,35 @@
 
 
 -(void) loadData{
-//    NSMutableDictionary *params = [NSMutableDictionary new];
-//    [params setObject:@"5" forKey:@"real_id"];
-//    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-//    [params setObject:userTokenStr forKey:@"userToken"];
-//    [ConfigModel showHud:self];
-//    
-//    [HttpRequest postPath:@"_homepage_001" params:params resultBlock:^(id responseObject, NSError *error) {
-//        [ConfigModel hideHud:self];
-//        NSDictionary *datadic = responseObject;
-//        if ([datadic[@"error"] intValue] == 0) {
-//            NSDictionary *infoDic = responseObject[@"info"];
-//            NSDictionary *userInfo = infoDic[@"userinfo"];
-//            
-//            UserModel *userModel = [UserModel new];
-//            userModel.name =  userInfo[@"nickname"];
-//            userModel.avatarUrl =  userInfo[@"avatar_url"];
-//            userModel.telNumber =  userInfo[@"mobile"];
-//            userModel.type =  userInfo[@"user_type"];
-//            userModel.integral =  userInfo[@"integral"];
-//            
-//            NSDictionary *goodsList = infoDic[@"goodlist"];
-//            for (NSDictionary *dict in goodsList) {
-//                GoodsModel *model = [GoodsModel new];
-//                model._id = dict[@"id"];
-//                model.name = dict[@"good"];
-//                model.imgUrl = dict[@"img"];
-//                model.sequence = [dict[@"sort_num"] intValue];
-//                
-//                [_models addObject:model];
-//            }
-//            
-//            [self setUser:userModel];
-//            [_collectionView reloadData];
-//            
-//        }else {
-//            NSString *info = datadic[@"info"];
-//            [ConfigModel mbProgressHUD:info andView:nil];
-//        }
-//        NSLog(@"error>>>>%@", error);
-//    }];
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_userintegrallist_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            
+            for (NSDictionary *dict in infoDic) {
+                IntegralRecordModel *model = [IntegralRecordModel new];
+                model.sum = dict[@"amount"];
+                model.type = [dict[@"type"]  isEqual: @"1"] ? @"收入":@"支出";
+                model.summery = dict[@"action_type"];
+                model.date = dict[@"create_time"];
+                
+                [_models addObject:model];
+            }
+            
+            [_tb reloadData];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
 }
 
 -(void) getIntegral{

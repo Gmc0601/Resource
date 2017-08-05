@@ -164,6 +164,27 @@ static char base64EncodingTable[64] = {
     return result;
 }
 
+-(BOOL) isTelNumber{
+    if (self.length <= 0) {
+        return NO;
+    }
+    NSString *phoneRegex = @"^1+[3578]+\\d{9}";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    
+    return  [phoneTest evaluateWithObject:self];
+}
+
+-(BOOL) isIdCardNo{
+    BOOL flag;
+    if (self.length <= 0) {
+        flag = NO;
+        return flag;
+    }
+    NSString *regex2 = @"(^[0-9]{15}$)|([0-9]{17}([0-9]|X)$)";
+    NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
+    return [identityCardPredicate evaluateWithObject:self];
+}
+
 @end
 
 

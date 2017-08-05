@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import <PopupDialog/PopupDialog-Swift.h>
 #import "UIImageView+WebCache.h"
+#import "NSString+Category.h"
 
 @interface BaseViewController : UIViewController
 

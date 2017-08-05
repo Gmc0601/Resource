@@ -283,6 +283,41 @@
         return;
     }
     
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [ConfigModel showHud:self];
+    
+//    [HttpRequest postPath:@"_userintegrallist_001" params:params resultBlock:^(id responseObject, NSError *error) {
+//        [ConfigModel hideHud:self];
+//        NSDictionary *datadic = responseObject;
+//        if ([datadic[@"error"] intValue] == 0) {
+//            NSDictionary *infoDic = responseObject[@"info"];
+//            
+//            for (NSDictionary *dict in infoDic) {
+//                IntegralRecordModel *model = [IntegralRecordModel new];
+//                model.sum = dict[@"amount"];
+//                model.type = [dict[@"type"]  isEqual: @"1"] ? @"收入":@"支出";
+//                model.summery = dict[@"action_type"];
+//                model.date = dict[@"create_time"];
+//                
+//                [_models addObject:model];
+//            }
+//            
+//            [_tb reloadData];
+//            
+//        }else {
+//            NSString *info = datadic[@"info"];
+//            [ConfigModel mbProgressHUD:info andView:nil];
+//        }
+//        NSLog(@"error>>>>%@", error);
+//    }];
+    
+    self.integral = self.integral - model.integral;
+    _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
+}
+
+-(void) showPopup{
     PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@""
                                                     message:@"提现已提交，正在审核中..."
                                                       image:nil
@@ -307,9 +342,6 @@
     [popup addButtons: @[cancel]];
     
     [self presentViewController:popup animated:YES completion:nil];
-    
-    self.integral = self.integral - model.integral;
-    _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
 }
 
 -(void) setBankCard:(BankCardModel *) bankCard{
