@@ -47,7 +47,6 @@
 
     
     _img = [UIImageView new];
-    _img.backgroundColor = [UIColor redColor];
     [backView addSubview:_img];
     
     [_img mas_makeConstraints:^(MASConstraintMaker *make) {

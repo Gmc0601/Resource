@@ -254,8 +254,8 @@
     
     KitingModel *model = _models[_selectIndex];
     
-    if (self.integral > model.integral) {
-        [ConfigModel mbProgressHUD:@"积分不够，请努赚取。" andView:self.view];
+    if (self.integral < model.integral) {
+        [ConfigModel mbProgressHUD:@"积分不足，无法提现。" andView:self.view];
         
         return;
     }
@@ -271,10 +271,12 @@
         NSDictionary *datadic = responseObject;
         NSString *info = datadic[@"info"];
         [ConfigModel mbProgressHUD:info andView:self.view];
+
+        if ([datadic[@"error"] intValue] != 0) {
+            self.integral = self.integral - model.integral;
+            _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
+        }
     }];
-    
-    self.integral = self.integral - model.integral;
-    _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
 }
 
 -(void) showPopup{
@@ -400,8 +402,8 @@
             NSDictionary *infoDic = responseObject[@"info"];
             for (NSDictionary *dict in infoDic) {
                 KitingModel *model = [KitingModel new];
-                model.integral = (int)dict[@"integral"];
-                model.money = (int)dict[@"money"];
+                model.integral = [[dict valueForKey:@"integral"] intValue];
+                model.money = [[dict valueForKey:@"money"] intValue];
                 model._id = dict[@"id"];
                 [_models addObject:model];
             }

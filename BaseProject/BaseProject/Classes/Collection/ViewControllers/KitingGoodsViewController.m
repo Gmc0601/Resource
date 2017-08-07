@@ -28,45 +28,7 @@
     _models = [NSMutableArray arrayWithCapacity:0];
     [PublicClass setRightTitleOnTargetNav:self action:@selector(gotoRecord) Title:@"兑换记录"];
     
-    KitingGoodsModel *model1 = [KitingGoodsModel new];
-    model1.name = @"秋田小町米";
-    model1.needIntergal = @"288";
-    [_models addObject:model1];
-    
-    KitingGoodsModel *model2 = [KitingGoodsModel new];
-    model2.name = @"秋田小町米";
-    model2.needIntergal = @"288";
-    [_models addObject:model2];
-    
-    KitingGoodsModel *model3 = [KitingGoodsModel new];
-    model3.name = @"秋田小町米";
-    model3.needIntergal = @"288";
-    [_models addObject:model3];
-    
-    KitingGoodsModel *model4 = [KitingGoodsModel new];
-    model4.name = @"秋田小町米";
-    model4.needIntergal = @"288";
-    [_models addObject:model4];
-    
-    KitingGoodsModel *model5 = [KitingGoodsModel new];
-    model5.name = @"秋田小町米";
-    model5.needIntergal = @"288";
-    [_models addObject:model5];
-    
-    KitingGoodsModel *model6 = [KitingGoodsModel new];
-    model6.name = @"秋田小町米";
-    model6.needIntergal = @"288";
-    [_models addObject:model6];
-    
-    KitingGoodsModel *model7 = [KitingGoodsModel new];
-    model7.name = @"秋田小町米";
-    model7.needIntergal = @"288";
-    [_models addObject:model7];
-    
-    KitingGoodsModel *model8 = [KitingGoodsModel new];
-    model8.name = @"秋田小町米";
-    model8.needIntergal = @"288";
-    [_models addObject:model8];
+    [self loadKitingGoodsList];
 }
 
 -(void) addCollectionView{
@@ -131,12 +93,6 @@
 }
 
 -(void) kiting:(KitingGoodsModel *) model{
-        
-    if (self.integral > model.needIntergal.intValue) {
-        [ConfigModel mbProgressHUD:@"积分不够，请努赚取。" andView:self.view];
-    
-        return;
-    }
     
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
@@ -149,10 +105,12 @@
         NSDictionary *datadic = responseObject;
         NSString *info = datadic[@"info"];
         [ConfigModel mbProgressHUD:info andView:self.view];
+        
+        if ([datadic[@"error"] intValue] != 0) {
+            self.integral = self.integral - model.needIntergal.intValue;
+            _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
+        }
     }];
-    
-    self.integral = self.integral - model.needIntergal.intValue;
-    _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -270,6 +228,7 @@
                 model.needIntergal = dict[@"num"];
                 model.name = dict[@"name"];
                 model.imgUrl = dict[@"img"];
+                model._id = dict[@"id"];
                 [_models addObject:model];
             }
             
