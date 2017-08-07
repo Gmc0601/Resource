@@ -30,7 +30,7 @@
 //       NSForegroundColorAttributeName:RGBColor(0, 0, 0)}];
 
     
-//    [self getProtocolURl];
+    [self getProtocolURl];
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickProtocolBackBtn)];
     
     DetailWebView = [[UIWebView alloc] init];
@@ -39,17 +39,20 @@
     DetailWebView.scalesPageToFit = YES;
     //    [DetailWebView loadHTMLString:URLStr baseURL:nil];
     
-        NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];
-        NSMutableURLRequest *requeset = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:3.0];
+//        NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];
+//        NSMutableURLRequest *requeset = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:3.0];
+//       [DetailWebView loadRequest:requeset];
+    
     
        [self.view addSubview:DetailWebView];
-        [DetailWebView loadRequest:requeset];
+    
 }
 
 
 - (void)getProtocolURl{
-    
-    [HttpRequest postPath:@"_useragreement_001" params:nil resultBlock:^(id responseObject, NSError *error) {
+    NSMutableDictionary *protocolDic = [NSMutableDictionary new];
+    [protocolDic setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+    [HttpRequest postPath:@"_useragreement_001" params:protocolDic resultBlock:^(id responseObject, NSError *error) {
         
         if([error isEqual:[NSNull null]] || error == nil){
             NSLog(@"success");
@@ -98,7 +101,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     
-//    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '340%'"];
+    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '340%'"];
     
     
 }

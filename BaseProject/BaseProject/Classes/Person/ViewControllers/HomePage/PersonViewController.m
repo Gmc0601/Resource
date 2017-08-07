@@ -37,6 +37,8 @@
     UIView *signView;
     UIButton *GoodsBtn;
     UIView *lastView;
+    
+    UIImage * imgP;
 }
 
 
@@ -202,7 +204,6 @@ NSString *identifier = @"cell";
     lblTag.layer.cornerRadius = SizeHeight(7);
     lblTag.font = [UIFont fontWithName:[FontConstrants pingFang] size:11];
     [headerView addSubview:lblTag];
-    
     [lblTag mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(header.mas_centerX).offset(40);
         make.bottom.equalTo(header.mas_bottom).offset(SizeWidth(-18));
@@ -212,7 +213,7 @@ NSString *identifier = @"cell";
     }];
     
     _lblTelNumber  = [[UILabel alloc] init];
-    _lblTelNumber.text = @"18192061844";
+//    _lblTelNumber.text = @"18192061844";
     _lblTelNumber.textAlignment = NSTextAlignmentCenter;
     _lblTelNumber.textColor = [ColorContants phoneNumerFontColor];
     _lblTelNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:13];
@@ -225,8 +226,11 @@ NSString *identifier = @"cell";
         make.height.equalTo(lblTag.mas_height);
     }];
     
+//    _lblTelNumber.text = [ConfigModel getStringforKey:@"PersonPhone"];
+    
+    
     _lblName  = [[UILabel alloc] init];
-    _lblName.text = @"我只是个名字";
+//    _lblName.text = @"我只是个名字";
     _lblName.textAlignment = NSTextAlignmentCenter;
     _lblName.textColor = [ColorContants userNameFontColor];
     _lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
@@ -236,11 +240,13 @@ NSString *identifier = @"cell";
         make.centerX.equalTo(headerView.mas_centerX);
         make.bottom.equalTo(_lblTelNumber.mas_top).offset(SizeHeight(-13));
         make.width.equalTo(@(SizeWidth(300)));
-        make.height.equalTo(@(SizeHeight(14)));
+        make.height.equalTo(@(SizeHeight(18)));
     }];
-    
+//     _lblName.text = [ConfigModel getStringforKey:@"PersonNickName"];
     
     _avatarBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
+    _avatarBtn.layer.masksToBounds = YES;
+    _avatarBtn.layer.cornerRadius = SizeWidth(72)/2;
     [_avatarBtn setBackgroundImage:[UIImage imageNamed:@"mrtx144"] forState:UIControlStateNormal];
     [_avatarBtn addTarget:self action:@selector(pushPersonMessBtn) forControlEvents:UIControlEventTouchUpInside];
 //    _avatar.image = [UIImage imageNamed:@"mrtx144"];
@@ -249,8 +255,12 @@ NSString *identifier = @"cell";
         make.centerX.equalTo(header.mas_centerX).offset(0);
         make.bottom.equalTo(_lblName.mas_top).offset(SizeHeight(-36));
         make.width.equalTo(@(SizeWidth(72)));
-        make.height.equalTo(@(SizeHeight(72)));
+        make.height.equalTo(@(SizeWidth(72)));
     }];
+
+    
+    
+//    [_avatarBtn setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[ConfigModel getStringforKey:@"PersonPortrait"]]]] forState:UIControlStateNormal];
     
     
 //    _avatar  = [[UIImageView alloc] init];
@@ -329,7 +339,32 @@ NSString *identifier = @"cell";
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
+    
+    
+    _lblTelNumber.text = [ConfigModel getStringforKey:@"PersonPhone"];
+     _lblName.text = [ConfigModel getStringforKey:@"PersonNickName"];
+    dispatch_queue_t xrQueue = dispatch_queue_create("loadImae", NULL); // 创建GCD线程队列
+    dispatch_async(xrQueue, ^{
+        // 异步下载图片
+        imgP = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[ConfigModel getStringforKey:@"PersonPortrait"]]]];
+        // 主线程刷新UI
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (imgP) {
+                [_avatarBtn setImage:imgP forState:UIControlStateNormal];
+            }else{
+                [_avatarBtn setImage:[UIImage imageNamed:@"mrtx144"] forState:UIControlStateNormal];
+            }
+            
+        });
+        
+        
+        
+    });
 }
+
+
+
+
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -409,6 +444,7 @@ NSString *identifier = @"cell";
 - (void)pushPersonMessBtn{
     
     PersonMessageViewController *personMessVC = [[PersonMessageViewController alloc ] init];
+    personMessVC.protraitImage = imgP;
     [self.navigationController pushViewController:personMessVC animated:YES];
 }
 

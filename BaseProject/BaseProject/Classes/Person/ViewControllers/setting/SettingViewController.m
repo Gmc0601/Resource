@@ -11,6 +11,7 @@
 #import "CDZPicker.h"
 
 #import "ProtocolViewController.h"
+#import "LoginViewController.h"
 @interface SettingViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIAlertViewDelegate>
 {
     NSArray *roleArray;
@@ -103,7 +104,41 @@
 
 
 - (IBAction)logoutBtn:(UIButton *)sender {
-    
+    NSMutableDictionary *loginDic = [NSMutableDictionary new];
+    [loginDic setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+    [HttpRequest postPath:@"_logout_001" params:loginDic resultBlock:^(id responseObject, NSError *error) {
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSLog(@"login>>>>>>%@", responseObject);
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            [ConfigModel mbProgressHUD:datadic[@"info"] andView:self.view];
+            [ConfigModel saveBoolObject:NO forKey:isPersonlogin];
+            [ConfigModel saveBoolObject:NO forKey:isStorelogin];
+            NSUserDefaults *defatluts = [NSUserDefaults standardUserDefaults];
+            NSDictionary *dictionary = [defatluts dictionaryRepresentation];
+            for(NSString *key in [dictionary allKeys]){
+                [defatluts removeObjectForKey:key];
+                [defatluts synchronize];
+            }
+            
+            LoginViewController * loginVC = [[LoginViewController alloc] init];
+            UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:loginVC];
+            [self presentViewController:navi animated:YES completion:nil];
+            
+            NSLog(@"lo>>>>>>%@", [ConfigModel getStringforKey:@"PersonNickName"]);
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+//            LoginViewController * loginVC = [[LoginViewController alloc] init];
+//            UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:loginVC];
+//            [self presentViewController:navi animated:YES completion:nil];
+
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
 
 }
 

@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonMessageViewController">
             <connections>
                 <outlet property="ProtraitBtn" destination="x9J-gY-lhS" id="e3O-c8-Nbg"/>
+                <outlet property="ProtraitImg" destination="nFl-v9-eFo" id="Onu-9h-u9A"/>
+                <outlet property="nickNameBtn" destination="Ch1-Gy-RXp" id="4yY-uR-fOm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -69,21 +71,6 @@
                         <constraint firstAttribute="width" constant="6.5" id="tpv-YE-CaR"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x9J-gY-lhS">
-                    <rect key="frame" x="298.5" y="75" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="x9J-gY-lhS" secondAttribute="height" multiplier="15:15" id="jBw-Xe-rLK"/>
-                    </constraints>
-                    <state key="normal" image="mrtx144"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="25"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="ClickHeaderBtn:" destination="-1" eventType="touchUpInside" id="DSK-FJ-hiZ"/>
-                    </connections>
-                </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_gds" translatesAutoresizingMaskIntoConstraints="NO" id="vrM-Qc-vp9">
                     <rect key="frame" x="358.5" y="152" width="6.5" height="13"/>
                     <constraints>
@@ -103,19 +90,49 @@
                         <action selector="ChangeNickBtn:" destination="-1" eventType="touchUpInside" id="Ees-6q-77N"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nFl-v9-eFo">
+                    <rect key="frame" x="299" y="75" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="nFl-v9-eFo" secondAttribute="height" multiplier="7:7" id="Fbm-D6-UJO"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="25"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x9J-gY-lhS">
+                    <rect key="frame" x="298.5" y="75" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="x9J-gY-lhS" secondAttribute="height" multiplier="15:15" id="jBw-Xe-rLK"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="25"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="ClickHeaderBtn:" destination="-1" eventType="touchUpInside" id="DSK-FJ-hiZ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="3mr-j3-McW" firstAttribute="top" secondItem="4cV-1C-Plg" secondAttribute="bottom" constant="28.5" id="3cn-JN-nDL"/>
                 <constraint firstItem="Ch1-Gy-RXp" firstAttribute="top" secondItem="AdV-wr-Abr" secondAttribute="bottom" constant="7" id="Cwv-A5-PAY"/>
+                <constraint firstItem="nFl-v9-eFo" firstAttribute="top" secondItem="4cV-1C-Plg" secondAttribute="bottom" constant="10" id="FC0-fy-SD5"/>
                 <constraint firstItem="AdV-wr-Abr" firstAttribute="top" secondItem="x9J-gY-lhS" secondAttribute="bottom" constant="10" id="Hsd-Pq-Nap"/>
                 <constraint firstItem="3mr-j3-McW" firstAttribute="leading" secondItem="x9J-gY-lhS" secondAttribute="trailing" constant="10" id="JSo-6n-6kU"/>
                 <constraint firstItem="fo9-ll-Yqc" firstAttribute="top" secondItem="AdV-wr-Abr" secondAttribute="bottom" constant="17" id="LCI-oz-mHW"/>
+                <constraint firstItem="AdV-wr-Abr" firstAttribute="top" secondItem="nFl-v9-eFo" secondAttribute="bottom" constant="10" id="Mmj-bQ-6vg"/>
                 <constraint firstItem="vrM-Qc-vp9" firstAttribute="leading" secondItem="Ch1-Gy-RXp" secondAttribute="trailing" constant="10" id="OK8-oX-ffS"/>
                 <constraint firstItem="AdV-wr-Abr" firstAttribute="top" secondItem="hWh-fV-smU" secondAttribute="bottom" constant="20" id="W4I-18-GJF"/>
                 <constraint firstItem="hWh-fV-smU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="cKO-DG-NwW"/>
                 <constraint firstItem="AdV-wr-Abr" firstAttribute="centerX" secondItem="4cV-1C-Plg" secondAttribute="centerX" id="dHZ-4h-7we"/>
                 <constraint firstItem="cPI-qE-l4y" firstAttribute="leading" secondItem="AdV-wr-Abr" secondAttribute="leading" id="fy1-Zg-9qr"/>
+                <constraint firstItem="3mr-j3-McW" firstAttribute="leading" secondItem="nFl-v9-eFo" secondAttribute="trailing" constant="10" id="h0s-x6-24B"/>
                 <constraint firstItem="hWh-fV-smU" firstAttribute="top" secondItem="4cV-1C-Plg" secondAttribute="bottom" constant="20" id="lqS-aH-Yfa"/>
                 <constraint firstItem="AdV-wr-Abr" firstAttribute="top" secondItem="4cV-1C-Plg" secondAttribute="bottom" constant="70" id="m2n-T5-tSb"/>
                 <constraint firstItem="vrM-Qc-vp9" firstAttribute="top" secondItem="AdV-wr-Abr" secondAttribute="bottom" constant="16" id="maF-9N-RdP"/>
@@ -135,6 +152,5 @@
     </objects>
     <resources>
         <image name="icon_gds" width="6" height="13"/>
-        <image name="mrtx144" width="77" height="77"/>
     </resources>
 </document>

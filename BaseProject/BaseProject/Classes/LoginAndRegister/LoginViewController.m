@@ -10,6 +10,7 @@
 #import "PersonViewController.h"
 
 #import <UMSocialCore/UMSocialCore.h>
+#import "MBProgressHUD.h"
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *PersonBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shopBtn;
@@ -27,6 +28,14 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logginBtnTop;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logginBottomBtn;
+
+
+@property (weak, nonatomic) IBOutlet UITextField *phoneTF;
+@property (weak, nonatomic) IBOutlet UITextField *codeTF;
+@property(assign, nonatomic) NSInteger timeCount;
+@property(strong, nonatomic) NSTimer *timer;
+
+@property (nonatomic, assign) BOOL IsPerson;
 
 @end
 
@@ -46,25 +55,50 @@
      self.logginBtnHeight.constant = SizeHeight(44);
      self.logginBtnTop.constant = SizeHeight(20);
      self.logginBottomBtn.constant = SizeHeight(20);
+     self.IsPerson = YES;
+
     NSLog(@"%f", self.personBtnHeight.constant);
     // Do any additional setup after loading the view from its nib.
 }
 
 
+- (IBAction)personLoginBtn:(UIButton *)sender {
+    sender.layer.borderColor = UIColorFromHex(0x79b4f8).CGColor;
+    [self.PersonBtn setTitleColor:UIColorFromHex(0x79b4f8) forState:UIControlStateNormal];
+    self.shopBtn.layer.borderColor = UIColorFromHex(0xcccccc).CGColor;
+    [self.shopBtn setTitleColor:UIColorFromHex(0xcccccc) forState:UIControlStateNormal];
+    self.IsPerson = YES;
+
+}
+
+- (IBAction)StoreLoginBtn:(UIButton *)sender {
+    sender.layer.borderColor = UIColorFromHex(0x79b4f8).CGColor;
+    [sender setTitleColor:UIColorFromHex(0x79b4f8) forState:UIControlStateNormal];
+     self.PersonBtn.layer.borderColor = UIColorFromHex(0xcccccc).CGColor;
+     [self.PersonBtn setTitleColor:UIColorFromHex(0xcccccc) forState:UIControlStateNormal];
+     self.IsPerson = NO;
+}
+
+
+- (IBAction)protocolBtn:(UIButton *)sender {
+    [ConfigModel mbProgressHUD:@"使用本产品必需同意用户协议" andView:self.view];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 - (void)CreateUI{
     self.PersonBtn.layer.cornerRadius = SizeHeight(14.5);
     self.PersonBtn.layer.borderWidth = 1;
     self.PersonBtn.layer.borderColor = UIColorFromHex(0x79b4f8).CGColor;
+    [self.PersonBtn setTitleColor:UIColorFromHex(0x79b4f8) forState:UIControlStateNormal];
     
     self.shopBtn.layer.cornerRadius = SizeHeight(14.5);
     self.shopBtn.layer.borderWidth = 1;
     self.shopBtn.layer.borderColor = UIColorFromHex(0xcccccc).CGColor;
+    [self.shopBtn setTitleColor:UIColorFromHex(0xcccccc) forState:UIControlStateNormal];
     
     self.getCodeBtn.layer.cornerRadius = 2;
     self.getCodeBtn.layer.borderWidth = 1;
@@ -154,4 +188,101 @@
         }
     }];
 }
+
+
+//获取验证码
+- (IBAction)getCodeBtn:(UIButton *)sender {
+    if ([self.phoneTF.text isEqualToString:@""]) {
+        [ConfigModel mbProgressHUD:@"请输入正确的手机号" andView:self.view];
+        return;
+    }
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSMutableDictionary *codeMudic = [NSMutableDictionary dictionary];
+    [codeMudic setObject:self.phoneTF.text forKey:@"mobile"];
+    [HttpRequest postPath:@"_sms_002" params:codeMudic resultBlock:^(id responseObject, NSError *error) {
+//        NSLog(@"List>>>>>>%@", responseObject);
+        NSDictionary *datadic = responseObject;
+        hud.hidden = YES;
+        [hud removeFromSuperview];
+        if ([datadic[@"error"] intValue] == 0) {
+            sender.userInteractionEnabled = NO;
+//            _codeddStr = datadic[@"info"];
+            
+            self.timeCount = 60;
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reduceTime:) userInfo:sender repeats:YES];
+
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+//        NSLog(@"error>>>>%@", error);
+    }];
+    
+}
+
+- (IBAction)loginBtn:(UIButton *)sender {
+    NSMutableDictionary *loginDic = [NSMutableDictionary new];
+    [loginDic setObject:self.phoneTF.text forKey:@"mobile"];
+    [loginDic setObject:self.codeTF.text forKey:@"code"];
+    if (self.IsPerson) {
+        [loginDic setObject:@"1" forKey:@"user_type"];
+    }else{
+         [loginDic setObject:@"2" forKey:@"user_type"];
+    }
+    
+    [HttpRequest postPath:@"_login_001" params:loginDic resultBlock:^(id responseObject, NSError *error) {
+        
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSLog(@"login>>>>>>%@", responseObject);
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = datadic[@"info"];
+            NSString *usertoken = infoDic[@"userToken"];
+            [ConfigModel saveBoolObject:YES forKey:isPersonlogin];
+            [ConfigModel saveString:usertoken forKey:UserToken];
+        
+            PersonViewController *personVC = [[ PersonViewController alloc] init];
+            [ConfigModel saveString:infoDic[@"avatar_url"] forKey:@"PersonPortrait"];
+            [ConfigModel saveString:infoDic[@"nickname"] forKey:@"PersonNickName"];
+            [ConfigModel saveString:infoDic[@"mobile"] forKey:@"PersonPhone"];
+            personVC.protraitUrlStr = infoDic[@"avatar_url"];
+            personVC.nickNameStr = infoDic[@"nickname"];
+            personVC.phoneStr = infoDic[@"mobile"];
+            [self.navigationController pushViewController:personVC animated:YES];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+    
+}
+
+
+
+
+- (void)reduceTime:(NSTimer *)codeTimer {
+    self.timeCount--;
+    if (self.timeCount == 0) {
+        self.getCodeBtn.font = [UIFont systemFontOfSize:12];
+        [self.getCodeBtn setTitle:@"重新获取验证码" forState:UIControlStateNormal];
+        [self.getCodeBtn setTitleColor:RGBColor(55, 159, 242) forState:UIControlStateNormal];
+        UIButton *info = codeTimer.userInfo;
+        info.enabled = YES;
+        self.getCodeBtn.userInteractionEnabled = YES;
+        [self.timer invalidate];
+    } else {
+        self.getCodeBtn.font = [UIFont systemFontOfSize:12];
+        NSString *str = [NSString stringWithFormat:@"%lu秒后重新获取", self.timeCount];
+        [self.getCodeBtn setTitle:str forState:UIControlStateNormal];
+        self.getCodeBtn.userInteractionEnabled = NO;
+        
+    }
+    
+}
+
 @end

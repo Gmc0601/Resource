@@ -9,5 +9,8 @@
 #import "CCBaseViewController.h"
 
 @interface PersonViewController : CCBaseViewController
+@property (nonatomic, strong) NSString *protraitUrlStr;
+@property (nonatomic, strong) NSString *nickNameStr;
+@property (nonatomic, strong) NSString *phoneStr;
 
 @end

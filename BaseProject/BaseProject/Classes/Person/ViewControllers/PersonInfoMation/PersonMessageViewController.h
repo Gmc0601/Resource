@@ -10,4 +10,6 @@
 
 @interface PersonMessageViewController : UIViewController
 
+@property(nonatomic, strong)UIImage *protraitImage;
+
 @end

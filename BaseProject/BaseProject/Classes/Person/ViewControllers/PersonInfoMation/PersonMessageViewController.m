@@ -14,18 +14,23 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *ProtraitBtn;
+@property (weak, nonatomic) IBOutlet UIButton *nickNameBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *ProtraitImg;
 
 @end
 
 @implementation PersonMessageViewController
 
 - (void)viewDidLoad {
+    [self.ProtraitImg setImage:self.protraitImage];
+//    [self setImageAndTitle];
     [super viewDidLoad];
     self.navigationItem.title = @"个人信息";
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickPersonMessageBackBtn)];
     
-    
     // Do any additional setup after loading the view from its nib.
+    self.ProtraitBtn.layer.masksToBounds = YES;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,7 +46,37 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.translucent = YES;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    [self setImageAndTitle];
+    
 }
+
+- (void)setImageAndTitle{
+//    dispatch_queue_t xrQueue = dispatch_queue_create("loadImae", NULL);
+//    dispatch_async(xrQueue, ^{
+//        UIImage * imgP = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[ConfigModel getStringforKey:@"PersonPortrait"]]]];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (imgP) {
+//                [self.ProtraitBtn setImage:imgP forState:UIControlStateNormal];
+//            }else{
+//                [self.ProtraitBtn setImage:[UIImage imageNamed:@"mrtx144"] forState:UIControlStateNormal];
+//            }
+//        });
+//        
+//    });
+    [self.ProtraitImg sd_setImageWithURL:[NSURL URLWithString:[ConfigModel getStringforKey:@"PersonPortrait"]] placeholderImage:[UIImage imageNamed:@"mrtx144"] completed:nil];
+    
+//    [self.ProtraitBtn setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[ConfigModel getStringforKey:@"PersonPortrait"]]]] forState:UIControlStateNormal];
+    
+    
+    if ([[ConfigModel getStringforKey:@"PersonNickName"] isEqualToString:@"(null)"]) {
+        [self.nickNameBtn setTitle:@"我就是个名" forState:UIControlStateNormal];
+    }else{
+        [self.nickNameBtn setTitle:[ConfigModel getStringforKey:@"PersonNickName"] forState:UIControlStateNormal];
+    }
+
+}
+
 
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -127,27 +162,46 @@
     //     UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     //     [self.imageArray addObject:resultImage];
     UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-    [self.ProtraitBtn setImage:resultImage forState:UIControlStateNormal];;
+    [self.ProtraitImg setImage:resultImage];;
     oneImgViewData=UIImageJPEGRepresentation(resultImage,0.8);
     oneImgViewData = [oneImgViewData base64EncodedDataWithOptions:0];
+
+    NSString * tmpOneImgViewString = [[NSString alloc] initWithData:oneImgViewData  encoding:NSUTF8StringEncoding];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    NSMutableDictionary *infoDic=[NSMutableDictionary dictionary];
+    [infoDic setObject:tmpOneImgViewString forKey:@"avatar_url"];
+    [infoDic setObject:userTokenStr forKey:@"userToken"];
+    [HttpRequest postPath:@"_update_userinfo_001" params:infoDic resultBlock:^(id responseObject, NSError *error) {
+        
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *avatarDic = datadic[@"info"];
+            NSLog(@"333%@", datadic);
+            [ConfigModel saveString:avatarDic[@"avatar_url"] forKey:@"PersonPortrait"];
+//            [[NSUserDefaults standardUserDefaults] setObject:resultImage forKey:@"personImage"];
+          [ConfigModel mbProgressHUD:@"修改头像成功" andView:nil];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
     
-    //
-    //    //如果按钮创建时用的是系统风格UIButtonTypeSystem，需要在设置图片一栏设置渲染模式为"使用原图"
-    //        //裁成边角
-    //    }else
-    //    {
-    //        UIImage *resultImage1 = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    //        self.twoIMageBtn.image=resultImage1;
-    //    }
-    //
     
-    //    button.layer.cornerRadius = 100;
-    //    button.layer.masksToBounds = YES;
-    //使用模态返回到软件界面
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         
     }];
 }
+
+
+
+
+
 
 //点击取消按钮所执行的方法
 
