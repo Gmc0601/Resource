@@ -8,7 +8,7 @@
 
 #import "LoginViewController.h"
 #import "PersonViewController.h"
-
+#import "RegisterInfoViewController.h"
 #import <UMSocialCore/UMSocialCore.h>
 #import "MBProgressHUD.h"
 @interface LoginViewController ()
@@ -255,7 +255,12 @@
             
         }else {
             NSString *info = datadic[@"info"];
-            [ConfigModel mbProgressHUD:info andView:nil];
+            if([datadic[@"info"]  isEqual: @"该商家账号尚未注册，请先提交注册申请！"]){
+                RegisterInfoViewController *newVC = [RegisterInfoViewController new];
+                [self.navigationController pushViewController:newVC animated:YES];
+            }else{
+                [ConfigModel mbProgressHUD:info andView:nil];
+            }
         }
         NSLog(@"error>>>>%@", error);
     }];

@@ -238,45 +238,57 @@
 
 -(void) tapLocationButton{
     LocationViewController *newViewCotroller = [LocationViewController new];
+    newViewCotroller.delegate = self;
     [self.navigationController pushViewController:newViewCotroller animated:YES];
 }
 
 -(void) tapConfirmButton{
+    BOOL isInvalidate = NO;
     NSMutableString *strMsg = [[NSMutableString alloc] initWithString:@"请输入正确的"];
     if (_txtName.text == nil || _txtName.text.length == 0) {
         [strMsg appendString:@"姓名"];
+        isInvalidate = YES;
     }
     
     if (_txtTelNo.text == nil || ![_txtTelNo.text isTelNumber]) {
         [strMsg appendString:@",手机号码"];
+        isInvalidate = YES;
     }
     
     if (_txtCardId.text == nil || ![_txtCardId.text isIdCardNo]) {
         [strMsg appendString:@",身份证号码"];
+        isInvalidate = YES;
     }
     
     if (_txtPointName.text == nil || _txtPointName.text.length == 0) {
         [strMsg appendString:@",收购点名称"];
+        isInvalidate = YES;
     }
     
     if (_txtDetailAddress.text == nil || _txtDetailAddress.text.length == 0) {
         [strMsg appendString:@",详细地址"];
+        isInvalidate = YES;
     }
     
     if (_location == nil) {
         [strMsg appendString:@"\n请选择收购点地址"];
+        isInvalidate = YES;
     }
     
     if (_imgfacade == nil || _imgLicense == nil || _imgCardBack == nil || _imgCardFront == nil) {
          [strMsg appendString:@"\n请上传全部图片"];
+        isInvalidate = YES;
     }
     
-    if (strMsg.length > 0) {
+    if (strMsg.length > 0 && isInvalidate) {
         NSString *msg = strMsg;
-        NSString *str = [strMsg substringWithRange:NSMakeRange(6, 1)];
-        if ([str  isEqual: @","]) {
-            msg = [strMsg stringByReplacingCharactersInRange:NSMakeRange(6, 1) withString:@""];
+        if ([strMsg containsString:@"请输入正确的"]) {
+            NSString *str = [strMsg substringWithRange:NSMakeRange(6, 1)];
+            if ([str  isEqual: @","]) {
+                msg = [strMsg stringByReplacingCharactersInRange:NSMakeRange(6, 1) withString:@""];
+            }
         }
+    
         [ConfigModel mbProgressHUD:msg andView:self.view];
         return;
     }
@@ -289,14 +301,14 @@
     [params setObject:_txtName.text forKey:@"nickname"];
     [params setObject:_txtTelNo.text forKey:@"mobile"];
     [params setObject:_txtCardId.text forKey:@"id_num"];
-    [params setObject:_txtPointName forKey:@"good_name"];
+    [params setObject:_txtPointName.text forKey:@"good_name"];
     [params setObject:_txtDetailAddress.text forKey:@"address"];
     [params setObject:[NSString stringWithFormat:@"%f",_location.longitude] forKey:@"long"];
     [params setObject:[NSString stringWithFormat:@"%f",_location.latitude] forKey:@"lat"];
     [params setObject:[GTMBase64 encodeBase64Data:_imgCardFront] forKey:@"front_img"];
-    [params setObject:_txtDetailAddress.text forKey:@"verso_img"];
-    [params setObject:_txtDetailAddress.text forKey:@"permit"];
-    [params setObject:_txtDetailAddress.text forKey:@"good_img"];
+    [params setObject:[GTMBase64 encodeBase64Data:_imgCardBack] forKey:@"verso_img"];
+    [params setObject:[GTMBase64 encodeBase64Data:_imgLicense] forKey:@"permit"];
+    [params setObject:[GTMBase64 encodeBase64Data:_imgfacade] forKey:@"good_img"];
     
     [HttpRequest postPath:@"_register_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
@@ -339,8 +351,9 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void) chooseAddress:(AMapGeoPoint *)point{
-    
+-(void) chooseAddress:(AMapGeoPoint *)point withName:(NSString *) name{
+    _location = point;
+    [_btnAddress setTitle:name forState:UIControlStateNormal];
 }
 
 @end

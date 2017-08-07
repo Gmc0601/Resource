@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface KitingGoodsRecordModel : NSObject
-
+@property(retain,atomic) NSString *type;
+@property(retain,atomic) NSString *goodsName;
+@property(retain,atomic) NSDate *date;
+@property(retain,atomic) NSString *integral;
 @end

@@ -99,7 +99,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
     _tb.separatorColor = [ColorContants integralSeperatorColor];
     [_tb registerClass:[LocationCell class] forCellReuseIdentifier:@"LocationCell"];
     [_tb registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    _tb.allowsSelection = NO;
+    _tb.allowsSelection = YES;
     _tb.clipsToBounds=YES;
     _tb.dataSource = self;
     _tb.delegate = self;
@@ -159,8 +159,9 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    AMapGeoPoint *point = ((AMapPOI *) _dataSource[indexPath.row]).location;
-    [self.delegate chooseAddress:point];
+    AMapPOI *poi = (AMapPOI *) _dataSource[indexPath.row];
+    AMapGeoPoint *point = poi.location;
+    [self.delegate chooseAddress:point withName:poi.name];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

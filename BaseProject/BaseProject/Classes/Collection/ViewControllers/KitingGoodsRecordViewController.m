@@ -8,100 +8,53 @@
 
 #import "KitingGoodsRecordViewController.h"
 #import "KitingGoodsRecordCell.h"
+#import "KitingGoodsRecordModel.h"
+#import "TBRefresh.h"
+
 @interface KitingGoodsRecordViewController ()
 @property(retain,atomic) NSMutableArray *models;
+@property(assign,nonatomic) int pageIndex;
+@property(assign,nonatomic) int limit;
+@property(retain,atomic) UITableView *tb;
 @end
 
 @implementation KitingGoodsRecordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _limit = 10;
+    _pageIndex = 0;
     [self setNavTitle:@"积分兑换记录"];
     [self addTableView];
     _models = [NSMutableArray arrayWithCapacity:0];
     
-    IntegralRecordModel *model1 = [IntegralRecordModel new];
-    model1.type = @"提现";
-    model1.sum = @"-1000";
-    model1.summery = @"提现";
-    model1.date = @"2019-10-01";
-    [_models addObject:model1];
+    __weak KitingGoodsRecordViewController *weakSelf = self;
+    [_tb addRefreshHeaderWithBlock:^{
+        _pageIndex = 0;
+        [weakSelf loadKitingRecord];
+        [weakSelf.tb.header endHeadRefresh];
+    }];
     
-    IntegralRecordModel *model2 = [IntegralRecordModel new];
-    model2.type = @"提现";
-    model2.sum = @"-1000";
-    model2.summery = @"提现";
-    model2.date = @"2019-10-01";
-    [_models addObject:model2];
+    [_tb addRefreshFootWithBlock:^{
+        [weakSelf loadKitingRecord];
+        [weakSelf.tb.footer endFooterRefreshing];
+    }];
     
-    IntegralRecordModel *model3 = [IntegralRecordModel new];
-    model3.type = @"提现";
-    model3.sum = @"-1000";
-    model3.summery = @"提现";
-    model3.date = @"2019-10-01";
-    [_models addObject:model3];
-    
-    IntegralRecordModel *model4 = [IntegralRecordModel new];
-    model4.type = @"提现";
-    model4.sum = @"-1000";
-    model4.summery = @"提现";
-    model4.date = @"2019-10-01";
-    [_models addObject:model4];
-    
-    IntegralRecordModel *model5 = [IntegralRecordModel new];
-    model5.type = @"提现";
-    model5.sum = @"-1000";
-    model5.summery = @"提现";
-    model5.date = @"2019-10-01";
-    [_models addObject:model5];
-    
-    IntegralRecordModel *model6 = [IntegralRecordModel new];
-    model6.type = @"提现";
-    model6.sum = @"-1000";
-    model6.summery = @"提现";
-    model6.date = @"2019-10-01";
-    [_models addObject:model6];
-    
-    IntegralRecordModel *model7 = [IntegralRecordModel new];
-    model7.type = @"提现";
-    model7.sum = @"-1000";
-    model7.summery = @"提现";
-    model7.date = @"2019-10-01";
-    [_models addObject:model7];
-    
-    IntegralRecordModel *model8 = [IntegralRecordModel new];
-    model8.type = @"提现";
-    model8.sum = @"-1000";
-    model8.summery = @"提现";
-    model8.date = @"2019-10-01";
-    [_models addObject:model8];
-    
-    IntegralRecordModel *model9 = [IntegralRecordModel new];
-    model9.type = @"提现";
-    model9.sum = @"-1000";
-    model9.summery = @"提现";
-    model9.date = @"2019-10-01";
-    [_models addObject:model9];
-    
-    IntegralRecordModel *model16 = [IntegralRecordModel new];
-    model16.type = @"提现";
-    model16.sum = @"-1000";
-    model16.summery = @"提现";
-    model16.date = @"2019-10-01";
-    [_models addObject:model16];}
+    [_tb.header beginRefreshing];
+}
 
 -(void) addTableView{
-    UITableView *tb = [[UITableView alloc] initWithFrame:CGRectMake(0, [self getNavBarHeight], self.view.bounds.size.width, self.view.bounds.size.height - [self getNavBarHeight]) style:UITableViewStylePlain];
-    tb.backgroundColor = [UIColor whiteColor];
-    tb.separatorColor = [ColorContants integralSeperatorColor];
-    [tb registerClass:[KitingGoodsRecordCell class] forCellReuseIdentifier:@"cell"];
-    tb.allowsSelection = NO;
-    tb.clipsToBounds=YES;
-    tb.dataSource = self;
-    tb.rowHeight = SizeHeight(50);
-    tb.tableFooterView = [UIView new];
+    _tb = [[UITableView alloc] initWithFrame:CGRectMake(0, [self getNavBarHeight], self.view.bounds.size.width, self.view.bounds.size.height - [self getNavBarHeight]) style:UITableViewStylePlain];
+    _tb.backgroundColor = [UIColor whiteColor];
+    _tb.separatorColor = [ColorContants integralSeperatorColor];
+    [_tb registerClass:[KitingGoodsRecordCell class] forCellReuseIdentifier:@"cell"];
+    _tb.allowsSelection = NO;
+    _tb.clipsToBounds=YES;
+    _tb.dataSource = self;
+    _tb.rowHeight = SizeHeight(50);
+    _tb.tableFooterView = [UIView new];
     
-    [self.view addSubview:tb];
+    [self.view addSubview:_tb];
 }
 
 
@@ -109,41 +62,48 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        ((KitingGoodsRecordCell *) cell).model = _models[indexPath.row];
+    ((KitingGoodsRecordCell *) cell).model = _models[indexPath.row];
     
     return cell;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{ 
-        return  _models.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return  _models.count;
 }
 
 -(void) loadKitingRecord{
-    [ConfigModel showHud:self];
+    _pageIndex++;
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
+    [params setObject:[NSString stringWithFormat:@"%d",_pageIndex] forKey:@"page"];
+    [params setObject:[NSString stringWithFormat:@"%d",_limit] forKey:@"size"];
     
-//    [HttpRequest postPath:@"_exchangeguserlist_001" params:params resultBlock:^(id responseObject, NSError *error) {
-//        [ConfigModel hideHud:self];
-//        NSDictionary *datadic = responseObject;
-//        if ([datadic[@"error"] intValue] == 0) {
-//            NSDictionary *infoDic = responseObject[@"info"];
-//            for (NSDictionary *dict in infoDic) {
-//                KitingGoodsRecord *model = [KitingGoodsRecord new];
-//                model.integral = (int)dict[@"integral"];
-//                model.money = (int)dict[@"money"];
-//                model._id = dict[@"id"];
-//                [_models addObject:model];
-//            }
-//            
-//            [_collectionView reloadData];
-//            
-//        }else {
-//            NSString *info = datadic[@"info"];
-//            [ConfigModel mbProgressHUD:info andView:nil];
-//        }
-//    }];
+    [HttpRequest postPath:@"_exchangeguserlist_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            if (infoDic.count == 0) {
+                _pageIndex--;
+                return;
+            }
+            
+            for (NSDictionary *dict in infoDic) {
+                KitingGoodsRecordModel *model = [KitingGoodsRecordModel new];
+                model.integral = dict[@"amount"];
+                model.goodsName = dict[@"good_name"];
+                model.date = dict[@"create_time"];
+                model.type = @"兑换";
+                [_models addObject:model];
+            }
+            
+            [_tb reloadData];
+        }else {
+            _pageIndex--;
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+    }];
 }
 
 @end

@@ -12,7 +12,7 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 
 @protocol LocationViewControllerDelegate<NSObject>
--(void) chooseAddress:(AMapGeoPoint *) point;
+-(void) chooseAddress:(AMapGeoPoint *)point withName:(NSString *) name;
 @end
 
 
