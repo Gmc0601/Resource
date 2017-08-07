@@ -9,8 +9,9 @@
 #import "RecycleDetailViewController.h"
 #import <Masonry/Masonry.h>
 #import "PublicClass.h"
-
+#import "NSMutableAttributedString+Category.h"
 #import "NearbyTableViewCell.h"
+
 @interface RecycleDetailViewController ()
 {
     UIView *TBheadView;
@@ -23,15 +24,25 @@
     UILabel *unitLabel;
     UILabel *priceLabel;
 }
+@property(retain,nonatomic) GoodsModel *model;
 @end
 
 @implementation RecycleDetailViewController
 
-@synthesize model = _model;
+@synthesize goodsId = _goodsId;
+-(void) setGoodsId:(NSString *)goodsId{
+    _goodsId = goodsId;
+    [self loadData];
+}
+
 -(void) setModel:(GoodsModel *)model{
     [self setNavTitle:_model.name];
     moneyLabel.text = [NSString stringWithFormat:@"￥%f", _model.price];
-    
+    if (_model.unit != nil) {
+        unitLabel.text = [NSString stringWithFormat:@"单位(%@)",_model.unit];
+        priceLabel.text = [NSString stringWithFormat:@"单位:%f元/%@",_model.price,_model.unit];
+        [self setAttributeString];
+    }
 }
 
 - (void)viewDidLoad {
@@ -100,8 +111,7 @@
         
     }];
     unitLabel.font = [UIFont systemFontOfSize:15];
-    unitLabel.text = @"重量(kg):";
-    
+    unitLabel.text = @"单位(kg):";
     
     AmountTF = [[UITextField alloc] init];
     [headImgView addSubview:AmountTF];
@@ -109,13 +119,13 @@
     AmountTF.layer.cornerRadius = 2.5;
     AmountTF.layer.borderWidth = 1;
     AmountTF.font = [UIFont systemFontOfSize:14];
+    AmountTF.keyboardType = UIKeyboardTypeDecimalPad;
     AmountTF.layer.borderColor = UIColorFromHex(0xe0e0e0).CGColor;
     [AmountTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headImgView).offset(SizeWidth(20));
         make.top.equalTo(unitLabel).offset(SizeHeight(30));
         make.width.equalTo(@(SizeWidth(249)));
         make.height.equalTo(@(SizeHeight(44)));
-        
     }];
     
     
@@ -145,24 +155,58 @@
         
     }];
     priceLabel.text = @"单价: 0.80元/kg";
+    
+    [self.view addSubview:TBheadView];
+}
+
+-(void) setAttributeString{
     NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc] initWithString:priceLabel.text];
     NSRange priceStrRange = NSMakeRange(4, 4);
     //    [priceStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:priceStrRange];
     [priceStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:priceStrRange];
     priceLabel.attributedText = priceStr;
     
-    
-    [self.view addSubview:TBheadView];
 }
 
 
 - (void)calculateMoneyBtn{
-    
+    moneyLabel.text = [NSString stringWithFormat:@"￥ %f",[self getSumMoney]];
 }
 
 -(void) showCallView{
     [PublicClass showCallPopupWithTelNo:@"400-800-2123" inViewController:self];
 }
 
+-(CGFloat) getSumMoney{
+    return floor(AmountTF.text.floatValue * _model.price);
+}
 
+-(void) loadData{
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [params setObject:self.goodsId forKey:@"id"];
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_gooddetail_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            
+            NSDictionary *goods = infoDic[@"good"];
+            GoodsModel *model = [GoodsModel new];
+            model._id = goods[@"real_id"];
+            model.name = goods[@"goodlist"];
+            model.imgUrl = goods[@"img"];
+            model.price = ((NSString *)goods[@"price"]).floatValue;
+            model.unit = goods[@"unit"];
+            
+            [self setModel:model];
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+    }];
+}
 @end

@@ -44,30 +44,7 @@
     _selectIndex = -1;
     _models = [NSMutableArray arrayWithCapacity:0];
     
-    KitingModel *model1 = [KitingModel new];
-    model1.money = 102;
-    model1.integral = 100;
-    [_models addObject:model1];
-    
-    KitingModel *model2 = [KitingModel new];
-    model2.money = 102;
-    model2.integral = 102;
-    [_models addObject:model2];
-    
-    KitingModel *model3 = [KitingModel new];
-    model3.money = 102;
-    model3.integral = 102;
-    [_models addObject:model3];
-    
-    KitingModel *model4 = [KitingModel new];
-    model4.money = 102;
-    model4.integral = 102;
-    [_models addObject:model4];
-    
-    KitingModel *model5 = [KitingModel new];
-    model5.money = 102;
-    model5.integral = 102;
-    [_models addObject:model5];
+    [self loadKitingRatio];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -286,32 +263,15 @@
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
+    [params setObject:model._id forKey:@"id"];
     [ConfigModel showHud:self];
     
-//    [HttpRequest postPath:@"_userintegrallist_001" params:params resultBlock:^(id responseObject, NSError *error) {
-//        [ConfigModel hideHud:self];
-//        NSDictionary *datadic = responseObject;
-//        if ([datadic[@"error"] intValue] == 0) {
-//            NSDictionary *infoDic = responseObject[@"info"];
-//            
-//            for (NSDictionary *dict in infoDic) {
-//                IntegralRecordModel *model = [IntegralRecordModel new];
-//                model.sum = dict[@"amount"];
-//                model.type = [dict[@"type"]  isEqual: @"1"] ? @"收入":@"支出";
-//                model.summery = dict[@"action_type"];
-//                model.date = dict[@"create_time"];
-//                
-//                [_models addObject:model];
-//            }
-//            
-//            [_tb reloadData];
-//            
-//        }else {
-//            NSString *info = datadic[@"info"];
-//            [ConfigModel mbProgressHUD:info andView:nil];
-//        }
-//        NSLog(@"error>>>>%@", error);
-//    }];
+    [HttpRequest postPath:@"_withdraw_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        NSString *info = datadic[@"info"];
+        [ConfigModel mbProgressHUD:info andView:self.view];
+    }];
     
     self.integral = self.integral - model.integral;
     _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
@@ -355,7 +315,7 @@
     cardName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
     cardName.textColor = [ColorContants whiteFontColor];
     cardName.textAlignment = NSTextAlignmentLeft;
-    cardName.text = bankCard.bankName;
+    cardName.text = @"银行卡";//bankCard.bankName;
     [_bankCardView addSubview:cardName];
     
     [cardName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -404,7 +364,7 @@
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
-    [ConfigModel showHud:self];
+    //    [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_usercard_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
@@ -419,12 +379,39 @@
                 _bankCard.userName = infoDic[@"real_name"];
                 [self setBankCard:_bankCard];
             }
-
+            
         }else {
             NSString *info = datadic[@"info"];
             [ConfigModel mbProgressHUD:info andView:nil];
         }
         NSLog(@"error>>>>%@", error);
+    }];
+}
+
+-(void) loadKitingRatio{
+    [ConfigModel showHud:self];
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [HttpRequest postPath:@"_withdrawratio_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            for (NSDictionary *dict in infoDic) {
+                KitingModel *model = [KitingModel new];
+                model.integral = (int)dict[@"integral"];
+                model.money = (int)dict[@"money"];
+                model._id = dict[@"id"];
+                [_models addObject:model];
+            }
+            
+            [_collectionView reloadData];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
     }];
 }
 

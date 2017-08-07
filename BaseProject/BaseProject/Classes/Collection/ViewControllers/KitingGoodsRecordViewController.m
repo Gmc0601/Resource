@@ -118,4 +118,32 @@
         return  _models.count;
 }
 
+-(void) loadKitingRecord{
+    [ConfigModel showHud:self];
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    
+//    [HttpRequest postPath:@"_exchangeguserlist_001" params:params resultBlock:^(id responseObject, NSError *error) {
+//        [ConfigModel hideHud:self];
+//        NSDictionary *datadic = responseObject;
+//        if ([datadic[@"error"] intValue] == 0) {
+//            NSDictionary *infoDic = responseObject[@"info"];
+//            for (NSDictionary *dict in infoDic) {
+//                KitingGoodsRecord *model = [KitingGoodsRecord new];
+//                model.integral = (int)dict[@"integral"];
+//                model.money = (int)dict[@"money"];
+//                model._id = dict[@"id"];
+//                [_models addObject:model];
+//            }
+//            
+//            [_collectionView reloadData];
+//            
+//        }else {
+//            NSString *info = datadic[@"info"];
+//            [ConfigModel mbProgressHUD:info andView:nil];
+//        }
+//    }];
+}
+
 @end

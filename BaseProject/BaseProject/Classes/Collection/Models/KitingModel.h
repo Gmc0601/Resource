@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface KitingModel : NSObject
+@property(retain,atomic) NSString *_id;
 @property(assign,nonatomic) int integral;
 @property(assign,nonatomic) int money;
 @end

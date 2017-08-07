@@ -93,6 +93,7 @@
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    KitingGoodsModel *mode = _models[indexPath.row];
     PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@""
                                                     message:@"兑换会减掉相应的积分哟\n确定兑换码？"
                                                       image:nil
@@ -116,7 +117,7 @@
     cancel.titleColor = popupViewController.titleColor;
     
     DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"确认" height:50 dismissOnTap:NO action:^{
-       //TODO:
+        [self kiting:mode];
         [popup dismiss:^{
             
         }];
@@ -127,6 +128,31 @@
     [popup addButtons: @[cancel,ok]];
     
     [self presentViewController:popup animated:YES completion:nil];
+}
+
+-(void) kiting:(KitingGoodsModel *) model{
+        
+    if (self.integral > model.needIntergal.intValue) {
+        [ConfigModel mbProgressHUD:@"积分不够，请努赚取。" andView:self.view];
+    
+        return;
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [params setObject:model._id forKey:@"id"];
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_exchangegood_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        NSString *info = datadic[@"info"];
+        [ConfigModel mbProgressHUD:info andView:self.view];
+    }];
+    
+    self.integral = self.integral - model.needIntergal.intValue;
+    _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -226,6 +252,40 @@
     KitingGoodsRecordViewController *newViewController = [KitingGoodsRecordViewController new];
     
     [self.navigationController pushViewController:newViewController animated:YES];
+}
+
+-(void) loadKitingGoodsList{
+    [ConfigModel showHud:self];
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    
+    [HttpRequest postPath:@"_exchangegoodlist_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            for (NSDictionary *dict in infoDic) {
+                KitingGoodsModel *model = [KitingGoodsModel new];
+                model.needIntergal = dict[@"num"];
+                model.name = dict[@"name"];
+                model.imgUrl = dict[@"img"];
+                [_models addObject:model];
+            }
+            
+            [_models sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                KitingGoodsModel *model1 = (KitingGoodsModel *) obj1;
+                KitingGoodsModel *model2 = (KitingGoodsModel *) obj2;
+                return model1.sequence < model2.sequence;
+            }];
+            
+            [_collectionView reloadData];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+    }];
 }
 
 @end

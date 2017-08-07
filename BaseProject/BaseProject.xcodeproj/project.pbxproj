@@ -90,6 +90,7 @@
 		6BB129861F24F696004D9A24 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB129851F24F696004D9A24 /* UserModel.m */; };
 		6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */; };
 		6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE7E51F26437F006B6DA4 /* Constants.m */; };
+		6BE3125A1F3607E300D3221B /* KitingGoodsRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE312591F3607E300D3221B /* KitingGoodsRecordModel.m */; };
 		6BE806651F30170F005133C8 /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE806641F30170F005133C8 /* LocationHelper.m */; };
 		6BE806681F301ADD005133C8 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE806671F301ADD005133C8 /* LocationViewController.m */; };
 		6BFE65661F30BE9100EC4B40 /* LocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE65651F30BE9100EC4B40 /* LocationCell.m */; };
@@ -307,6 +308,8 @@
 		6BBCE7DD1F262F0F006B6DA4 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		6BBCE7E41F26437F006B6DA4 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Constrants/Constants.h; sourceTree = "<group>"; };
 		6BBCE7E51F26437F006B6DA4 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Constrants/Constants.m; sourceTree = "<group>"; };
+		6BE312581F3607E300D3221B /* KitingGoodsRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KitingGoodsRecordModel.h; sourceTree = "<group>"; };
+		6BE312591F3607E300D3221B /* KitingGoodsRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KitingGoodsRecordModel.m; sourceTree = "<group>"; };
 		6BE806631F30170F005133C8 /* LocationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationHelper.h; sourceTree = "<group>"; };
 		6BE806641F30170F005133C8 /* LocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationHelper.m; sourceTree = "<group>"; };
 		6BE806661F301ADD005133C8 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
@@ -444,6 +447,8 @@
 				6B0165FB1F2CD812002071E2 /* KitingModel.m */,
 				6B0166311F2DB10F002071E2 /* KitingGoodsModel.h */,
 				6B0166321F2DB10F002071E2 /* KitingGoodsModel.m */,
+				6BE312581F3607E300D3221B /* KitingGoodsRecordModel.h */,
+				6BE312591F3607E300D3221B /* KitingGoodsRecordModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1162,6 +1167,7 @@
 				42C84F0F1EF2E97D0008189D /* UIView+BGFrame.m in Sources */,
 				429558261F248874000B2BB2 /* BaseTableView.m in Sources */,
 				42C84F081EF2E97D0008189D /* UIColor+BGHexColor.m in Sources */,
+				6BE3125A1F3607E300D3221B /* KitingGoodsRecordModel.m in Sources */,
 				42C84F041EF2E97D0008189D /* NSString+MD5.m in Sources */,
 				6B12E48E1F2B8D45008C4A3F /* IntegralHeaderCell.m in Sources */,
 				42C84F131EF2EA140008189D /* UITextView+placeholder.m in Sources */,

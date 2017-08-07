@@ -7,6 +7,8 @@
 //
 
 #import "RegisterResultViewController.h"
+#import "LoginViewController.h"
+#import "RegisterInfoViewController.h"
 
 @interface RegisterResultViewController ()
 @property(retain,atomic) UILabel *lblMsg ;
@@ -34,7 +36,7 @@
 -(void) addRejectedView{
     [self addImage:@"zlsh_icon_yw"];
     [self addMessageLabel:@"因填写的资料有误，请重新填写"];
-    [self addRejectedView];
+    [self addRegistButton];
 }
 
 -(void) addApprovedView{
@@ -112,8 +114,14 @@
     
 }
 
+-(void) backAction{
+    LoginViewController *newVC = [LoginViewController new];
+    [self presentViewController:newVC animated:YES completion:nil];
+}
+
 -(void) tapRegistButton{
-    
+    RegisterInfoViewController *newVC = [RegisterInfoViewController new];
+    [self presentViewController:newVC animated:YES completion:nil];
 }
 
 @end

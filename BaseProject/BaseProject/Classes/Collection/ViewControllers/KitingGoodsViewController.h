@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface KitingGoodsViewController : BaseViewController<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
-
+@property(assign,nonatomic) int integral;
 @end

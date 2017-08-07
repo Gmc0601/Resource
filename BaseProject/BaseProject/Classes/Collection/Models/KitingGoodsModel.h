@@ -13,4 +13,5 @@
 @property(retain,atomic) NSString *imgUrl;
 @property(retain,atomic) NSString *name;
 @property(retain,atomic) NSString *needIntergal;
+@property(assign,nonatomic) int sequence;
 @end

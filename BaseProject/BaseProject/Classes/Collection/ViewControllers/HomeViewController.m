@@ -19,7 +19,7 @@
 #import "PublicClass.h"
 #import "RegisterInfoViewController.h"
 #import "UIImageView+WebCache.h"
-#import "GoodsListViewController.h";
+#import "GoodsListViewController.h"
 
 @interface HomeViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -286,7 +286,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RecycleDetailViewController *newViewController = [[RecycleDetailViewController alloc] init];
-    newViewController.model = _models[indexPath.row];
+    newViewController.goodsId = ((GoodsModel *)_models[indexPath.row])._id;
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 
