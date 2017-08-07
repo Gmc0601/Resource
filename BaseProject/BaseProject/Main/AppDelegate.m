@@ -14,6 +14,9 @@
 
 
 #import <UMSocialCore/UMSocialCore.h>
+#import "PersonViewController.h"
+#import "HomeViewController.h"
+#import "LoginViewController.h"
 #define USHARE_DEMO_APPKEY @"5861e5daf5ade41326001eab"
 
 @interface AppDelegate ()
@@ -27,8 +30,18 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    TempViewController * nav = [[TempViewController alloc] init];
-    self.window.rootViewController = nav;
+    NSLog(@"4444%@", [ConfigModel getStringforKey:isPersonlogin]);
+    if ([[ConfigModel getStringforKey:isPersonlogin]  isEqualToString:@"1"]) {
+        PersonViewController * PersonVC = [[PersonViewController alloc] init];
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:PersonVC];;
+    }else if ([[ConfigModel getStringforKey:isStorelogin] isEqualToString:@"1"]){
+        HomeViewController * homeVC = [[HomeViewController alloc] init];
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    }else{
+        LoginViewController * loginVC = [[LoginViewController alloc] init];
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    }
+    
     
     self.window.backgroundColor = [UIColor whiteColor];
     

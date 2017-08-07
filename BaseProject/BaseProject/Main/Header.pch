@@ -12,6 +12,7 @@
 #import "CCUrl.h"
 #import "ConfigModel.h"
 #import "MainApi.h"
+#import "UIImageView+WebCache.h"
 //#import "JumpFactory.h"
 #define API_KEY @"292c0fdfe3e1facb67a1e743303426bb"
 
@@ -95,7 +96,9 @@
 #define App_SDKversion         [[UIDevice currentDevice] systemVersion]
 
 
-#define IsLogin @"islogin"
+#define isPersonlogin @"isPersonlogin"
+#define isStorelogin @"isStorelogin"
+
 
 #define UserToken @"userTOken"
 
