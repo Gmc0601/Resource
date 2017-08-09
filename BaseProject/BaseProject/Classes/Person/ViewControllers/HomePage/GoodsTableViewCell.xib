@@ -65,6 +65,11 @@
                     <constraint firstItem="Swa-rp-hWa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xkm-sN-eKk"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="RightPriceLabel" destination="N6j-qT-Ksy" id="LwW-t6-0r3"/>
+                <outlet property="TableViewImg" destination="fGC-kF-abr" id="xjI-5L-ZDR"/>
+                <outlet property="leftNameLabel" destination="Mwy-IR-Jpk" id="bkc-bW-HBF"/>
+            </connections>
             <point key="canvasLocation" x="18" y="33.5"/>
         </tableViewCell>
     </objects>

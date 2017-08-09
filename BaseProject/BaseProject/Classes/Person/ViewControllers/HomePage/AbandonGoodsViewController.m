@@ -10,7 +10,7 @@
 #import <Masonry/Masonry.h>
 
 #import "NearbyTableViewCell.h"
-@interface AbandonGoodsViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface AbandonGoodsViewController ()<UITableViewDelegate,UITableViewDataSource,PersonPageTableViewDelegate>
 {
     UITableView *AbandonTableView;
     UIView *TBheadView;
@@ -22,6 +22,7 @@
     UIButton *sureBtn;
     
     UILabel *priceLabel;
+    NSMutableArray *GoodsDetailArr;
 }
 @end
 
@@ -29,15 +30,48 @@
 //392
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"废报纸";
+    GoodsDetailArr = [NSMutableArray new];
+    self.title = self.abandanGoosVCTitleStr;
     self.automaticallyAdjustsScrollViewInsets = NO;
      self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
     // Do any additional setup after loading the view.
 
     [self initTableView];
     [self CreateUI];
+    [self getGoodsDetailData];
      AbandonTableView.tableHeaderView = TBheadView;
 }
+
+
+
+- (void)getGoodsDetailData{
+    NSMutableDictionary *GoodsDetailDic = [NSMutableDictionary new];
+    [GoodsDetailDic setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+    [GoodsDetailDic setObject:self.abandanSecondIDStr forKey:@"id"];
+    [GoodsDetailDic setObject:[ConfigModel getStringforKey:@"longitudeStr"] forKey:@"long"];
+    [GoodsDetailDic setObject:[ConfigModel getStringforKey:@"latitudeStr"] forKey:@"lat"];
+    [HttpRequest postPath:@"_gooddetail_001" params:GoodsDetailDic resultBlock:^(id responseObject, NSError *error) {
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSDictionary *datadic = responseObject;
+        NSLog(@"error>%@", datadic);
+        if ([datadic[@"error"] intValue] == 0) {
+            GoodsDetailArr = datadic[@"info"][@"merchantlist"];
+            [AbandonTableView reloadData];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+            
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+
+}
+
+
 
 
 - (void)CreateUI{
@@ -71,11 +105,11 @@
         make.left.equalTo(headImgView);
         make.top.equalTo(headImgView).offset(SizeHeight(132));
         make.width.equalTo(headImgView);
-        make.height.equalTo(@(SizeHeight(20)));
+        make.height.equalTo(@(SizeHeight(23)));
         
     }];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
-    moneyLabel.text = @"¥ 8.88";
+    moneyLabel.text = @"¥ 0.00";
     moneyLabel.font = [UIFont systemFontOfSize:24];
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:moneyLabel.text];
     NSRange range = NSMakeRange(0, 1);
@@ -95,12 +129,12 @@
         
     }];
     unitLabel.font = [UIFont systemFontOfSize:15];
-    unitLabel.text = @"重量(kg):";
-    
+//    unitLabel.text = @"单位(kg):";
+    unitLabel.text = [NSString stringWithFormat:@"单位(%@):",self.abandanGoodUnitStr ];
     
     AmountTF = [[UITextField alloc] init];
     [headImgView addSubview:AmountTF];
-    AmountTF.placeholder = @"请输入废纸重量";
+    AmountTF.placeholder = @"请输入废品重量";
     AmountTF.layer.cornerRadius = 2.5;
     AmountTF.layer.borderWidth = 1;
     AmountTF.font = [UIFont systemFontOfSize:14];
@@ -118,7 +152,7 @@
     sureBtn.layer.cornerRadius = 2.5;
     [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
     sureBtn.backgroundColor = UIColorFromHex(0x78b4fc);
-    [sureBtn addTarget:self action:@selector(calculateMoneyBtn) forControlEvents:UIControlEventTouchUpInside];
+    [sureBtn addTarget:self action:@selector(calculateMoneyBtnBtn) forControlEvents:UIControlEventTouchUpInside];
     [headImgView addSubview:sureBtn];
     [sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(headImgView).offset(SizeWidth(-20));
@@ -139,9 +173,10 @@
         make.height.equalTo(@(SizeHeight(13)));
         
     }];
-    priceLabel.text = @"单价: 0.80元/kg";
+//    priceLabel.text = @"单价: 0.80元/kg";
+    priceLabel.text = [NSString stringWithFormat:@"单价: %@元/%@",self.abandanGoodPriceStr,self.abandanGoodUnitStr];
     NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc] initWithString:priceLabel.text];
-    NSRange priceStrRange = NSMakeRange(4, 4);
+    NSRange priceStrRange = NSMakeRange(4, self.abandanGoodPriceStr.length);
 //    [priceStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:priceStrRange];
     [priceStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:priceStrRange];
     priceLabel.attributedText = priceStr;
@@ -161,7 +196,7 @@
     nearbyBtn.backgroundColor = [UIColor whiteColor];
     nearbyBtn.frame = CGRectMake(0, SizeHeight(349), kScreenW, SizeHeight(42));
     [nearbyBtn setTitle:@"附近的回收点" forState:UIControlStateNormal];
-    [nearbyBtn addTarget:self action:@selector(calculateMoneyBtn) forControlEvents:UIControlEventTouchUpInside];;
+    [nearbyBtn addTarget:self action:@selector(calculateMoneyBtnBtn) forControlEvents:UIControlEventTouchUpInside];;
     [TBheadView addSubview:nearbyBtn];
     
     UIView *seView = [[UIView alloc] init];
@@ -171,10 +206,19 @@
 }
 
 
-- (void)calculateMoneyBtn{
-    
+- (void)calculateMoneyBtnBtn{
+    moneyLabel.text = [NSString stringWithFormat:@"￥ %.2f",[self getSumMoney]];
+    moneyLabel.font = [UIFont systemFontOfSize:24];
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:moneyLabel.text];
+    NSRange range = NSMakeRange(0, 1);
+    [attString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:range];
+    [attString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
+    moneyLabel.attributedText = attString;
 }
 
+-(CGFloat) getSumMoney{
+    return floor(AmountTF.text.floatValue * [self.abandanGoodPriceStr floatValue]);
+}
 - (void)initTableView{
     AbandonTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH-64) style:UITableViewStylePlain];
     AbandonTableView.delegate = self;
@@ -189,7 +233,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return GoodsDetailArr.count;
 }
 
 
@@ -199,8 +243,24 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"NearbyTableViewCell" owner:self options:nil] lastObject];
     }
-    
+
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell.personHomePageImage sd_setImageWithURL:[NSURL URLWithString:GoodsDetailArr[indexPath.row][@"good_img"]] placeholderImage:[UIImage imageNamed:@"backGroud"]];
+     cell.personHomePagePhone.text = GoodsDetailArr[indexPath.row][@"mobile"];
+    cell.personHomePageTitle.text = GoodsDetailArr[indexPath.row][@"good_name"];
+    cell.personHomePageAddress.text = GoodsDetailArr[indexPath.row][@"address"];
+    cell.personHomePageDistance.text = [NSString stringWithFormat:@"%@ km",GoodsDetailArr[indexPath.row][@"distance"]];
+    cell.delegate = self;
+
     return cell;
+}
+
+- (void)ClickPersonHomePageBtn:(NSString *)str{
+    
+    NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",str];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+    
+    
 }
 
 

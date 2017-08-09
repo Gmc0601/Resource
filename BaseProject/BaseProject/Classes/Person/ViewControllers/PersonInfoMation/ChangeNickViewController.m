@@ -23,6 +23,20 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.translucent = NO;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.translucent = NO;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+}
+
+
 - (void)ClickNIckBtn{
 
     NSMutableDictionary *NickDic = [NSMutableDictionary new];

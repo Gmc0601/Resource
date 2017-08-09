@@ -73,7 +73,9 @@
                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="messageTimeLabel" destination="ukJ-wT-vLU" id="N19-n6-JpS"/>
                 <outlet property="messageView" destination="H2p-sc-9uM" id="5AF-s2-hQT"/>
+                <outlet property="messagetitlelabel" destination="UNS-KT-8V3" id="xfL-4A-JoG"/>
             </connections>
         </tableViewCell>
     </objects>

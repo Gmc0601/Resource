@@ -13,22 +13,29 @@
 @interface MessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *messageTable;
+    NSMutableArray *messageArr;
 }
 @end
 
 @implementation MessageViewController
 
 - (void)viewDidLoad {
+    messageArr = [NSMutableArray new];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
        [self setStatusBarBackgroundColor:[UIColor whiteColor]];
     self.automaticallyAdjustsScrollViewInsets= NO;
     self.view.backgroundColor = RGBColor(236, 236, 236);
     self.navigationItem.title = @"消息";
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickMessBackBtn)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStylePlain target:self action:@selector(cleanAllData)];
     [super viewDidLoad];
     [self initTableView];
     // Do any additional setup after loading the view.
 }
+- (void)cleanAllData{
+    
+}
+
 
 - (void)setStatusBarBackgroundColor:(UIColor *)color {
     UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
@@ -54,6 +61,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.translucent = YES;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    [self getMessageListData];
 }
 
 
@@ -63,7 +71,28 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
-
+- (void)getMessageListData{
+    NSMutableDictionary *messageMudic = [NSMutableDictionary new];
+    [messageMudic setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+    [HttpRequest postPath:@"_information_001" params:messageMudic resultBlock:^(id responseObject, NSError *error) {
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSDictionary *datadic = responseObject;
+        NSLog(@"error>%@", datadic);
+        if ([datadic[@"error"] intValue] == 0) {
+            messageArr = datadic[@"info"];
+            [messageTable reloadData];
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+            
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+    
+}
 
 -(void)clickMessBackBtn{
     [self.navigationController popViewControllerAnimated:YES];
@@ -72,7 +101,7 @@
     return 10;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return messageArr.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -84,13 +113,18 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"MessageTableViewCell" owner:self options:nil] lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.messageTimeLabel.text = messageArr[indexPath.row][@"create_time"];
+    cell.messagetitlelabel.text = messageArr[indexPath.row][@"title"];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NewsWebViewController *newsWeb = [[NewsWebViewController alloc] init];
-//    newsWeb.newsId =  _NewSArrCount[indexPath.row][@"id"];
-    newsWeb.titleStr = @"咨询详情";
+    newsWeb.messageDetailTime = messageArr[indexPath.row][@"create_time"];
+    newsWeb.messageDetailTitle = messageArr[indexPath.row][@"title"];
+    newsWeb.messageDetailContent = messageArr[indexPath.row][@"content"];
+    newsWeb.titleStr = @"消息详情";
     [self.navigationController pushViewController:newsWeb animated:YES];
 }
 

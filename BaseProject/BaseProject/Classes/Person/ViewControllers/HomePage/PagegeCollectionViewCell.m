@@ -13,10 +13,10 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     
     if (self = [super initWithFrame:frame]) {
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        self.imageView.image = [UIImage imageNamed:@"backGroud"];
-        self.imageView.layer.cornerRadius = 2.5;
-        [self.contentView addSubview:self.imageView];
+        self.imaView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        self.imaView.image = [UIImage imageNamed:@"backGroud"];
+        self.imaView.layer.cornerRadius = 2.5;
+        [self.contentView addSubview:self.imaView];
         
         UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         view1.backgroundColor = [UIColor blackColor];
@@ -39,6 +39,9 @@
     return self;
     
 }
+
+
+
 
 
 

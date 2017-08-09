@@ -11,7 +11,10 @@
 @interface PagegeCollectionViewCell : UICollectionViewCell
 
 
-@property(nonatomic,strong)UIImageView *imageView;
+@property(nonatomic,strong)UIImageView *imaView;
 @property(nonatomic,strong)UILabel *titleLabel;
+
+
+
 
 @end

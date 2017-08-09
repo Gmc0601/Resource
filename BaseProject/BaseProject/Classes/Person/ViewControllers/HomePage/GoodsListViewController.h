@@ -10,4 +10,9 @@
 
 @interface GoodsListViewController : UIViewController
 
+@property (nonatomic, strong)  NSString *titleListStr;
+@property (nonatomic, strong)  NSString *goodListID;
+
+
+
 @end

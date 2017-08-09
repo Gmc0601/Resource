@@ -12,6 +12,7 @@
 @interface GoodsListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *GoodsTableView;
+    NSArray *ListArr;
 }
 
 @end
@@ -20,15 +21,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ListArr = [NSArray new];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleDefault;
-    self.title = @"废纸";
+    self.title = self.titleListStr;
     self.view.backgroundColor = RGBColor(237, 239, 239);
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
     // Do any additional setup after loading the view.
     
     [self initTableView];
+    [self getTableViewData];
+    
 }
+
+- (void)getTableViewData{
+    NSMutableDictionary *GoodsListDic = [NSMutableDictionary new];
+    [GoodsListDic setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+//    [GoodsListDic setObject:self.goodListID forKey:@"real_id"];
+     [GoodsListDic setObject:@"8" forKey:@"real_id"];
+    [HttpRequest postPath:@"_goodlist_001" params:GoodsListDic resultBlock:^(id responseObject, NSError *error) {
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSDictionary *datadic = responseObject;
+//        NSLog(@"error>%@", datadic);
+        if ([datadic[@"error"] intValue] == 0) {
+            ListArr = datadic[@"info"];
+            [GoodsTableView reloadData];
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+            
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBar.translucent = NO;
@@ -54,7 +83,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 8;
+    return ListArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -71,12 +100,20 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsTableViewCell" owner:self options:nil] lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell.TableViewImg sd_setImageWithURL:[NSURL URLWithString:ListArr[indexPath.row][@"img"]] placeholderImage:[UIImage imageNamed:@""]];
+    cell.leftNameLabel.text = ListArr[indexPath.row][@"goodlist"];
+    cell.RightPriceLabel.text = [NSString stringWithFormat:@"%@元/%@", ListArr[indexPath.row][@"price"],ListArr[indexPath.row][@"unit"]];
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     AbandonGoodsViewController *abandonVC = [[AbandonGoodsViewController alloc] init];
+    abandonVC.abandanGoosVCTitleStr = ListArr[indexPath.row][@"goodlist"];
+    abandonVC.abandanGoodUnitStr = ListArr[indexPath.row][@"unit"];
+    abandonVC.abandanGoodPriceStr = ListArr[indexPath.row][@"price"];
+    abandonVC.abandanSecondIDStr = ListArr[indexPath.row][@"id"];
     [self.navigationController pushViewController:abandonVC animated:YES];
     
 }

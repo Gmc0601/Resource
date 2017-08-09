@@ -21,4 +21,7 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)clickPhoneCellBtn:(UIButton *)sender {
+    [self.delegate ClickPersonHomePageBtn:self.personHomePagePhone.text];
+}
 @end

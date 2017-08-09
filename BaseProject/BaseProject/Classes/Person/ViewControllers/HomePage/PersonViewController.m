@@ -29,16 +29,29 @@
 #import "PersonMessageViewController.h"
 #import "MessageViewController.h"
 
+#import <CoreLocation/CoreLocation.h>
 #import "MapViewController.h"
-@interface PersonViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface PersonViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CLLocationManagerDelegate,PersonPageTableViewDelegate>
 {
     UITableView *myTableView;
+    UICollectionView  *collectionView;
     UIView *headerView;
     UIView *signView;
     UIButton *GoodsBtn;
     UIView *lastView;
     
     UIImage * imgP;
+    
+    CLLocationManager *locationManager;
+//    NSString *currentCity;
+    NSString *Strlatitude;
+    NSString *Strlongitude;
+    CLLocation *currentLocation;
+    
+    
+    NSMutableArray *GoodsArr;
+    NSMutableArray *potsArr;
+    NSMutableArray *allPersonArr;
 }
 
 
@@ -60,15 +73,60 @@ NSString *identifier = @"cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    GoodsArr = [NSMutableArray new];
+    potsArr = [NSMutableArray new];
+    allPersonArr = [NSMutableArray new];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    
+    [self locatemap];
     [self CreateUI];
     _models = [NSMutableArray arrayWithCapacity:0];
     [self initCollection];
     [self initTableView];
+    [self getAllPersonHomeData];
+   
 
 }
+
+- (void)locatemap{
+    if ([CLLocationManager locationServicesEnabled]) {
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        locationManager.distanceFilter = 500.0;
+        
+        if ([[UIDevice currentDevice].systemVersion floatValue] >=8.0) {
+            [locationManager requestAlwaysAuthorization];
+        }else{
+            [locationManager startUpdatingLocation];
+        }
+    }
+}
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    if (status == kCLAuthorizationStatusNotDetermined) {
+        NSLog(@"等待授权");
+    }else if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse){
+        NSLog(@"授权成功");
+        [locationManager startUpdatingLocation];
+    }else{
+        NSLog(@"授权失败");
+    }
+}
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    NSLog(@"222请打开定位按钮");
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    currentLocation  = [locations lastObject];
+    Strlongitude = [NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude];
+    Strlatitude = [NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude];
+    NSLog(@"%f---%f", currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+    [ConfigModel saveString:Strlongitude forKey:@"longitudeStr"];
+    [ConfigModel saveString:Strlatitude forKey:@"latitudeStr"];
+   [self getPersonHomeData];
+}
+
 
 - (void)initCollection{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -80,7 +138,7 @@ NSString *identifier = @"cell";
 
      flowLayout.sectionInset = UIEdgeInsetsMake(SizeWidth(15), SizeWidth(10), SizeWidth(15), SizeWidth(15));
     
-    UICollectionView  *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
 
     collectionView.backgroundColor = [UIColor whiteColor];
 
@@ -148,8 +206,69 @@ NSString *identifier = @"cell";
     [self.view addSubview:myTableView];
 }
 
+- (void)getAllPersonHomeData{
+    NSMutableDictionary *AllpersonDIc = [NSMutableDictionary new];
+    [AllpersonDIc setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+    [HttpRequest postPath:@"_allgood_001" params:AllpersonDIc resultBlock:^(id responseObject, NSError *error) {
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSDictionary *datadic = responseObject;
+      
+        NSLog(@"login>>%@",datadic);
+        
+        if ([datadic[@"error"] intValue] == 0) {
+            
+            allPersonArr = datadic[@"info"];
+           
+            
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+            
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+}
+
+-(void)getPersonHomeData{
+    NSMutableDictionary *personDIc = [NSMutableDictionary new];
+//     NSLog(@"%@---%@", Strlongitude,Strlatitude);
+    [personDIc setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+    [personDIc setObject:Strlongitude forKey:@"long"];
+    [personDIc setObject:Strlatitude forKey:@"lat"];
+    [HttpRequest postPath:@"_homepage_001" params:personDIc resultBlock:^(id responseObject, NSError *error) {
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSDictionary *datadic = responseObject;
+         NSArray *gosssArr = datadic[@"info"][@"goodlist"];
+        NSLog(@"%lulogin>>%@", (unsigned long)gosssArr.count,gosssArr);
+
+        if ([datadic[@"error"] intValue] == 0) {
+
+            GoodsArr = datadic[@"info"][@"goodlist"];
+            potsArr = datadic[@"info"][@"merchantlist"];
+            
+            
+            [myTableView reloadData];
+            [collectionView reloadData];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 8;
+    return potsArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -158,9 +277,17 @@ NSString *identifier = @"cell";
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"NearbyTableViewCell" owner:self options:nil] lastObject];
     }
-    
+   [cell.personHomePageImage sd_setImageWithURL:[NSURL URLWithString: potsArr[indexPath.row][@"good_img"]]placeholderImage:[UIImage imageNamed:@"backGroud"]];
+    cell.personHomePagePhone.text = potsArr[indexPath.row][@"mobile"];
+    cell.personHomePageTitle.text = potsArr[indexPath.row][@"good_name"];
+    cell.personHomePageAddress.text = potsArr[indexPath.row][@"address"];
+    cell.personHomePageDistance.text = [NSString stringWithFormat:@"%@ km",potsArr[indexPath.row][@"distance"]];
+    cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
+
+
 
 - (void)CreateUI{
     headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW,SizeHeight(135)+ SizeHeight(269)+2*SizeHeight(52))];
@@ -170,29 +297,31 @@ NSString *identifier = @"cell";
     
     
     UIButton *btnMessage = [[UIButton alloc] init];
-    [btnMessage setBackgroundImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
+//    [btnMessage setBackgroundImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
+     [btnMessage setImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
     [btnMessage addTarget:self action:@selector(ClickMessageButton) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:btnMessage];
     [btnMessage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_top).offset(SizeHeight(25));
+        make.top.equalTo(headerView.mas_top).offset(SizeHeight(30));
         make.leading.equalTo(headerView.mas_leading).offset(SizeWidth(16));
-        make.width.equalTo(@(SizeWidth(22)));
-        make.height.equalTo(@(SizeHeight(19)));
+        make.width.equalTo(@(SizeWidth(32)));
+        make.height.equalTo(@(SizeHeight(29)));
     }];
-    
+     [btnMessage setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
     
     
     UIButton *btnSetting = [[UIButton alloc] init];
-    [btnSetting setBackgroundImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
+     [btnSetting setImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
+//    [btnSetting setBackgroundImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
     [btnSetting addTarget:self action:@selector(ClickSettingButton) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:btnSetting];
     [btnSetting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_top).offset(SizeHeight(20));
+        make.top.equalTo(headerView.mas_top).offset(SizeHeight(25));
         make.right.equalTo(headerView.mas_right).offset(SizeWidth(-16));
-        make.width.equalTo(@(SizeWidth(20.4)));
-        make.height.equalTo(@(SizeHeight(22)));
+        make.width.equalTo(@(SizeWidth(30.4)));
+        make.height.equalTo(@(SizeHeight(32)));
     }];
-    
+    [btnSetting setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
     
 
     UILabel *lblTag  = [[UILabel alloc] init];
@@ -205,7 +334,7 @@ NSString *identifier = @"cell";
     lblTag.font = [UIFont fontWithName:[FontConstrants pingFang] size:11];
     [headerView addSubview:lblTag];
     [lblTag mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(header.mas_centerX).offset(40);
+        make.centerX.equalTo(header.mas_centerX).offset(50);
         make.bottom.equalTo(header.mas_bottom).offset(SizeWidth(-18));
         make.height.equalTo(@(SizeHeight(16)));
         make.width.equalTo(@(SizeWidth(44)));
@@ -326,6 +455,7 @@ NSString *identifier = @"cell";
     flowLayout.sectionInset = UIEdgeInsetsMake(SizeWidth(10), SizeWidth(10), SizeWidth(10), SizeWidth(10));
 
     CollectionViewController *collectVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout];
+    collectVC.goodsTypeArr = allPersonArr;
     [self.navigationController pushViewController:collectVC animated:YES];
 }
 
@@ -339,7 +469,7 @@ NSString *identifier = @"cell";
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     _lblTelNumber.text = [ConfigModel getStringforKey:@"PersonPhone"];
      _lblName.text = [ConfigModel getStringforKey:@"PersonNickName"];
@@ -372,41 +502,33 @@ NSString *identifier = @"cell";
 }
 
 
--(void)  showCallView{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拨打平台电话"
-                                                    message:@"400-800-1234"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"拨打"
-                                          otherButtonTitles:@"取消",nil];
+- (void)ClickPersonHomePageBtn:(NSString *)str{
+
+    NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",str];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
     
-    alert.delegate = self;
-    [alert show];
+    
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",@"13377892977"];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-    }
-}
 
 #pragma UICollection Delegate
 
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-//    return 2;
-//}
-//
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return GoodsArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PagegeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    [cell.imaView sd_setImageWithURL:[NSURL URLWithString:GoodsArr[indexPath.item][@"img"]]];
+    cell.titleLabel.text = GoodsArr[indexPath.item][@"good"];
     return cell;
 }
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     GoodsListViewController *newViewController = [[GoodsListViewController alloc] init];
+    newViewController.titleListStr = GoodsArr[indexPath.item][@"good"];
+    newViewController.goodListID = GoodsArr[indexPath.item][@"id"];
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 
@@ -458,8 +580,7 @@ NSString *identifier = @"cell";
 -(void) ClickMessageButton{
     MessageViewController *personMessVC = [[MessageViewController alloc ] init];
     [self.navigationController pushViewController:personMessVC animated:YES];
-//    fixPhoneViewController *fixVC = [[fixPhoneViewController alloc ] init];
-//    [self.navigationController pushViewController:fixVC animated:YES];
+
 }
 
 -(void) ClickSettingButton{

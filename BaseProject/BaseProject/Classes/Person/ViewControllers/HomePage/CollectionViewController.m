@@ -8,6 +8,7 @@
 
 #import "CollectionViewController.h"
 #import "PagegeCollectionViewCell.h"
+#import "GoodsListViewController.h"
 @interface CollectionViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @end
@@ -66,14 +67,14 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return 10;
+    return self.goodsTypeArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PagegeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell
-     cell.contentView.backgroundColor = [UIColor yellowColor];
+//     cell.contentView.backgroundColor = [UIColor yellowColor];
+    [cell.imaView sd_setImageWithURL:[NSURL URLWithString:self.goodsTypeArr[indexPath.item][@"img"]] placeholderImage:[UIImage imageNamed:@"backGroud"]];
+    cell.titleLabel.text = self.goodsTypeArr[indexPath.item][@"good"];
     return cell;
 }
 
@@ -82,9 +83,14 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-    NSLog(@"点击%ld分区%ld张图片",section,row);
+//    NSInteger section = indexPath.section;
+//    NSInteger row = indexPath.row;
+//    NSLog(@"点击%ld分区%ld张图片",section,row);
+    
+    GoodsListViewController *newViewController = [[GoodsListViewController alloc] init];
+    newViewController.titleListStr = self.goodsTypeArr[indexPath.item][@"good"];
+    newViewController.goodListID = self.goodsTypeArr[indexPath.item][@"id"];
+    [self.navigationController pushViewController:newViewController animated:YES];
 }
 
 

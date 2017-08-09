@@ -10,5 +10,7 @@
 
 @interface MessageTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *messageView;
+@property (weak, nonatomic) IBOutlet UILabel *messagetitlelabel;
+@property (weak, nonatomic) IBOutlet UILabel *messageTimeLabel;
 
 @end

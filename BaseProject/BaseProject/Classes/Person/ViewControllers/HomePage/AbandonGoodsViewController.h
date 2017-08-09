@@ -10,4 +10,11 @@
 
 @interface AbandonGoodsViewController : UIViewController
 
+
+@property (nonatomic, strong) NSString *abandanGoosVCTitleStr;
+@property (nonatomic, strong) NSString *abandanGoodPriceStr;
+@property (nonatomic, strong) NSString *abandanGoodUnitStr;
+@property (nonatomic, strong) NSString *abandanSecondIDStr;
+
+
 @end

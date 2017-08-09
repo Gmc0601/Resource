@@ -17,10 +17,10 @@
     
     UILabel *titleLabelD;
     UILabel *timeLabelD;
-    UILabel *readCountLabel;
+     UIView *separView;
     
     
-    UIView *separView1;
+   
     UIView *separView2;
     UILabel *labelRa;
 }
@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.navigationItem.title = @"消息详情";
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickNewsBackBtn)];
@@ -56,103 +57,20 @@
     
    
     
-    NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];
-    NSMutableURLRequest *requeset = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:3.0];
+//    NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];
+//    NSMutableURLRequest *requeset = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:3.0];
     
     [self.view addSubview:NewsWebView];
-    [NewsWebView loadRequest:requeset];
+//    [NewsWebView loadRequest:requeset];
     
     [self creatUI];
     
 }
 
-- (void)getUrlViewWebDetail:(NSString *)pathStr {
-    NSMutableDictionary *newsIdMudic = [NSMutableDictionary new];
-    [newsIdMudic setObject:self.newsId forKey:@"id"];
-    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-    [newsIdMudic setObject:userTokenStr forKey:@"userToken"];
-    [HttpRequest postPath:pathStr params:newsIdMudic resultBlock:^(id responseObject, NSError *error) {
-        
-        if([error isEqual:[NSNull null]] || error == nil){
-            NSLog(@"success");
-        }
-        
-        NSLog(@"%@_newsdetails_001>>>>>>%@",responseObject[@"info"][@"userhint"], responseObject);
-        NSDictionary *datadic = responseObject;
-        if ([datadic[@"error"] intValue] == 0) {
-            NSDictionary *infoDic = responseObject[@"info"];
-            urlStr = infoDic[@"content"];
-            readStr = infoDic[@"userhint"];
-            if ([readStr isEqualToString:@"1"]) {
-                [PraiseBtn setImage:[UIImage imageNamed:@"btn_zxxq_yz"] forState:UIControlStateNormal];
-            }else{
-                [PraiseBtn setImage:[UIImage imageNamed:@"btn_zxxq_wz"] forState:UIControlStateNormal];
-            }
 
-            
-        }else {
-            NSString *info = datadic[@"info"];
-            [ConfigModel mbProgressHUD:info andView:nil];
-        }
-        NSLog(@"error>>>>%@", error);
-    }];
-    
-
-    
-    
-}
-
-
-
-- (void)getUrlWebDetail:(NSString *)pathStr {
-    NSMutableDictionary *newsIdMudic = [NSMutableDictionary new];
-    [newsIdMudic setObject:self.newsId forKey:@"id"];
-    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-    [newsIdMudic setObject:userTokenStr forKey:@"userToken"];
-    [HttpRequest postPath:pathStr params:newsIdMudic resultBlock:^(id responseObject, NSError *error) {
-        
-        if([error isEqual:[NSNull null]] || error == nil){
-            NSLog(@"success");
-        }
-        
-        NSLog(@"%@_newsdetails_001>>>>>>%@",responseObject[@"info"][@"userhint"], responseObject);
-        NSDictionary *datadic = responseObject;
-        if ([datadic[@"error"] intValue] == 0) {
-            NSDictionary *infoDic = responseObject[@"info"];
-            urlStr = infoDic[@"content"];
-            titleLabelD.text =infoDic[@"title"];
-            timeLabelD.text =infoDic[@"create_time"];
-            
-            if ([self.titleStr isEqualToString:@"咨询详情"]) {
-                readStr = infoDic[@"userhint"];
-                if ([readStr isEqualToString:@"1"]) {
-                    [PraiseBtn setImage:[UIImage imageNamed:@"btn_zxxq_yz"] forState:UIControlStateNormal];
-                }else{
-                    [PraiseBtn setImage:[UIImage imageNamed:@"btn_zxxq_wz"] forState:UIControlStateNormal];
-                }
-                readCountLabel.text = [NSString stringWithFormat:@"阅读 %@   赞 %@",infoDic[@"read_num"],infoDic[@"praise_num"]];
-                NSString *wideStr = [NSString stringWithFormat:@" <head><style>img{width:%fpx !important;}</style></head>", (kScreenW+100)*2];
-                urlStr = [wideStr stringByAppendingString:urlStr];
-
-            }
-            
-            
-            NSLog(@"error>>>>%lu", (unsigned long)urlStr.length);
-            
-            [NewsWebView loadHTMLString:urlStr baseURL:nil];
-            
-        }else {
-            NSString *info = datadic[@"info"];
-            [ConfigModel mbProgressHUD:info andView:nil];
-        }
-        NSLog(@"error>>>>%@", error);
-    }];
-
-    
-}
 - (void)creatUI{
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
-    titleLabel.text = @"标题";
+    titleLabel.text = @"消息详情";
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.font = [UIFont systemFontOfSize:18];
     self.navigationItem.titleView = titleLabel;
@@ -164,101 +82,28 @@
     [NewsWebView.scrollView addSubview:titleLabelD];
     
     timeLabelD = [[UILabel alloc] initWithFrame:CGRectZero];
-    timeLabelD.font = [UIFont systemFontOfSize:10];
+    timeLabelD.font = [UIFont systemFontOfSize:12];
     timeLabelD.textColor = RGBColor(153, 153, 153);
     [NewsWebView.scrollView addSubview:timeLabelD];
     
+    separView = [[UIView alloc] initWithFrame:CGRectZero];
+    separView.backgroundColor = [UIColor lightGrayColor];
+    [NewsWebView.scrollView addSubview:separView];
 
-    titleLabelD.text =@"达到很好的";
-    timeLabelD.text =@"2017 08 08 12:12:12";
     
-}
+    urlStr = self.messageDetailContent;
+    titleLabelD.text = self.messageDetailTitle;
+    timeLabelD.text = self.messageDetailTime;
+    
 
-
-- (void)PraiseBtnClick:(UIButton *)sender{
-//    [ConfigModel saveBoolObject:NO forKey:IsLogin];
-    NSLog(@"%@888", IsLogin);
-    if ([ConfigModel getBoolObjectforKey:IsLogin] ) {
-        if ([readStr isEqualToString:@"1"]) {
-            NSMutableDictionary *UNPraiseMudic = [NSMutableDictionary new];
-            [UNPraiseMudic setObject:self.newsId forKey:@"id"];
-            NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-            [UNPraiseMudic setObject:userTokenStr forKey:@"userToken"];
-            [HttpRequest postPath:@"_offgoodnews_001" params:UNPraiseMudic resultBlock:^(id responseObject, NSError *error) {
-                
-                if([error isEqual:[NSNull null]] || error == nil){
-                    NSLog(@"success");
-                }
-                
-                NSLog(@"%@----%@_newsdetails_001>>>>>>%@",self.newsId, userTokenStr, responseObject);
-                NSDictionary *datadic = responseObject;
-                if ([datadic[@"error"] intValue] == 0) {
-                    NSDictionary *infoDic = responseObject[@"info"];
-                    [ConfigModel mbProgressHUD:@"取消点赞成功" andView:self.view];
-                    readStr=@"2";
-                    [sender setImage:[UIImage imageNamed:@"btn_zxxq_wz"] forState:UIControlStateNormal];
-                    
-                }else {
-                    NSString *info = datadic[@"info"];
-                    [ConfigModel mbProgressHUD:info andView:nil];
-                }
-                NSLog(@"error>>>>%@", error);
-            }];
-            
-        }else{
-            NSMutableDictionary *PraiseMudic = [NSMutableDictionary new];
-            [PraiseMudic setObject:self.newsId forKey:@"id"];
-            NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-            [PraiseMudic setObject:userTokenStr forKey:@"userToken"];
-            [HttpRequest postPath:@"_goodnews_001" params:PraiseMudic resultBlock:^(id responseObject, NSError *error) {
-                
-                if([error isEqual:[NSNull null]] || error == nil){
-                    NSLog(@"success");
-                }
-                
-                NSLog(@"%@----%@_newsdetails_001>>>>>>%@",self.newsId, userTokenStr, responseObject);
-                NSDictionary *datadic = responseObject;
-                if ([datadic[@"error"] intValue] == 0) {
-                    NSDictionary *infoDic = responseObject[@"info"];
-                    readStr = @"1";
-                    [ConfigModel mbProgressHUD:@"点赞成功" andView:self.view];
-                    [sender setImage:[UIImage imageNamed:@"btn_zxxq_yz"] forState:UIControlStateNormal];
-                    
-                }else {
-                    NSString *info = datadic[@"info"];
-                    [ConfigModel mbProgressHUD:info andView:nil];
-                }
-                NSLog(@"error>>>>%@", error);
-            }];
-            
-        }
- 
-        return;
-    }else{
-//        LoginViewController *loginVC = [[LoginViewController alloc ] init];
-//
-//        [self presentViewController:loginVC animated:YES completion:nil];
-
+    NSString *wideStr = [NSString stringWithFormat:@" <head><style>img{width:%fpx !important;}</style></head>", (kScreenW+100)*2];
+    urlStr = [wideStr stringByAppendingString:urlStr];
         
-    }
- 
+
+    [NewsWebView loadHTMLString:urlStr baseURL:nil];
+
     
-   
 }
-
-
-
-
-//- (void)viewWillAppear:(BOOL)animated{
-////   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forBarMetrics:UIBarMetricsDefault];
-//     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated:YES];
-//}
-//
-//- (void)viewWillDisappear:(BOOL)animated{
-//
-//    [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleLightContent;
-//   
-//}
 
 
 
@@ -290,9 +135,10 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
+    separView.frame = CGRectMake(-16, -129, kScreenW, 1);
      timeLabelD.frame = CGRectMake(1, -18-30, 150, 10);
-     titleLabelD.frame = CGRectMake(-3, -120, kScreenW-40, 60);
-//    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '340%'"];
+     titleLabelD.frame = CGRectMake(3, -120, kScreenW-40, 60);
+    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '340%'"];
     
      NSLog(@"%f------", webView.scrollView.contentSize.height);
 

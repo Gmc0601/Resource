@@ -15,4 +15,10 @@
 // 标题
 @property (nonatomic, strong) NSString *titleStr;
 
+
+@property (nonatomic, strong) NSString *messageDetailTitle;
+@property (nonatomic, strong) NSString *messageDetailTime;
+@property (nonatomic, strong) NSString *messageDetailContent;
+
+
 @end

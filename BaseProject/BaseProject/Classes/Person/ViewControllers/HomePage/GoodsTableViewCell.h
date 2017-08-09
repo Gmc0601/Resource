@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface GoodsTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *TableViewImg;
+@property (weak, nonatomic) IBOutlet UILabel *leftNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *RightPriceLabel;
 
 @end

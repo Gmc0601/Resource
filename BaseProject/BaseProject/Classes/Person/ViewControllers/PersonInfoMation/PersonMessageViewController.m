@@ -153,24 +153,20 @@
 //选择照片完成之后的代理方法
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    //info是所选择照片的信息
-    //    UIImagePickerControllerEditedImage//编辑过的图片
-    //    UIImagePickerControllerOriginalImage//原图
-    NSLog(@"%@",info);
-    //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
-    
-    //     UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    //     [self.imageArray addObject:resultImage];
-    UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-    [self.ProtraitImg setImage:resultImage];;
+
+    UIImage *resultImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    [self.ProtraitBtn setImage:resultImage forState:UIControlStateNormal];
+//    self.ProtraitImg.image = resultImage;
     oneImgViewData=UIImageJPEGRepresentation(resultImage,0.8);
     oneImgViewData = [oneImgViewData base64EncodedDataWithOptions:0];
-
+    
     NSString * tmpOneImgViewString = [[NSString alloc] initWithData:oneImgViewData  encoding:NSUTF8StringEncoding];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-    NSMutableDictionary *infoDic=[NSMutableDictionary dictionary];
-    [infoDic setObject:tmpOneImgViewString forKey:@"avatar_url"];
-    [infoDic setObject:userTokenStr forKey:@"userToken"];
+    NSDictionary *infoDic = @{
+                                     @"avatar_url":tmpOneImgViewString,
+                                     @"userToken" :userTokenStr
+                                     };
+
     [HttpRequest postPath:@"_update_userinfo_001" params:infoDic resultBlock:^(id responseObject, NSError *error) {
         
         if([error isEqual:[NSNull null]] || error == nil){
@@ -182,20 +178,16 @@
             NSDictionary *avatarDic = datadic[@"info"];
             NSLog(@"333%@", datadic);
             [ConfigModel saveString:avatarDic[@"avatar_url"] forKey:@"PersonPortrait"];
-//            [[NSUserDefaults standardUserDefaults] setObject:resultImage forKey:@"personImage"];
-          [ConfigModel mbProgressHUD:@"修改头像成功" andView:nil];
+            [ConfigModel mbProgressHUD:@"修改头像成功" andView:nil];
             
         }else {
             NSString *info = datadic[@"info"];
             [ConfigModel mbProgressHUD:info andView:nil];
         }
-        NSLog(@"error>>>>%@", error);
     }];
-    
-    
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+
+    [picker dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 
