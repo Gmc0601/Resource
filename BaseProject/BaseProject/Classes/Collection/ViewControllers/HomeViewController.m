@@ -22,6 +22,7 @@
 #import "GoodsListViewController.h"
 #import "MessageViewController.h"
 #import "SettingViewController.h"
+#import "PersonMessageViewController.h"
 
 @interface HomeViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -34,6 +35,7 @@
 @property(retain,atomic) UIButton *btnMessage;
 @property(retain,atomic) UIButton *btnSetting;
 @property(retain,atomic) UserModel *user;
+@property(retain,atomic) NSString *strTel;
 @end
 
 @implementation HomeViewController
@@ -42,7 +44,11 @@
     _models = [NSMutableArray arrayWithCapacity:0];
     [self addCollectionView];
     [self addSubviews];
-    [PublicClass addCallButtonInViewContrller:self];
+    [self getTelNum];
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self loadData];
 }
 
@@ -347,7 +353,14 @@
     
     _avatar  = [[UIImageView alloc] init];
     _avatar.image = [UIImage imageNamed:@"mrtx144"];
+    _avatar.userInteractionEnabled = YES;
+    _avatar.layer.cornerRadius = SizeWidth(72/2);
+    _avatar.clipsToBounds = YES;
     [headerView addSubview:_avatar];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushPersonMessBtn)];
+    tap.numberOfTapsRequired = 1;
+    [_avatar addGestureRecognizer:tap];
     
     [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(header.mas_centerX).offset(0);
@@ -383,7 +396,7 @@
 }
 
 -(void) showCallView{
-    [PublicClass showCallPopupWithTelNo:@"400-800-2123" inViewController:self];
+    [PublicClass showCallPopupWithTelNo:_strTel inViewController:self];
 }
 
 -(void) showIntegralDetail{
@@ -474,6 +487,31 @@
     _lblName.text = user.name;
     _lblTelNumber.text = user.telNumber;
     [self setIntergral:user.integral];
+    [_avatar sd_setImageWithURL:[NSURL URLWithString:user.avatarUrl] placeholderImage:[UIImage imageNamed:@"mrtx144"]];
+}
+
+-(void) getTelNum{
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    //    [params setObject:@"5" forKey:@"real_id"];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    
+    [HttpRequest postPath:@"_setinfo_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            _strTel = infoDic[@"phone"];
+            [PublicClass addCallButtonInViewContrller:self];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+}
+
+- (void)pushPersonMessBtn{
+    
+    PersonMessageViewController *personMessVC = [[PersonMessageViewController alloc ] init];
+    personMessVC.protraitImage = _avatar.image;
+    [self.navigationController pushViewController:personMessVC animated:YES];
 }
 
 @end

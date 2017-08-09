@@ -31,6 +31,7 @@
     
     UILabel * lab = [[UILabel alloc]init];
     lab.text = @"积分";
+    _type = @"1";
     lab.textColor = [ColorContants whiteFontColor];
     lab.font = [UIFont fontWithName:[FontConstrants pingFang] size:18];
     [lab sizeToFit];
@@ -38,7 +39,6 @@
     [self addTableView];
     
     _models = [NSMutableArray arrayWithCapacity:0];
-    [self loadData:@"1"];
     [self.navigationItem setLeftBarButtonItem:nil];
      [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];}
 
@@ -46,6 +46,7 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forBarMetrics:UIBarMetricsDefault];
     [self getIntegral];
+    [self loadData:_type];
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
@@ -55,7 +56,7 @@
 }
 
 -(void) addTableView{
-    _tb = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64) style:UITableViewStylePlain];
+    _tb = [[UITableView alloc] initWithFrame:CGRectMake(0, [self getNavBarHeight], self.view.bounds.size.width, self.view.bounds.size.height - [self getNavBarHeight]) style:UITableViewStylePlain];
     _tb.backgroundColor = [UIColor whiteColor];
     _tb.separatorColor = [ColorContants integralSeperatorColor];
     _tb.separatorInset = UIEdgeInsetsMake(0, SizeWidth(12), 0, SizeWidth(12));

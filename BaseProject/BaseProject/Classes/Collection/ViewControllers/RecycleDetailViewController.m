@@ -24,6 +24,7 @@
     UIButton *sureBtn;
     UILabel *unitLabel;
     UILabel *priceLabel;
+    NSString *telNum;
 }
 @property(retain,nonatomic) GoodsModel *model;
 @end
@@ -58,7 +59,7 @@
     
     [self CreateUI];
     self.view.backgroundColor = [UIColor whiteColor];
-    [PublicClass addCallButtonInViewContrller:self];
+    [self loadData];
 }
 
 - (void)clickBackBtn{
@@ -187,7 +188,7 @@
 }
 
 -(void) showCallView{
-    [PublicClass showCallPopupWithTelNo:@"400-800-2123" inViewController:self];
+    [PublicClass showCallPopupWithTelNo:telNum inViewController:self];
 }
 
 -(CGFloat) getSumMoney{
@@ -199,10 +200,8 @@
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
     [params setObject:self.goodsId forKey:@"id"];
-    [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_gooddetail_001" params:params resultBlock:^(id responseObject, NSError *error) {
-        [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
@@ -220,6 +219,22 @@
             NSString *info = datadic[@"info"];
             [ConfigModel mbProgressHUD:info andView:nil];
         }
+    }];
+}
+
+-(void) getTelNum{
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    
+    [HttpRequest postPath:@"_setinfo_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            telNum = infoDic[@"phone"];
+            [PublicClass addCallButtonInViewContrller:self];
+        }
+        NSLog(@"error>>>>%@", error);
     }];
 }
 @end
