@@ -20,6 +20,8 @@
 #import "RegisterInfoViewController.h"
 #import "UIImageView+WebCache.h"
 #import "GoodsListViewController.h"
+#import "MessageViewController.h"
+#import "SettingViewController.h"
 
 @interface HomeViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -366,12 +368,13 @@
 }
 
 -(void) tapMessageButton{
-    
+    MessageViewController *personMessVC = [[MessageViewController alloc ] init];
+    [self.navigationController pushViewController:personMessVC animated:YES];
 }
 
 -(void) tapSettingButton{
-    RegisterInfoViewController *newViewContrller = [RegisterInfoViewController new];
-    [self.navigationController pushViewController:newViewContrller animated:YES];
+    SettingViewController  *setVC = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:setVC animated:YES];
 }
 
 -(void) tapCheckButton{

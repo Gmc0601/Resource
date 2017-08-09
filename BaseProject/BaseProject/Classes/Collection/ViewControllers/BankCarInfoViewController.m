@@ -135,6 +135,7 @@
     _txtCardNo.font = placeHolderFont;
     _txtCardNo.textColor = [ColorContants kitingFontColor];
     NSAttributedString *str1 = [[NSAttributedString alloc] initWithString:@"请填写银行卡卡号" attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont}];
+    _txtCardNo.keyboardType = UIKeyboardTypeNumberPad;
     _txtCardNo.attributedPlaceholder = str1;
     
     [self.view addSubview:_txtCardNo];

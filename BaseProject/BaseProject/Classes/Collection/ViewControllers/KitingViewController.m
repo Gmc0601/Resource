@@ -375,7 +375,7 @@
             NSDictionary *infoDic = responseObject[@"info"];
             _bankCard = [BankCardModel new];
             
-            if (infoDic[@"banknumber"] != nil) {
+            if (infoDic[@"banknumber"] != nil && [infoDic[@"type"]  isEqual: @"1"]) {
                 _bankCard.bankName = infoDic[@"real_name"];
                 _bankCard.cardNumber = infoDic[@"banknumber"];
                 _bankCard.userName = infoDic[@"real_name"];

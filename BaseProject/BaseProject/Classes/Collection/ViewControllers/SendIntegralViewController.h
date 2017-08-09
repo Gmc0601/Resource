@@ -10,5 +10,5 @@
 #import "BaseViewController.h"
 
 @interface SendIntegralViewController : BaseViewController
-
+- (instancetype)initWithIntegral:(int) integral;
 @end

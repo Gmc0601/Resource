@@ -41,6 +41,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_phb"] forBarMetrics:UIBarMetricsDefault];
+    [self getIntegral];
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
@@ -181,10 +182,11 @@
 }
 -(void) tapConvertButton{
     KitingGoodsViewController *newViewController = [KitingGoodsViewController new];
+    newViewController.integral = _integral.intValue;
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 -(void) tapSend{
-    SendIntegralViewController *newViewController = [SendIntegralViewController new];
+    SendIntegralViewController *newViewController = [[SendIntegralViewController alloc] initWithIntegral:_integral.intValue];
     
     [self.navigationController pushViewController:newViewController animated:NO];
 }
@@ -194,7 +196,8 @@
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
-    [ConfigModel showHud:self];
+    [params setObject:@"2" forKey:@"type"];
+//    [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_userintegrallist_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];

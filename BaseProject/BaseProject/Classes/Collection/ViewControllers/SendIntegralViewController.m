@@ -11,7 +11,7 @@
 @interface SendIntegralViewController ()
 @property(retain,atomic) UITextField *txtPhoneNo;
 @property(retain,atomic) UITextField *txtIntegral;
-@property(assign,nonatomic) int *integral;
+@property(assign,nonatomic) int integral;
 @end
 
 @implementation SendIntegralViewController
@@ -106,6 +106,7 @@
     _txtPhoneNo = [UITextField new];
     _txtPhoneNo.font = placeHolderFont;
     _txtPhoneNo.textColor = [ColorContants kitingFontColor];
+    _txtPhoneNo.keyboardType = UIKeyboardTypePhonePad;
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:@"请输入赠送方的手机号" attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont}];
     _txtPhoneNo.attributedPlaceholder = str;
     
@@ -121,6 +122,7 @@
     _txtIntegral = [UITextField new];
     _txtIntegral.font = placeHolderFont;
     _txtIntegral.textColor = [ColorContants kitingFontColor];
+    _txtIntegral.keyboardType = UIKeyboardTypeNumberPad;
     NSAttributedString *str1 = [[NSAttributedString alloc] initWithString:@"请输入赠送积分数量" attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont}];
     _txtIntegral.attributedPlaceholder = str1;
     
@@ -145,7 +147,7 @@
         return;
     }
     
-    if (![_txtIntegral.text isTelNumber]){
+    if (![_txtPhoneNo.text isTelNumber]){
         [ConfigModel mbProgressHUD:@"请输入正确的手机号" andView:self.view];
         
         return;
@@ -166,9 +168,15 @@
     [HttpRequest postPath:@"_getnum_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
-        NSString *info = datadic[@"info"];
-        [ConfigModel mbProgressHUD:info andView:nil];
-        NSLog(@"error>>>>%@", error);
+        
+        if ([datadic[@"error"] intValue] == 0) {
+            NSString *info = datadic[@"info"];
+            _integral = info.intValue;
+            [ConfigModel mbProgressHUD:@"操作成功" andView:self.view];
+        }else{
+            [ConfigModel mbProgressHUD:datadic[@"info"] andView:self.view];
+        }
+
     }];
 
 }

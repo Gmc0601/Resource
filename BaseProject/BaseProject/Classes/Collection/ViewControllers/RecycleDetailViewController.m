@@ -11,6 +11,7 @@
 #import "PublicClass.h"
 #import "NSMutableAttributedString+Category.h"
 #import "NearbyTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface RecycleDetailViewController ()
 {
@@ -38,7 +39,8 @@
 -(void) setModel:(GoodsModel *)model{
     _model = model;
     self.title = model.name;
-    moneyLabel.text = [NSString stringWithFormat:@"￥%f", _model.price];
+    [BottomImgView sd_setImageWithURL:[NSURL URLWithString:_model.imgUrl]];
+    moneyLabel.text = [NSString stringWithFormat:@"￥%.2f", _model.price];
     if (_model.unit != nil) {
         unitLabel.text = [NSString stringWithFormat:@"单位(%@)",_model.unit];
         priceLabel.text = [NSString stringWithFormat:@"单位:%.2f元/%@",_model.price,_model.unit];
@@ -48,7 +50,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"废报纸";
     self.automaticallyAdjustsScrollViewInsets = NO;
     [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleDefault;
     self.view.backgroundColor = RGBColor(237, 239, 239);

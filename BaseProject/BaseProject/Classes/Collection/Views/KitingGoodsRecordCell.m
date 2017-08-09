@@ -20,12 +20,12 @@
 @implementation KitingGoodsRecordCell
 
 @synthesize model = _model;
--(void) setModel:(IntegralRecordModel *)model{
+-(void) setModel:(KitingGoodsRecordModel *)model{
     _model = model;
     _lblDate.text = _model.date;
-    _lblSum.text = _model.sum;
-    _lblSummery.text = _model.summery;
-    _lblType.text = _model.type;
+    _lblSum.text = _model.integral;
+    _lblSummery.text = _model.type;
+    _lblType.text = _model.goodsName;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{

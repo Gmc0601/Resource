@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IntegralRecordModel.h"
+#import "KitingGoodsRecordModel.h"
+
 @interface KitingGoodsRecordCell : UITableViewCell
-@property(retain,nonatomic) IntegralRecordModel *model;
+@property(retain,nonatomic) KitingGoodsRecordModel *model;
 @end

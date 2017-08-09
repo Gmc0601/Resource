@@ -103,7 +103,7 @@
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX).offset(0);
         make.bottom.equalTo(btnConvert.mas_top).offset(SizeHeight(-41));
-        make.width.equalTo(@(SizeWidth(200)));
+        make.width.equalTo(self);
         make.height.equalTo(@(SizeHeight(50)));
     }];
     

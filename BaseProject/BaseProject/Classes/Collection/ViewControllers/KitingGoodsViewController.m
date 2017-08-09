@@ -20,7 +20,10 @@
 @end
 
 @implementation KitingGoodsViewController
-
+-(void) setIntegral:(int)integral{
+    _integral = integral;
+    _lblIntergal.text = [NSString stringWithFormat:@"%d",integral];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavTitle:@"积分兑换"];
@@ -104,11 +107,13 @@
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
         NSString *info = datadic[@"info"];
-        [ConfigModel mbProgressHUD:info andView:self.view];
         
-        if ([datadic[@"error"] intValue] != 0) {
+        if ([datadic[@"error"] intValue] == 0) {
             self.integral = self.integral - model.needIntergal.intValue;
-            _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
+            _lblIntergal.text = [NSString stringWithFormat:@"%d",self.integral];
+            [ConfigModel mbProgressHUD:@"操作成功" andView:self.view];
+        }else{
+            [ConfigModel mbProgressHUD:@"操作失败" andView:self.view];
         }
     }];
 }
@@ -191,7 +196,7 @@
         _lblIntergal.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:SizeWidth(18)];
         _lblIntergal.textColor = [ColorContants userNameFontColor];
         _lblIntergal.textAlignment = NSTextAlignmentLeft;
-        _lblIntergal.text = @"1000";
+        _lblIntergal.text = [NSString stringWithFormat:@"%d",_integral];
         [header addSubview:_lblIntergal];
         
         [_lblIntergal mas_makeConstraints:^(MASConstraintMaker *make) {
