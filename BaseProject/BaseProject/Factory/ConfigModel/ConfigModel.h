@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ConfigModel : NSObject
-
++(BOOL) isPerson;
 + (void)showHud:(UIViewController *)vc;
 
 + (void)hideHud:(UIViewController *)vc;

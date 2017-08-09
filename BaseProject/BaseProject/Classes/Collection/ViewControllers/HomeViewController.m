@@ -40,46 +40,6 @@
     [self addCollectionView];
     [self addSubviews];
     [PublicClass addCallButtonInViewContrller:self];
-    //    GoodsCategoryModel *model1 = [GoodsCategoryModel new];
-    //    model1.name = @"废纸";
-    //    [_models addObject:model1];
-    //
-    //
-    //    GoodsCategoryModel *model2 = [GoodsCategoryModel new];
-    //    model2.name = @"废塑料";
-    //    [_models addObject:model2];
-    //
-    //    GoodsCategoryModel *model3 = [GoodsCategoryModel new];
-    //    model3.name = @"废品车辆";
-    //    [_models addObject:model3];
-    //
-    //    GoodsCategoryModel *model4 = [GoodsCategoryModel new];
-    //    model4.name = @"小家电";
-    //    [_models addObject:model4];
-    //
-    //    GoodsCategoryModel *model5 = [GoodsCategoryModel new];
-    //    model5.name = @"电视机";
-    //    [_models addObject:model5];
-    //
-    //    GoodsCategoryModel *model6 = [GoodsCategoryModel new];
-    //    model6.name = @"冰箱";
-    //    [_models addObject:model6];
-    //
-    //    GoodsCategoryModel *model7 = [GoodsCategoryModel new];
-    //    model7.name = @"空调";
-    //    [_models addObject:model7];
-    //
-    //    GoodsCategoryModel *model8 = [GoodsCategoryModel new];
-    //    model8.name = @"电脑";
-    //    [_models addObject:model8];
-    //
-    //    GoodsCategoryModel *model9 = [GoodsCategoryModel new];
-    //    model9.name = @"手机";
-    //    [_models addObject:model9];
-    //
-    //    GoodsCategoryModel *model10 = [GoodsCategoryModel new];
-    //    model10.name = @"汽车";
-    //    [_models addObject:model10];
     [self loadData];
 }
 
@@ -285,8 +245,9 @@
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RecycleDetailViewController *newViewController = [[RecycleDetailViewController alloc] init];
-    newViewController.goodsId = ((GoodsModel *)_models[indexPath.row])._id;
+    GoodsListViewController *newViewController = [[GoodsListViewController alloc] init];
+    newViewController.goodListID = ((GoodsModel *)_models[indexPath.row])._id;
+    newViewController.title =  ((GoodsModel *)_models[indexPath.row]).name;
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 

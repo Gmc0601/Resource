@@ -11,6 +11,9 @@
 #import "RegisterInfoViewController.h"
 #import <UMSocialCore/UMSocialCore.h>
 #import "MBProgressHUD.h"
+#import "RegisterResultViewController.h"
+#import "HomeViewController.h"
+
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *PersonBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shopBtn;
@@ -236,29 +239,44 @@
             NSLog(@"success");
         }
         
+        [ConfigModel saveString:self.phoneTF.text forKey:@"PersonPhone"];
         NSLog(@"login>>>>>>%@", responseObject);
         NSDictionary *datadic = responseObject;
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = datadic[@"info"];
             NSString *usertoken = infoDic[@"userToken"];
-            [ConfigModel saveBoolObject:YES forKey:isPersonlogin];
+            [ConfigModel saveBoolObject:_IsPerson forKey:isPersonlogin];
             [ConfigModel saveString:usertoken forKey:UserToken];
-        
-            PersonViewController *personVC = [[ PersonViewController alloc] init];
             [ConfigModel saveString:infoDic[@"avatar_url"] forKey:@"PersonPortrait"];
             [ConfigModel saveString:infoDic[@"nickname"] forKey:@"PersonNickName"];
-            [ConfigModel saveString:infoDic[@"mobile"] forKey:@"PersonPhone"];
-            personVC.protraitUrlStr = infoDic[@"avatar_url"];
-            personVC.nickNameStr = infoDic[@"nickname"];
-            personVC.phoneStr = infoDic[@"mobile"];
-            [self.navigationController pushViewController:personVC animated:YES];
-            
+           
+            if (_IsPerson) {
+                PersonViewController *personVC = [[ PersonViewController alloc] init];
+                personVC.protraitUrlStr = infoDic[@"avatar_url"];
+                personVC.nickNameStr = infoDic[@"nickname"];
+                personVC.phoneStr = infoDic[@"mobile"];
+                [self.navigationController pushViewController:personVC animated:YES];
+            }else{
+                HomeViewController * homeVC = [[HomeViewController alloc] init];
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homeVC];
+
+                [self presentViewController:nav animated:YES completion:nil];
+            }
         }else {
             NSString *info = datadic[@"info"];
             if([datadic[@"info"]  isEqual: @"该商家账号尚未注册，请先提交注册申请！"]){
-                RegisterInfoViewController *newVC = [RegisterInfoViewController new];
+                RegisterInfoViewController *newVC = [[RegisterInfoViewController alloc] initWithTelNo:self.phoneTF.text];
                 [self.navigationController pushViewController:newVC animated:YES];
-            }else{
+            }else if([datadic[@"info"] isEqualToString:@"商家注册尚未通过，请等待！"]){
+                RegisterResultViewController *newVC = [RegisterResultViewController new];
+                newVC.status = 1;
+                [self.navigationController pushViewController:newVC animated:YES];
+            }else if([datadic[@"info"] isEqualToString:@"商家注册未通过，请重新提交！"]){
+                RegisterResultViewController *newVC = [RegisterResultViewController new];
+                newVC.status = 3;
+                [self.navigationController pushViewController:newVC animated:YES];
+            }
+            else{
                 [ConfigModel mbProgressHUD:info andView:nil];
             }
         }
@@ -266,9 +284,6 @@
     }];
     
 }
-
-
-
 
 - (void)reduceTime:(NSTimer *)codeTimer {
     self.timeCount--;

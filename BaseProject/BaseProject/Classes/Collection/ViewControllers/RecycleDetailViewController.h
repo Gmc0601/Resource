@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "GoodsModel.h"
-@interface RecycleDetailViewController : BaseViewController
+@interface RecycleDetailViewController : UIViewController
 @property(retain,nonatomic) NSString *goodsId;
 @end

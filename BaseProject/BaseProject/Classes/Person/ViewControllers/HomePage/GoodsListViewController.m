@@ -9,6 +9,9 @@
 #import "GoodsListViewController.h"
 #import "GoodsTableViewCell.h"
 #import "AbandonGoodsViewController.h"
+#import "ConfigModel.h"
+#import "RecycleDetailViewController.h"
+
 @interface GoodsListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *GoodsTableView;
@@ -109,12 +112,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    AbandonGoodsViewController *abandonVC = [[AbandonGoodsViewController alloc] init];
-    abandonVC.abandanGoosVCTitleStr = ListArr[indexPath.row][@"goodlist"];
-    abandonVC.abandanGoodUnitStr = ListArr[indexPath.row][@"unit"];
-    abandonVC.abandanGoodPriceStr = ListArr[indexPath.row][@"price"];
-    abandonVC.abandanSecondIDStr = ListArr[indexPath.row][@"id"];
-    [self.navigationController pushViewController:abandonVC animated:YES];
+    if ([ConfigModel isPerson]) {
+        AbandonGoodsViewController *abandonVC = [[AbandonGoodsViewController alloc] init];
+        abandonVC.abandanGoosVCTitleStr = ListArr[indexPath.row][@"goodlist"];
+        abandonVC.abandanGoodUnitStr = ListArr[indexPath.row][@"unit"];
+        abandonVC.abandanGoodPriceStr = ListArr[indexPath.row][@"price"];
+        abandonVC.abandanSecondIDStr = ListArr[indexPath.row][@"id"];
+        [self.navigationController pushViewController:abandonVC animated:YES];
+    }else{
+        RecycleDetailViewController *newVC = [RecycleDetailViewController new];
+        
+        newVC.goodsId = ListArr[indexPath.row][@"id"];
+        [self.navigationController pushViewController:newVC animated:YES];
+    }
+    
     
 }
 /*

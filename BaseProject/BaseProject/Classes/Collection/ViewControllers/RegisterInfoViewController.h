@@ -11,5 +11,5 @@
 #import "ImagePickerView.h"
 
 @interface RegisterInfoViewController : BaseViewController<ImagePickerViewDelegate,UIImagePickerControllerDelegate>
-
+- (instancetype)initWithTelNo:(NSString *) telNo;
 @end

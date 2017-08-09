@@ -9,7 +9,9 @@
 #import "ConfigModel.h"
 #import "MBProgressHUD.h"
 @implementation ConfigModel
-
++(BOOL) isPerson{
+    return [ConfigModel getBoolObjectforKey:isPersonlogin];
+}
 + (void)showHud:(UIViewController *)vc {
     [MBProgressHUD showHUDAddedTo:vc.view animated:YES];
 }

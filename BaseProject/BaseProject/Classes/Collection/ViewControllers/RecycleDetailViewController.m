@@ -36,11 +36,12 @@
 }
 
 -(void) setModel:(GoodsModel *)model{
-    [self setNavTitle:_model.name];
+    _model = model;
+    self.title = model.name;
     moneyLabel.text = [NSString stringWithFormat:@"￥%f", _model.price];
     if (_model.unit != nil) {
         unitLabel.text = [NSString stringWithFormat:@"单位(%@)",_model.unit];
-        priceLabel.text = [NSString stringWithFormat:@"单位:%f元/%@",_model.price,_model.unit];
+        priceLabel.text = [NSString stringWithFormat:@"单位:%.2f元/%@",_model.price,_model.unit];
         [self setAttributeString];
     }
 }
@@ -48,17 +49,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"废报纸";
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleDefault;
+    self.view.backgroundColor = RGBColor(237, 239, 239);
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
+    
     
     [self CreateUI];
+    self.view.backgroundColor = [UIColor whiteColor];
     [PublicClass addCallButtonInViewContrller:self];
 }
+
+- (void)clickBackBtn{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 }
 
 - (void)CreateUI{
-    TBheadView = [[UIView alloc] initWithFrame:CGRectMake(0, [self getNavBarHeight], kScreenW, SizeHeight(392))];
+    TBheadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, SizeHeight(392))];
     TBheadView.backgroundColor = [UIColor whiteColor];
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 1)];
@@ -161,16 +173,16 @@
 
 -(void) setAttributeString{
     NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc] initWithString:priceLabel.text];
-    NSRange priceStrRange = NSMakeRange(4, 4);
+    NSRange priceStrRange = NSMakeRange(3, priceLabel.text.length - 6);
     //    [priceStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:priceStrRange];
     [priceStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:priceStrRange];
+
     priceLabel.attributedText = priceStr;
-    
 }
 
 
 - (void)calculateMoneyBtn{
-    moneyLabel.text = [NSString stringWithFormat:@"￥ %f",[self getSumMoney]];
+    moneyLabel.text = [NSString stringWithFormat:@"￥ %.2f",[self getSumMoney]];
 }
 
 -(void) showCallView{

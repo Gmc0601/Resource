@@ -10,5 +10,5 @@
 #import "BaseViewController.h"
 
 @interface RegisterResultViewController : BaseViewController
-
+@property(assign,nonatomic) int status;
 @end

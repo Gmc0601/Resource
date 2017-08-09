@@ -9,7 +9,7 @@
 #import "RegisterResultViewController.h"
 #import "LoginViewController.h"
 #import "RegisterInfoViewController.h"
-
+#import "FactorySet.h"
 @interface RegisterResultViewController ()
 @property(retain,atomic) UILabel *lblMsg ;
 @property(retain,atomic) UIImageView *img;
@@ -17,15 +17,26 @@
 
 @implementation RegisterResultViewController
 
+@synthesize status = _status;
+-(void) setStatus:(int)status{
+    if (status == 1 || status == 4) {
+        [self addApprovingView];
+    }else if (status == 2) {
+        [self addApprovedView];
+    }else if (status == 3) {
+        [self addRejectedView];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavTitle:@"资料审核"];
-
-    [self addApprovingView];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+    
+    [self.navigationItem setHidesBackButton:NO animated:NO];
+    
+    UIBarButtonItem *leftBarButtonItem = [FactorySet createBackBarButtonItemWithTarget:self action:@selector(backAction)];
+    
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
 }
 
 -(void) addApprovingView{
@@ -42,7 +53,6 @@
 -(void) addApprovedView{
     [self addImage:@"zlsh_icon_tg"];
     [self addMessageLabel:@"您的审核已通过"];
-    [self addBackButton];
 }
 
 -(void) addMessageLabel:(NSString *) text{
@@ -103,7 +113,7 @@
 
 -(void) addConstraintsForButtton:(UIButton *) btn{
     [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_img.mas_bottom).offset(SizeHeight(20));
+        make.top.equalTo(_lblMsg.mas_bottom).offset(SizeHeight(20));
         make.centerX.equalTo(self.view.mas_centerX);
         make.width.equalTo(@(SizeWidth(690/2)));
         make.height.equalTo(@(SizeHeight(44)));
@@ -120,8 +130,9 @@
 }
 
 -(void) tapRegistButton{
-    RegisterInfoViewController *newVC = [RegisterInfoViewController new];
-    [self presentViewController:newVC animated:YES completion:nil];
+    NSString *telNo = [ConfigModel getStringforKey:@"PersonPhone"];
+    RegisterInfoViewController *newVC = [[RegisterInfoViewController alloc] initWithTelNo:telNo];
+    [self.navigationController pushViewController:newVC animated:YES];
 }
 
 @end

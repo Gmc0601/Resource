@@ -11,7 +11,7 @@
 #import "LocationViewController.h"
 #import "RegisterResultViewController.h"
 #import "GTMBase64.h"
-
+#import "LoginViewController.h"
 #define Card_Front_Tag 10001
 #define Card_Back_Tag 10002
 #define License_Tag 10003
@@ -31,9 +31,19 @@
 @property(retain,atomic) UIView *superView;
 @property(retain,atomic) ImagePickerView *currentPicker;
 @property(retain,atomic) AMapGeoPoint *location;
+@property(retain,atomic) NSString *strTel;
 @end
 
 @implementation RegisterInfoViewController
+
+- (instancetype)initWithTelNo:(NSString *) telNo
+{
+    self = [super init];
+    if (self) {
+        _strTel = telNo;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,10 +67,10 @@
     UILabel *lblName = [self addTitleLable:titleFont withTitleColor:titleColor with:@"姓名:" withTopView:_superView];
     UIView *border1 = [self addBorder:lblName];
     
-    UILabel *lblTelNo = [self addTitleLable:titleFont withTitleColor:titleColor with:@"手机:" withTopView:border1];
-    UIView *border2 = [self addBorder:lblTelNo];
+//    UILabel *lblTelNo = [self addTitleLable:titleFont withTitleColor:titleColor with:@"手机:" withTopView:border1];
+//    UIView *border2 = [self addBorder:lblTelNo];
     
-    UILabel *lblCardId = [self addTitleLable:titleFont withTitleColor:titleColor with:@"身份证号:" withTopView:border2];
+    UILabel *lblCardId = [self addTitleLable:titleFont withTitleColor:titleColor with:@"身份证号:" withTopView:border1];
     UIView *border3 = [self addBorder:lblCardId];
     
     UILabel *lblPointName = [self addTitleLable:titleFont withTitleColor:titleColor with:@"收购点名称:" withTopView:border3];
@@ -73,8 +83,8 @@
     UIView *border6 = [self addBorder:lblDetailAddress];
     _txtName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入姓名" withLeftView:lblName];
 
-    _txtTelNo = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入手机号" withLeftView:lblTelNo];
-    _txtTelNo.keyboardType = UIKeyboardTypePhonePad;
+//    _txtTelNo = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入手机号" withLeftView:lblTelNo];
+//    _txtTelNo.keyboardType = UIKeyboardTypePhonePad;
     _txtCardId = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入身份证号" withLeftView:lblCardId];
      _txtPointName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入收购点名称" withLeftView:lblPointName];
      _btnAddress = [self addLocationButton:lblPointAddress];
@@ -250,10 +260,10 @@
         isInvalidate = YES;
     }
     
-    if (_txtTelNo.text == nil || ![_txtTelNo.text isTelNumber]) {
-        [strMsg appendString:@",手机号码"];
-        isInvalidate = YES;
-    }
+//    if (_txtTelNo.text == nil || ![_txtTelNo.text isTelNumber]) {
+//        [strMsg appendString:@",手机号码"];
+//        isInvalidate = YES;
+//    }
     
     if (_txtCardId.text == nil || ![_txtCardId.text isIdCardNo]) {
         [strMsg appendString:@",身份证号码"];
@@ -293,13 +303,13 @@
         return;
     }
     
-    RegisterResultViewController *newVC = [RegisterResultViewController new];
+
     [ConfigModel showHud:self];
 
     NSMutableDictionary *params = [NSMutableDictionary new];
 
     [params setObject:_txtName.text forKey:@"nickname"];
-    [params setObject:_txtTelNo.text forKey:@"mobile"];
+    [params setObject:_strTel forKey:@"mobile"];
     [params setObject:_txtCardId.text forKey:@"id_num"];
     [params setObject:_txtPointName.text forKey:@"good_name"];
     [params setObject:_txtDetailAddress.text forKey:@"address"];
@@ -315,6 +325,8 @@
         NSDictionary *datadic = responseObject;
         
         if ([datadic[@"error"] intValue] == 0) {
+             RegisterResultViewController *newVC = [RegisterResultViewController new];
+            newVC.status = 1;
             [self.navigationController pushViewController:newVC animated:YES];
         }else {
             NSString *info = datadic[@"info"];
@@ -354,6 +366,11 @@
 -(void) chooseAddress:(AMapGeoPoint *)point withName:(NSString *) name{
     _location = point;
     [_btnAddress setTitle:name forState:UIControlStateNormal];
+}
+
+-(void) backAction{
+    LoginViewController *newVC = [LoginViewController new];
+    [self presentViewController:newVC animated:YES completion:nil];
 }
 
 @end
