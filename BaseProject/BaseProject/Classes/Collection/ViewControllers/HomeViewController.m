@@ -33,6 +33,7 @@
 @property(retain,atomic) UIView *backgroundView;
 @property(retain,atomic) UIButton *btnMessage;
 @property(retain,atomic) UIButton *btnSetting;
+@property(retain,atomic) UserModel *user;
 @end
 
 @implementation HomeViewController
@@ -387,7 +388,7 @@
 
 -(void) showIntegralDetail{
     IntegalViewController *newViewController = [[IntegalViewController alloc] init];
-    newViewController.integral = _lblIntegral.text;
+    newViewController.integral = _user.integral;
     [self.navigationController pushViewController:newViewController animated:YES];
     
 }
@@ -430,15 +431,15 @@
             NSDictionary *infoDic = responseObject[@"info"];
             NSDictionary *userInfo = infoDic[@"userinfo"];
             
-            UserModel *userModel = [UserModel new];
-            userModel.name =  userInfo[@"nickname"];
-            userModel.avatarUrl =  userInfo[@"avatar_url"];
-            userModel.telNumber =  userInfo[@"mobile"];
-            userModel.type =  userInfo[@"user_type"];
+            _user = [UserModel new];
+            _user.name =  userInfo[@"nickname"];
+            _user.avatarUrl =  userInfo[@"avatar_url"];
+            _user.telNumber =  userInfo[@"mobile"];
+            _user.type =  userInfo[@"user_type"];
             if (userInfo[@"integral"] == nil) {
-                userModel.integral = @"0";
+                _user.integral = @"0";
             }else{
-                userModel.integral =  userInfo[@"integral"];
+                _user.integral =  userInfo[@"integral"];
             }
             
             NSDictionary *goodsList = infoDic[@"goodlist"];
@@ -458,7 +459,7 @@
                 return model1.sequence < model2.sequence;
             }];
             
-            [self setUser:userModel];
+            [self setUser:_user];
             [_collectionView reloadData];
             
         }else {

@@ -24,8 +24,8 @@
     _model = model;
     _lblDate.text = _model.date;
     _lblSum.text = _model.integral;
-    _lblSummery.text = _model.type;
-    _lblType.text = _model.goodsName;
+    _lblSummery.text = _model.goodsName;
+    _lblType.text = _model.type;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -73,7 +73,7 @@
     [_lblDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SizeWidth(12));
         make.top.equalTo(_lblType.mas_bottom).offset(SizeWidth(10));
-        make.width.equalTo(@(SizeWidth(120)));
+        make.width.equalTo(@(SizeWidth(150)));
         make.height.equalTo(@(SizeHeight(14)));
     }];
     

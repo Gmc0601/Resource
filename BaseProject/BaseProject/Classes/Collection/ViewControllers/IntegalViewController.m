@@ -19,6 +19,10 @@
 @interface IntegalViewController ()
 @property(retain,atomic) NSMutableArray *models;
 @property(retain,atomic)  UITableView *tb;
+@property(retain,atomic)  NSString *type;
+@property(retain,atomic)  UIButton *btnEarn;
+@property(retain,atomic)  UIButton *btnExpend;
+@property(retain,atomic)  UIView *blueBorder;
 @end
 
 @implementation IntegalViewController
@@ -34,7 +38,7 @@
     [self addTableView];
     
     _models = [NSMutableArray arrayWithCapacity:0];
-    [self loadData];
+    [self loadData:@"1"];
     [self.navigationItem setLeftBarButtonItem:nil];
      [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];}
 
@@ -90,36 +94,39 @@
         return header;
     }
     header.backgroundColor = [ColorContants gray];
-    CGFloat width = SizeWidth(100);
-    CGFloat height = SizeHeight(15);
+    CGFloat width = SizeWidth(139);
     CGFloat margin = SizeWidth(87.5);
 
-
-    UILabel * lblInput = [[UILabel alloc]init];
-    lblInput.text = @"收入";
-    lblInput.textColor = [ColorContants phoneNumerFontColor];
-    lblInput.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
-    lblInput.textAlignment = NSTextAlignmentRight;
-    [header addSubview:lblInput];
+    _btnEarn = [[UIButton alloc]init];
+    [_btnEarn setTitle:@"收入" forState:UIControlStateNormal];
+    [_btnEarn setTitleColor:[ColorContants phoneNumerFontColor] forState:UIControlStateNormal] ;
+    [_btnEarn setTitleColor:[ColorContants BlueFontColor] forState:UIControlStateSelected];
+    _btnEarn.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    _btnEarn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [_btnEarn addTarget:self action:@selector(tapEarnButton) forControlEvents:UIControlEventTouchUpInside];
+    [_btnEarn setSelected:YES];
+    [header addSubview:_btnEarn];
     
-    [lblInput mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_btnEarn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(header.mas_centerY);
-        make.right.equalTo(header.mas_centerX).offset(-margin);
-        make.height.equalTo(@(height));
+        make.centerX.equalTo(header.mas_centerX).offset(-margin);
+        make.height.equalTo(header.mas_height);
         make.width.equalTo(@(width));
     }];
     
-    UILabel * lblOutput = [[UILabel alloc]init];
-    lblOutput.text = @"支出";
-    lblOutput.textColor = [ColorContants BlueFontColor];
-    lblOutput.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
-    lblOutput.textAlignment = NSTextAlignmentLeft;
-    [header addSubview:lblOutput];
+    _btnExpend = [[UIButton alloc]init];
+    [_btnExpend setTitle:@"支出" forState:UIControlStateNormal];
+    [_btnExpend setTitleColor:[ColorContants phoneNumerFontColor] forState:UIControlStateNormal] ;
+    [_btnExpend setTitleColor:[ColorContants BlueFontColor] forState:UIControlStateSelected];
+    _btnExpend.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    _btnExpend.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [_btnExpend addTarget:self action:@selector(tapExpendButton) forControlEvents:UIControlEventTouchUpInside];
+    [header addSubview:_btnExpend];
     
-    [lblOutput mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_btnExpend mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(header.mas_centerY);
-        make.left.equalTo(header.mas_centerX).offset(margin);
-        make.height.equalTo(@(height));
+        make.centerX.equalTo(header.mas_centerX).offset(margin);
+        make.height.equalTo(header.mas_height);
         make.width.equalTo(@(width));
     }];
     
@@ -134,18 +141,24 @@
         make.height.equalTo(@1);
     }];
     
-    UIView *blueBorder = [[UIView alloc] init];
-    blueBorder.backgroundColor = [ColorContants BlueFontColor];
-    [header addSubview:blueBorder];
-    
-    [blueBorder mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(lblOutput.mas_right).offset(-16);
-        make.bottom.equalTo(header.mas_bottom);
-        make.height.equalTo(@(SizeHeight(1.5)));
-        make.width.equalTo(@(SizeHeight(278/2)));
-    }];
-
+    _blueBorder = [[UIView alloc] init];
+    _blueBorder.backgroundColor = [ColorContants BlueFontColor];
+    [header addSubview:_blueBorder];
+    _blueBorder.frame = CGRectMake(0, 0, SizeWidth(278/2), SizeHeight(1.5));
+    _blueBorder.center = CGPointMake(self.view.center.x - margin, SizeHeight(42)-SizeHeight(1.5));
     return header;
+}
+
+-(void) addConstraintsForHightlight:(UIView *) center{
+    _blueBorder.center = CGPointMake(center.center.x, center.superview.bounds.size.height-SizeHeight(1.5));
+//    [_blueBorder removeConstraints:_blueBorder.constraints];
+//    
+//    [_blueBorder mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(center.mas_centerX);
+//        make.bottom.equalTo(_blueBorder.superview.mas_bottom);
+//        make.height.equalTo(@(SizeHeight(1.5)));
+//        make.width.equalTo(@(SizeHeight(278/2)));
+//    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -192,18 +205,19 @@
 }
 
 
--(void) loadData{
+-(void) loadData:(NSString *) type{
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
-    [params setObject:@"2" forKey:@"type"];
-//    [ConfigModel showHud:self];
+    [params setObject:type forKey:@"type"];
+    [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_userintegrallist_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
+            _models = [NSMutableArray arrayWithCapacity:0];
             
             for (NSDictionary *dict in infoDic) {
                 IntegralRecordModel *model = [IntegralRecordModel new];
@@ -229,7 +243,7 @@
         NSMutableDictionary *params = [NSMutableDictionary new];
         NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
         [params setObject:userTokenStr forKey:@"userToken"];
-        [ConfigModel showHud:self];
+//        [ConfigModel showHud:self];
     
         [HttpRequest postPath:@"_usernum_001" params:params resultBlock:^(id responseObject, NSError *error) {
             [ConfigModel hideHud:self];
@@ -243,6 +257,22 @@
             }
             NSLog(@"error>>>>%@", error);
         }];
+}
+
+-(void) tapEarnButton{
+    _type = @"1";
+    [_btnEarn setSelected:YES];
+    [_btnExpend setSelected:NO];
+    [self addConstraintsForHightlight:_btnEarn];
+    [self loadData:_type];
+}
+
+-(void) tapExpendButton{
+    _type = @"2";
+    [_btnEarn setSelected:NO];
+    [_btnExpend setSelected:YES];
+    [self addConstraintsForHightlight:_btnExpend];
+    [self loadData:_type];
 }
 
 

@@ -9,6 +9,7 @@
 #import "IntegralCell.h"
 #import "Constants.h"
 #import <Masonry/Masonry.h>
+#import "NSString+Category.h"
 
 @interface IntegralCell()
 @property(retain,atomic) UILabel *lblType;
@@ -23,7 +24,9 @@
 @synthesize model = _model;
 -(void) setModel:(IntegralRecordModel *)model{
     _model = model;
-    _lblDate.text = _model.date;
+    NSArray *arr = [_model.date componentsSeparatedByString:@" "];
+    _lblDate.text = arr[0];
+    _lblTime.text = arr[1];
     _lblSum.text = _model.sum;
     _lblSummery.text = _model.summery;
     _lblType.text = _model.type;
@@ -70,12 +73,14 @@
     _lblDate.textColor = [ColorContants phoneNumerFontColor];
     _lblDate.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(14)];
     _lblDate.textAlignment = NSTextAlignmentLeft;
+    _lblDate.text = @"2017-01-02";
     [self addSubview:_lblDate];
     
+    CGFloat width = [_lblDate.text widthWithFontSize:SizeWidth(14) height:SizeHeight(14)] + 5;
     [_lblDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SizeWidth(12));
         make.top.equalTo(_lblType.mas_bottom).offset(SizeWidth(10));
-        make.width.equalTo(@(SizeWidth(100)));
+        make.width.equalTo(@(width));
         make.height.equalTo(@(SizeHeight(14)));
     }];
     
@@ -87,8 +92,8 @@
     
     [_lblTime mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_lblDate.mas_right).offset(SizeWidth(13));
-        make.centerX.equalTo(_lblDate);
-        make.width.equalTo(@(SizeWidth(50)));
+        make.centerY.equalTo(_lblDate);
+        make.width.equalTo(@(SizeWidth(80)));
         make.height.equalTo(@(SizeHeight(14)));
     }];
     
