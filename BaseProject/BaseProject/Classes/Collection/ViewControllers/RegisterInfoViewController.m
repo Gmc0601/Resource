@@ -12,6 +12,7 @@
 #import "RegisterResultViewController.h"
 #import "GTMBase64.h"
 #import "LoginViewController.h"
+#import "UIImage+ResizeMagick.h"
 #define Card_Front_Tag 10001
 #define Card_Back_Tag 10002
 #define License_Tag 10003
@@ -319,6 +320,7 @@
     [params setObject:[GTMBase64 encodeBase64Data:_imgCardBack] forKey:@"verso_img"];
     [params setObject:[GTMBase64 encodeBase64Data:_imgLicense] forKey:@"permit"];
     [params setObject:[GTMBase64 encodeBase64Data:_imgfacade] forKey:@"good_img"];
+    NSLog(@"%@",params);
     
     [HttpRequest postPath:@"_register_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
@@ -348,7 +350,8 @@
 {
     //You can retrieve the actual UIImage
    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    NSData *data = UIImageJPEGRepresentation(image, 1);
+    image = [image resizedImageWithMaximumSize:CGSizeMake(SizeWidth(512), SizeHeight(512))];
+    NSData *data = UIImageJPEGRepresentation(image, 0.8);
     if (_currentPicker.tag == Card_Front_Tag) {
         _imgCardFront = data;
     }else if (_currentPicker.tag == Card_Back_Tag){
@@ -369,8 +372,7 @@
 }
 
 -(void) backAction{
-    LoginViewController *newVC = [LoginViewController new];
-    [self presentViewController:newVC animated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

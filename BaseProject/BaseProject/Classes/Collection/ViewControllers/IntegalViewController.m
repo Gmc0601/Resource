@@ -227,6 +227,10 @@
                 model.summery = dict[@"action_type"];
                 model.date = dict[@"create_time"];
                 
+                if([dict[@"type"] isEqualToString:@"2"]){
+                    model.sum = [NSString stringWithFormat:@"-%@",model.sum];
+                }
+                
                 [_models addObject:model];
             }
             

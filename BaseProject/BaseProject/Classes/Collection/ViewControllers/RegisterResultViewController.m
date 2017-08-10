@@ -125,8 +125,9 @@
 }
 
 -(void) backAction{
-    LoginViewController *newVC = [LoginViewController new];
-    [self presentViewController:newVC animated:YES completion:nil];
+//    LoginViewController *newVC = [LoginViewController new];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self presentViewController:newVC animated:YES completion:nil];
 }
 
 -(void) tapRegistButton{

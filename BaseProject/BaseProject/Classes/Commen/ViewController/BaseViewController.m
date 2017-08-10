@@ -57,7 +57,8 @@
         gesture.direction = UISwipeGestureRecognizerDirectionRight;
         [self.view addGestureRecognizer:gesture];
         
-        
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bar_bg"] forBarMetrics:UIBarMetricsDefault];
+        [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated:YES];
     }else{
         [self.navigationItem setHidesBackButton:YES animated:NO];
     }

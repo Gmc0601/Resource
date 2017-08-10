@@ -171,9 +171,7 @@
     
     if (indexPath.section == 0) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-        if (cell.subviews.count < 3) {
             [self setCell:cell];
-        }
     }else{
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"KitingCell" forIndexPath:indexPath];
         ((KitingCell *) cell).model = _models[indexPath.row];
@@ -183,6 +181,12 @@
 }
 
 -(void) setCell:(UICollectionViewCell *) cell{
+    for (UIView *v in cell.subviews) {
+        [v removeFromSuperview];
+        [v setHidden:YES];
+    }
+    
+    
     _bankCardView = [UIView new];
     _bankCardView.backgroundColor = [ColorContants gray];
     _bankCardView.layer.cornerRadius = 5;
@@ -194,6 +198,12 @@
         make.height.equalTo(@(SizeHeight(164/2)));
         make.width.equalTo(@(SizeHeight(710/2)));
     }];
+    
+    if (_bankCard != nil) {
+        [self setBankCard];
+        
+        return;
+    }
     
     UIButton *btnAdd = [[UIButton alloc] init];
     [btnAdd setTitle:@"新增银行卡" forState:UIControlStateNormal];
@@ -208,6 +218,52 @@
         make.centerX.equalTo(_bankCardView.mas_centerX);
         make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(@(SizeHeight(15)));
+    }];
+}
+
+-(void) setBankCard{
+    _bankCardView.backgroundColor = [ColorContants bankCardColor];
+
+    UILabel *cardName = [[UILabel alloc] init];
+    cardName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    cardName.textColor = [ColorContants whiteFontColor];
+    cardName.textAlignment = NSTextAlignmentLeft;
+    cardName.text = @"银行卡";//bankCard.bankName;
+    [_bankCardView addSubview:cardName];
+    
+    [cardName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_bankCardView.mas_top).offset(SizeHeight(20));
+        make.left.equalTo(_bankCardView.mas_left).offset(SizeWidth(15));
+        make.width.equalTo(@(SizeWidth(200)));
+        make.height.equalTo(@(SizeHeight(15)));
+    }];
+    
+    UILabel *cardNumber = [[UILabel alloc] init];
+    cardNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:17];
+    cardNumber.textColor = [ColorContants whiteFontColor];
+    cardNumber.textAlignment = NSTextAlignmentRight;
+    cardNumber.text = [_bankCard.cardNumber stringByReplacingCharactersInRange:NSMakeRange(0, 12) withString:@"**** **** **** "];
+    [_bankCardView addSubview:cardNumber];
+    
+    [cardNumber mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_bankCardView.mas_right).offset(SizeWidth(-20));
+        make.bottom.equalTo(_bankCardView.mas_bottom).offset(SizeHeight(-15));
+        make.width.equalTo(@(SizeWidth(400)));
+        make.height.equalTo(@(SizeHeight(17)));
+    }];
+    
+    UIButton *btnEdit = [[UIButton alloc] init];
+    btnEdit.backgroundColor = [ColorContants BlueFontColor];
+    [btnEdit setBackgroundImage:[UIImage imageNamed:@"tx_icon_bj"] forState:UIControlStateNormal];
+    [btnEdit addTarget:self action:@selector(gotoEditView) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_bankCardView addSubview:btnEdit];
+    
+    [btnEdit mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_bankCardView.mas_right).offset(SizeWidth(-20));
+        make.top.equalTo(_bankCardView.mas_top).offset(SizeHeight(10));
+        make.width.equalTo(@(SizeWidth(27/2)));
+        make.height.equalTo(@(SizeHeight(34/2)));
     }];
 }
 
@@ -306,56 +362,6 @@
     [self presentViewController:popup animated:YES completion:nil];
 }
 
--(void) setBankCard:(BankCardModel *) bankCard{
-    _bankCardView.backgroundColor = [ColorContants bankCardColor];
-    for (UIView *v in _bankCardView.subviews) {
-        [v removeFromSuperview];
-        [v setHidden:YES];
-    }
-    
-    UILabel *cardName = [[UILabel alloc] init];
-    cardName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
-    cardName.textColor = [ColorContants whiteFontColor];
-    cardName.textAlignment = NSTextAlignmentLeft;
-    cardName.text = @"银行卡";//bankCard.bankName;
-    [_bankCardView addSubview:cardName];
-    
-    [cardName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_bankCardView.mas_top).offset(SizeHeight(20));
-        make.left.equalTo(_bankCardView.mas_left).offset(SizeWidth(15));
-        make.width.equalTo(@(SizeWidth(200)));
-        make.height.equalTo(@(SizeHeight(15)));
-    }];
-    
-    UILabel *cardNumber = [[UILabel alloc] init];
-    cardNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:17];
-    cardNumber.textColor = [ColorContants whiteFontColor];
-    cardNumber.textAlignment = NSTextAlignmentRight;
-    cardNumber.text = [bankCard.cardNumber stringByReplacingCharactersInRange:NSMakeRange(0, 12) withString:@"**** **** **** "];
-    [_bankCardView addSubview:cardNumber];
-    
-    [cardNumber mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(_bankCardView.mas_right).offset(SizeWidth(-20));
-        make.bottom.equalTo(_bankCardView.mas_bottom).offset(SizeHeight(-15));
-        make.width.equalTo(@(SizeWidth(400)));
-        make.height.equalTo(@(SizeHeight(17)));
-    }];
-    
-    UIButton *btnEdit = [[UIButton alloc] init];
-    btnEdit.backgroundColor = [ColorContants BlueFontColor];
-    [btnEdit setBackgroundImage:[UIImage imageNamed:@"tx_icon_bj"] forState:UIControlStateNormal];
-    [btnEdit addTarget:self action:@selector(gotoEditView) forControlEvents:UIControlEventTouchUpInside];
-    
-    [_bankCardView addSubview:btnEdit];
-    
-    [btnEdit mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(_bankCardView.mas_right).offset(SizeWidth(-20));
-        make.top.equalTo(_bankCardView.mas_top).offset(SizeHeight(10));
-        make.width.equalTo(@(SizeWidth(27/2)));
-        make.height.equalTo(@(SizeHeight(34/2)));
-    }];
-}
-
 -(void) gotoEditView{
     BankCarInfoViewController *newViewController = [BankCarInfoViewController new];
     newViewController.model = _bankCard;
@@ -371,6 +377,7 @@
     [HttpRequest postPath:@"_usercard_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
+        NSLog(@"%@",responseObject);
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
             _bankCard = [BankCardModel new];
@@ -379,7 +386,7 @@
                 _bankCard.bankName = infoDic[@"real_name"];
                 _bankCard.cardNumber = infoDic[@"banknumber"];
                 _bankCard.userName = infoDic[@"real_name"];
-                [self setBankCard:_bankCard];
+                [_collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]]];
             }
             
         }else {

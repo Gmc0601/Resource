@@ -16,6 +16,7 @@ pod ‘AMapNavi’
 pod 'Masonry'
 pod 'IQKeyboardManager'
 pod 'PopupDialog', '~> 0.5'
+pod 'UIImage-ResizeMagick'
 use_frameworks!
 
 end

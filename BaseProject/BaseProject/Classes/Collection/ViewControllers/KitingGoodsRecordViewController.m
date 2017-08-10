@@ -90,7 +90,7 @@
             
             for (NSDictionary *dict in infoDic) {
                 KitingGoodsRecordModel *model = [KitingGoodsRecordModel new];
-                model.integral = dict[@"amount"];
+                model.integral = [NSString stringWithFormat:@"-%@",  dict[@"amount"]];
                 model.goodsName = dict[@"good_name"];
                 model.date = dict[@"create_time"];
                 model.type = @"兑换";
