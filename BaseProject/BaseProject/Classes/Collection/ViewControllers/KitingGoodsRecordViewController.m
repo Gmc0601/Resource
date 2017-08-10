@@ -92,11 +92,15 @@
                 KitingGoodsRecordModel *model = [KitingGoodsRecordModel new];
                 model.integral = [NSString stringWithFormat:@"-%@",  dict[@"amount"]];
                 model.goodsName = dict[@"good_name"];
-                model.date = dict[@"create_time"];
+                model.date = (NSDate *)dict[@"create_time"];
                 model.type = @"兑换";
                 [_models addObject:model];
             }
-            
+            [_models sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                KitingGoodsRecordModel *mode1l = (KitingGoodsRecordModel *) obj1;
+                KitingGoodsRecordModel *mode12 = (KitingGoodsRecordModel *) obj2;
+                return [mode12.date compare:mode1l.date] == NSOrderedDescending;
+            }];
             [_tb reloadData];
         }else {
             _pageIndex--;
