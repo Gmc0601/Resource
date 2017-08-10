@@ -86,9 +86,9 @@
     timeLabelD.textColor = RGBColor(153, 153, 153);
     [NewsWebView.scrollView addSubview:timeLabelD];
     
-    separView = [[UIView alloc] initWithFrame:CGRectZero];
-    separView.backgroundColor = [UIColor lightGrayColor];
-    [NewsWebView.scrollView addSubview:separView];
+//    separView = [[UIView alloc] initWithFrame:CGRectZero];
+//    separView.backgroundColor = [UIColor lightGrayColor];
+//    [NewsWebView.scrollView addSubview:separView];
 
     
     urlStr = self.messageDetailContent;
@@ -108,7 +108,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
-    
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.translucent = NO;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
@@ -116,7 +116,7 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated{
-    [self setStatusBarBackgroundColor:[UIColor whiteColor]];
+//    [self setStatusBarBackgroundColor:[UIColor whiteColor]];
     self.navigationController.navigationBar.translucent = NO;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
@@ -135,7 +135,7 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    separView.frame = CGRectMake(-16, -129, kScreenW, 1);
+//    separView.frame = CGRectMake(-16, -129, kScreenW, 1);
      timeLabelD.frame = CGRectMake(1, -18-30, 150, 10);
      titleLabelD.frame = CGRectMake(3, -120, kScreenW-40, 60);
     [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '340%'"];

@@ -10,11 +10,15 @@
 #import "MessageTableViewCell.h"
 
 #import "NewsWebViewController.h"
+#import "TBRefresh.h"
 @interface MessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    UITableView *messageTable;
     NSMutableArray *messageArr;
 }
+
+@property (nonatomic, strong)  UITableView *messageTable;
+@property(assign,nonatomic) int indexPage;
+
 @end
 
 @implementation MessageViewController
@@ -22,7 +26,7 @@
 - (void)viewDidLoad {
     messageArr = [NSMutableArray new];
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-       [self setStatusBarBackgroundColor:[UIColor whiteColor]];
+//       [self setStatusBarBackgroundColor:[UIColor whiteColor]];
     self.automaticallyAdjustsScrollViewInsets= NO;
     self.view.backgroundColor = RGBColor(236, 236, 236);
     self.navigationItem.title = @"消息";
@@ -31,7 +35,70 @@
     [super viewDidLoad];
     [self initTableView];
     // Do any additional setup after loading the view.
+    
+    __weak MessageViewController *weakSelf = self;
+    [weakSelf.messageTable addRefreshHeaderWithBlock:^{
+        _indexPage = 1;
+        [weakSelf loadMessageData];
+//        [weakSelf.messageTable.header endHeadRefresh];
+    }];
+    
+    [weakSelf.messageTable addRefreshFootWithBlock:^{
+        _indexPage++;
+        [weakSelf loadMessageData];
+//        [weakSelf.messageTable.footer endFooterRefreshing];
+    }];
+    
+    [self.messageTable.header beginRefreshing];
 }
+
+
+-(void) loadMessageData{
+
+    NSMutableDictionary *messageMudic = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [messageMudic setObject:userTokenStr forKey:@"userToken"];
+    [messageMudic setObject:[NSString stringWithFormat:@"%d",_indexPage] forKey:@"page"];
+    [messageMudic setObject:[NSString stringWithFormat:@"%d",2] forKey:@"size"];
+    
+    [HttpRequest postPath:@"_information_001" params:messageMudic resultBlock:^(id responseObject, NSError *error) {
+        NSDictionary *datadic = responseObject;
+        if (_indexPage == 1 ) {
+            [self.messageTable.header endHeadRefresh];
+             [messageArr removeAllObjects];
+        }else{
+            [self.messageTable.footer endFooterRefreshing];
+        }
+        
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            if (infoDic.count == 0) {
+                _indexPage--;
+                return;
+            }
+            NSLog(@"222%@", datadic[@"info"]);
+            for (NSDictionary *Dic in datadic[@"info"]) {
+                if ([messageArr containsObject:Dic]) {
+                    return;
+                }else{
+                    [messageArr addObject:Dic];
+                }
+            }
+            [self.messageTable reloadData];
+            
+
+        }else {
+            _indexPage--;
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+    }];
+    
+
+    
+}
+
+
 - (void)cleanAllData{
     
 }
@@ -47,21 +114,21 @@
 
 
 - (void)initTableView{
-    messageTable = [[UITableView alloc] initWithFrame:CGRectMake(SizeWidth(5),64, kScreenW -2*SizeWidth(5), kScreenH-64) style:UITableViewStylePlain];
-    messageTable.delegate = self;
-    messageTable.dataSource = self;
-    messageTable.rowHeight = 103;
-    messageTable.backgroundColor = RGBColor(236, 236, 236);
-    messageTable.separatorStyle = UITableViewCellSelectionStyleNone;
-    [self.view addSubview:messageTable];
+    self.messageTable = [[UITableView alloc] initWithFrame:CGRectMake(SizeWidth(5),64, kScreenW -2*SizeWidth(5), kScreenH-64) style:UITableViewStylePlain];
+    self.messageTable.delegate = self;
+    self.messageTable.dataSource = self;
+    self.messageTable.rowHeight = 103;
+    self.messageTable.backgroundColor = RGBColor(236, 236, 236);
+    self.messageTable.separatorStyle = UITableViewCellSelectionStyleNone;
+    [self.view addSubview:self.messageTable];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
- 
+   [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.translucent = YES;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    [self getMessageListData];
+//    [self getMessageListData];
 }
 
 
@@ -83,7 +150,7 @@
         NSLog(@"error>%@", datadic);
         if ([datadic[@"error"] intValue] == 0) {
             messageArr = datadic[@"info"];
-            [messageTable reloadData];
+            [self.messageTable reloadData];
         }else {
             NSString *info = datadic[@"info"];
             [ConfigModel mbProgressHUD:info andView:nil];

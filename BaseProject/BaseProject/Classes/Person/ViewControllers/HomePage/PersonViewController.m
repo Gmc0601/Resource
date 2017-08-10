@@ -471,6 +471,7 @@ NSString *identifier = @"cell";
     [self.navigationController setNavigationBarHidden:YES];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    
     _lblTelNumber.text = [ConfigModel getStringforKey:@"PersonPhone"];
      _lblName.text = [ConfigModel getStringforKey:@"PersonNickName"];
     dispatch_queue_t xrQueue = dispatch_queue_create("loadImae", NULL); // 创建GCD线程队列
@@ -498,7 +499,8 @@ NSString *identifier = @"cell";
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+//    self.navigationController.navigationBar.hidden = NO;
+     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 }
 
 
