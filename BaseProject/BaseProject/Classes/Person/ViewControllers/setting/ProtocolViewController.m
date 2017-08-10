@@ -34,6 +34,7 @@
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickProtocolBackBtn)];
     
     DetailWebView = [[UIWebView alloc] init];
+    DetailWebView.backgroundColor = [UIColor whiteColor];
     DetailWebView.frame = CGRectMake(10, 0, self.view.bounds.size.width-20, self.view.bounds.size.height-64);
     DetailWebView.delegate = self;
     DetailWebView.scalesPageToFit = YES;
@@ -45,6 +46,16 @@
     
     
        [self.view addSubview:DetailWebView];
+    
+    
+    for (UIView *subView in [DetailWebView subviews])
+    {
+        if ([subView isKindOfClass:[UIScrollView class]])
+        {
+            // 不显示竖直的滚动条
+            [(UIScrollView *)subView setShowsVerticalScrollIndicator:NO];
+        }
+    }
     
 }
 

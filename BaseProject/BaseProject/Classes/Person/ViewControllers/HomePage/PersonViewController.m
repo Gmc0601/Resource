@@ -343,7 +343,7 @@ NSString *identifier = @"cell";
     
     _lblTelNumber  = [[UILabel alloc] init];
 //    _lblTelNumber.text = @"18192061844";
-    _lblTelNumber.textAlignment = NSTextAlignmentCenter;
+    _lblTelNumber.textAlignment = NSTextAlignmentLeft;
     _lblTelNumber.textColor = [ColorContants phoneNumerFontColor];
     _lblTelNumber.font = [UIFont fontWithName:[FontConstrants helveticaNeue] size:13];
     [headerView addSubview:_lblTelNumber];

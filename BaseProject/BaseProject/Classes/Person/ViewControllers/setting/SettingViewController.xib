@@ -127,10 +127,10 @@
                         <constraint firstAttribute="width" constant="7" id="yfl-87-iRM"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400-900-888" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0y3-RW-sBs">
-                    <rect key="frame" x="239" y="115" width="120" height="50"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0y3-RW-sBs">
+                    <rect key="frame" x="199" y="115" width="160" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="120" id="XYu-07-uHo"/>
+                        <constraint firstAttribute="width" constant="160" id="XYu-07-uHo"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>

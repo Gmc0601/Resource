@@ -169,7 +169,7 @@
 {
     [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
         if (error) {
-            
+            NSLog(@"Wechat: %@",error);
         } else {
             UMSocialUserInfoResponse *resp = result;
             

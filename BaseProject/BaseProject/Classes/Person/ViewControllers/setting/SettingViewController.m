@@ -22,8 +22,9 @@
 @implementation SettingViewController
 
 - (void)viewDidLoad {
+    [self getPhoneStr];
     [super viewDidLoad];
-    self.phoneStr = @"15639073148";
+//    self.phoneStr = @"15639073148";
     self.navigationItem.title = @"设置";
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
     // Do any additional setup after loading the view from its nib.
@@ -53,6 +54,33 @@
 
     
 }
+
+
+
+- (void)getPhoneStr{
+    NSMutableDictionary *loginDic = [NSMutableDictionary new];
+    [loginDic setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
+    [HttpRequest postPath:@"_setinfo_001" params:loginDic resultBlock:^(id responseObject, NSError *error) {
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSLog(@"login>>>>>>%@", responseObject);
+        if ([responseObject[@"error"] intValue] == 0) {
+            NSDictionary *datadic = responseObject[@"info"];
+            self.phoneStr = datadic[@"phone"];
+            self.phoneLabel.text = self.phoneStr;
+        }else {
+            NSString *info = responseObject[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+    
+
+}
+
 
 - (IBAction)PlayCustomerTelBtn:(UIButton *)sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拨打客服电话"
