@@ -39,7 +39,7 @@
 @property(strong, nonatomic) NSTimer *timer;
 
 @property (nonatomic, assign) BOOL IsPerson;
-
+@property (nonatomic, assign) BOOL IsStore;
 @end
 
 @implementation LoginViewController
@@ -59,7 +59,7 @@
      self.logginBtnTop.constant = SizeHeight(20);
      self.logginBottomBtn.constant = SizeHeight(20);
      self.IsPerson = YES;
-
+     self.IsStore = NO;
     NSLog(@"%f", self.personBtnHeight.constant);
     // Do any additional setup after loading the view from its nib.
 }
@@ -71,7 +71,7 @@
     self.shopBtn.layer.borderColor = UIColorFromHex(0xcccccc).CGColor;
     [self.shopBtn setTitleColor:UIColorFromHex(0xcccccc) forState:UIControlStateNormal];
     self.IsPerson = YES;
-
+    self.IsStore = NO;
 }
 
 - (IBAction)StoreLoginBtn:(UIButton *)sender {
@@ -80,6 +80,7 @@
      self.PersonBtn.layer.borderColor = UIColorFromHex(0xcccccc).CGColor;
      [self.PersonBtn setTitleColor:UIColorFromHex(0xcccccc) forState:UIControlStateNormal];
      self.IsPerson = NO;
+     self.IsStore = YES;
 }
 
 
@@ -245,7 +246,12 @@
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = datadic[@"info"];
             NSString *usertoken = infoDic[@"userToken"];
-            [ConfigModel saveBoolObject:_IsPerson forKey:isPersonlogin];
+            if (self.IsPerson) {
+                 [ConfigModel saveBoolObject:_IsPerson forKey:isPersonlogin];
+            }else{
+                 [ConfigModel saveBoolObject:_IsStore forKey:isStorelogin];
+            }
+           
             [ConfigModel saveString:usertoken forKey:UserToken];
             [ConfigModel saveString:infoDic[@"avatar_url"] forKey:@"PersonPortrait"];
             [ConfigModel saveString:infoDic[@"nickname"] forKey:@"PersonNickName"];
