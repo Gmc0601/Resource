@@ -25,12 +25,16 @@ PODS:
   - AMapSearch (5.2.1):
     - AMapFoundation (~> 1.2)
   - IQKeyboardManager (4.0.11)
+  - JCore (1.1.5)
+  - JPush (3.0.6):
+    - JCore (~> 1.1.1)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - PopupDialog (0.5.4)
   - SDWebImage (4.1.0):
     - SDWebImage/Core (= 4.1.0)
   - SDWebImage/Core (4.1.0)
+  - UIImage-ResizeMagick (0.0.1)
   - UMengUShare/Core (6.4.5):
     - UMengUShare/Network
   - UMengUShare/Network (6.4.5)
@@ -51,10 +55,12 @@ DEPENDENCIES:
   - AMapNavi
   - AMapSearch
   - IQKeyboardManager
+  - JPush
   - Masonry
   - MBProgressHUD
   - PopupDialog (~> 0.5)
   - SDWebImage
+  - UIImage-ResizeMagick
   - UMengUShare/Social/ReducedQQ
   - UMengUShare/Social/ReducedWeChat
   - UMengUShare/UI
@@ -68,13 +74,16 @@ SPEC CHECKSUMS:
   AMapNavi: 9127e7cc171499830bc5613bc568984ad0b0ed04
   AMapSearch: 4979b98adf56ed4dabe735435ed78d759ba0c21f
   IQKeyboardManager: 83eae5318483a34eb2069ef413d195b97605232e
+  JCore: 9bd9c770c877c583d98b90a68792b8361974c231
+  JPush: c41be50eb1a574a66aeb68d237f00a4ec6ec3a82
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
+  UIImage-ResizeMagick: f08c2d14d1e8a5f0b402185408785540562f2fe7
   UMengUShare: a5711c54e640b04e3048e931d2b88d50f9cfa55c
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 289360b66f9749b085e4dc8ecfc0afe70dab750a
+PODFILE CHECKSUM: 4e7b4a753e9c09fb9ae15ab1b74e159ae20d6fcc
 
 COCOAPODS: 1.2.1

@@ -366,6 +366,7 @@
 		CA1A01E61F31DA2500C88313 /* NewsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsWebViewController.m; sourceTree = "<group>"; };
 		CA1A02011F31F34200C88313 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		CA1A02021F31F34200C88313 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		CA22C6391F3C94A6006F1D81 /* BaseProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BaseProject.entitlements; sourceTree = "<group>"; };
 		F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -566,6 +567,7 @@
 		42A4442F1EF133E000F90791 /* BaseProject */ = {
 			isa = PBXGroup;
 			children = (
+				CA22C6391F3C94A6006F1D81 /* BaseProject.entitlements */,
 				42C84EB31EF2DC7B0008189D /* Header.pch */,
 				42C84EB21EF2DC7B0008189D /* CCUrl.h */,
 				42C84EAE1EF2DB060008189D /* SuperClass */,
@@ -1015,8 +1017,13 @@
 				TargetAttributes = {
 					42A4442C1EF133E000F90791 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = FP2NL3STL2;
+						DevelopmentTeam = 5XW4L96Z63;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					42A444481EF133E000F90791 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1391,7 +1398,8 @@
 			baseConfigurationReference = F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = FP2NL3STL2;
+				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
+				DEVELOPMENT_TEAM = 5XW4L96Z63;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BaseProject/Classes/Collection/ViewControllers/Loaction/Class",
@@ -1411,7 +1419,8 @@
 			baseConfigurationReference = A2BC379B4929E517CCEBBD81 /* Pods-BaseProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = FP2NL3STL2;
+				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
+				DEVELOPMENT_TEAM = 5XW4L96Z63;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BaseProject/Classes/Collection/ViewControllers/Loaction/Class",

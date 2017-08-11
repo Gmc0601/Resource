@@ -2,6 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 
 target ‘BaseProject’ do
+pod 'JPush'
 pod ‘UMengUShare/UI’
 pod ‘UMengUShare/Social/ReducedWeChat'
 pod ‘UMengUShare/Social/ReducedQQ'
