@@ -86,6 +86,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>设置-&gt;定位-&gt;废品回收</string>
 	<key>NSPhotoLibraryUsageDescription</key>
