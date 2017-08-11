@@ -45,17 +45,12 @@
     [self addCollectionView];
     [self addSubviews];
     [self getTelNum];
-}
-
--(void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
     [self loadData];
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
-//    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.translucent = YES;
 }
 
 -(void) addSubviews{
@@ -102,6 +97,7 @@
     }
     return _models.count + 1;
 }
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
     if(_models.count > 0 && (indexPath.row + 1) <= _models.count){
@@ -432,7 +428,6 @@
 
 -(void) loadData{
     NSMutableDictionary *params = [NSMutableDictionary new];
-//    [params setObject:@"5" forKey:@"real_id"];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
     [ConfigModel showHud:self];
