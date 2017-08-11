@@ -73,10 +73,10 @@
     _lblDate.textColor = [ColorContants phoneNumerFontColor];
     _lblDate.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(14)];
     _lblDate.textAlignment = NSTextAlignmentLeft;
-    _lblDate.text = @"2017-01-02";
+    _lblDate.text = @"2017-08-28";
     [self addSubview:_lblDate];
     
-    CGFloat width = [_lblDate.text widthWithFontSize:SizeWidth(14) height:SizeHeight(14)] + 5;
+    CGFloat width = [_lblDate.text widthWithFontSize:SizeWidth(14) height:SizeHeight(14)] + SizeWidth(3);
     [_lblDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SizeWidth(12));
         make.top.equalTo(_lblType.mas_bottom).offset(SizeWidth(10));
@@ -88,6 +88,7 @@
     _lblTime.textColor = [ColorContants phoneNumerFontColor];
     _lblTime.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(14)];
     _lblTime.textAlignment = NSTextAlignmentLeft;
+
     [self addSubview:_lblTime];
     
     [_lblTime mas_makeConstraints:^(MASConstraintMaker *make) {

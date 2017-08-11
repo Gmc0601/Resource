@@ -138,12 +138,12 @@
     lblName.text = text;
     [_superView addSubview:lblName];
     
-    CGFloat width =  [lblName.text widthWithFontSize:15 height:15];
+    CGFloat width =  [lblName.text widthWithFontSize:SizeWidth(15) height:SizeHeight(15)];
     [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_top).offset(SizeHeight(17));
         make.left.equalTo(_superView.mas_left).offset(SizeWidth(16));
         make.width.equalTo(@(width));
-        make.height.equalTo(@(15));
+        make.height.equalTo(@(SizeHeight(15)));
     }];
     
     return lblName;
@@ -179,7 +179,7 @@
         make.centerY.equalTo(leftView.mas_centerY);
         make.left.equalTo(leftView.mas_right).offset(SizeWidth(15));
         make.right.equalTo(_superView.mas_right).offset(SizeWidth(-15));
-        make.height.equalTo(@(SizeHeight(15)));
+        make.height.equalTo(@(SizeHeight(20)));
     }];
     
     return txt;
@@ -212,6 +212,7 @@
     [_btnAddress setTitleColor:placeHolderColor forState:UIControlStateNormal];
     [_btnAddress setTitle:@"单击选择" forState:UIControlStateNormal];
     [_btnAddress addTarget:self action:@selector(tapLocationButton) forControlEvents:UIControlEventTouchUpInside];
+
     
     [_superView addSubview:_btnAddress];
     [_btnAddress mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -368,6 +369,8 @@
 
 -(void) chooseAddress:(AMapGeoPoint *)point withName:(NSString *) name{
     _location = point;
+    UIColor *titleColor = [ColorContants userNameFontColor];
+    [_btnAddress setTitleColor:titleColor forState:UIControlStateNormal];
     [_btnAddress setTitle:name forState:UIControlStateNormal];
 }
 
