@@ -44,6 +44,10 @@
     _models = [NSMutableArray arrayWithCapacity:0];
     [self addCollectionView];
     [self addSubviews];
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self getTelNum];
     [self loadData];
 }
@@ -435,6 +439,8 @@
     [HttpRequest postPath:@"_homepage_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
+        _models = [NSMutableArray arrayWithCapacity:0];
+
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
             NSDictionary *userInfo = infoDic[@"userinfo"];
@@ -507,6 +513,26 @@
     PersonMessageViewController *personMessVC = [[PersonMessageViewController alloc ] init];
     personMessVC.protraitImage = _avatar.image;
     [self.navigationController pushViewController:personMessVC animated:YES];
+}
+
+-(void) getIntegral{
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    //        [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_usernum_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            [self setIntergral:infoDic[@"jifen"]];
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
 }
 
 @end

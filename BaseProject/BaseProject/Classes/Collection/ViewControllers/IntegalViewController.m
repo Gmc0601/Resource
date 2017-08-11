@@ -40,7 +40,7 @@
     
     _models = [NSMutableArray arrayWithCapacity:0];
     [self.navigationItem setLeftBarButtonItem:nil];
-     [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];}
+    [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];}
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -65,7 +65,7 @@
     [_tb registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"header"];
     _tb.allowsSelection = NO;
     _tb.clipsToBounds=YES;
-
+    
     _tb.dataSource = self;
     _tb.delegate = self;
     
@@ -97,7 +97,7 @@
     header.backgroundColor = [ColorContants gray];
     CGFloat width = SizeWidth(139);
     CGFloat margin = SizeWidth(87.5);
-
+    
     _btnEarn = [[UIButton alloc]init];
     [_btnEarn setTitle:@"收入" forState:UIControlStateNormal];
     [_btnEarn setTitleColor:[ColorContants phoneNumerFontColor] forState:UIControlStateNormal] ;
@@ -152,14 +152,6 @@
 
 -(void) addConstraintsForHightlight:(UIView *) center{
     _blueBorder.center = CGPointMake(center.center.x, center.superview.bounds.size.height-SizeHeight(1.5));
-//    [_blueBorder removeConstraints:_blueBorder.constraints];
-//    
-//    [_blueBorder mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(center.mas_centerX);
-//        make.bottom.equalTo(_blueBorder.superview.mas_bottom);
-//        make.height.equalTo(@(SizeHeight(1.5)));
-//        make.width.equalTo(@(SizeHeight(278/2)));
-//    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -245,23 +237,23 @@
 }
 
 -(void) getIntegral{
-        NSMutableDictionary *params = [NSMutableDictionary new];
-        NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-        [params setObject:userTokenStr forKey:@"userToken"];
-//        [ConfigModel showHud:self];
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
     
-        [HttpRequest postPath:@"_usernum_001" params:params resultBlock:^(id responseObject, NSError *error) {
-            [ConfigModel hideHud:self];
-            NSDictionary *datadic = responseObject;
-            if ([datadic[@"error"] intValue] == 0) {
-                NSDictionary *infoDic = responseObject[@"info"];
-                self.integral =  infoDic[@"jifen"];
-            }else {
-                NSString *info = datadic[@"info"];
-                [ConfigModel mbProgressHUD:info andView:nil];
-            }
-            NSLog(@"error>>>>%@", error);
-        }];
+    [HttpRequest postPath:@"_usernum_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            self.integral =  infoDic[@"jifen"];
+            [_tb reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
 }
 
 -(void) tapEarnButton{

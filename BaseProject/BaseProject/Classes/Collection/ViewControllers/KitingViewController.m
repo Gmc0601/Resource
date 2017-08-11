@@ -328,7 +328,7 @@
         NSString *info = datadic[@"info"];
         [ConfigModel mbProgressHUD:info andView:self.view];
 
-        if ([datadic[@"error"] intValue] != 0) {
+        if ([datadic[@"error"] intValue] == 0) {
             self.integral = self.integral - model.integral;
             _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
         }

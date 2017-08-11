@@ -128,7 +128,7 @@
         make.centerY.equalTo(lblUserName.mas_centerY);
         make.left.equalTo(lblUserName.mas_right).offset(SizeWidth(5));
         make.right.equalTo(border1.mas_right);
-        make.height.equalTo(@(SizeHeight(15)));
+        make.height.equalTo(@(SizeHeight(40)));
     }];
     
     _txtCardNo = [UITextField new];
@@ -144,7 +144,7 @@
         make.centerY.equalTo(lblCardName.mas_centerY);
         make.left.equalTo(lblCardName.mas_right).offset(SizeWidth(5));
         make.right.equalTo(border1.mas_right);
-        make.height.equalTo(@(SizeHeight(15)));
+        make.height.equalTo(@(SizeHeight(40)));
     }];
     
     _txtCardNo.text = _model.cardNumber;
