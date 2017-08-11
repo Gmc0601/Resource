@@ -99,38 +99,38 @@
     if (section == 0) {
         return 0;
     }
-    return _models.count + 1;
+    return _models.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
-    if(_models.count > 0 && (indexPath.row + 1) <= _models.count){
+//    if(_models.count > 0 && (indexPath.row + 1) <= _models.count){
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
         [self setCell:cell withMode:_models[indexPath.row]];
-    }else{
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"otherCell" forIndexPath:indexPath];
-        
-        int tag = 30011;
-        cell.backgroundColor = [ColorContants gray];
-        if ([cell viewWithTag:tag] == nil) {
-            UILabel *lblName = [[UILabel alloc] init];
-            lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
-            lblName.textColor = [ColorContants otherFontColor];
-            lblName.textAlignment = NSTextAlignmentCenter;
-            lblName.text = @"其他";
-            lblName.tag = tag;
-            [cell addSubview:lblName];
-            
-            [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
-                CGFloat height = SizeHeight(15);
-                make.width.equalTo(cell.mas_width);
-                make.height.equalTo(@(height));
-                make.centerY.equalTo(cell.mas_centerY);
-                make.left.equalTo(cell.mas_left);
-            }];
-
-        }
-    }
+//    }else{
+//        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"otherCell" forIndexPath:indexPath];
+//        
+//        int tag = 30011;
+//        cell.backgroundColor = [ColorContants gray];
+//        if ([cell viewWithTag:tag] == nil) {
+//            UILabel *lblName = [[UILabel alloc] init];
+//            lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+//            lblName.textColor = [ColorContants otherFontColor];
+//            lblName.textAlignment = NSTextAlignmentCenter;
+//            lblName.text = @"其他";
+//            lblName.tag = tag;
+//            [cell addSubview:lblName];
+//            
+//            [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
+//                CGFloat height = SizeHeight(15);
+//                make.width.equalTo(cell.mas_width);
+//                make.height.equalTo(@(height));
+//                make.centerY.equalTo(cell.mas_centerY);
+//                make.left.equalTo(cell.mas_left);
+//            }];
+//
+//        }
+//    }
     
     return cell;
 }
