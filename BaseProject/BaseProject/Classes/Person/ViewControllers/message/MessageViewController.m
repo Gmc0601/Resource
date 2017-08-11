@@ -31,7 +31,7 @@
     self.view.backgroundColor = RGBColor(236, 236, 236);
     self.navigationItem.title = @"消息";
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickMessBackBtn)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStylePlain target:self action:@selector(cleanAllData)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStylePlain target:self action:@selector(cleanAllData)];
     [super viewDidLoad];
     [self initTableView];
     // Do any additional setup after loading the view.
@@ -99,9 +99,9 @@
 }
 
 
-- (void)cleanAllData{
-    
-}
+//- (void)cleanAllData{
+//    
+//}
 
 
 - (void)setStatusBarBackgroundColor:(UIColor *)color {

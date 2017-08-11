@@ -14,6 +14,14 @@
 #import "RegisterResultViewController.h"
 #import "HomeViewController.h"
 
+
+#import "JPUSHService.h"
+// iOS10注册APNs所需头文件
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+#endif
+// 如果需要使用idfa功能所需要引入的头文件（可选）
+#import <AdSupport/AdSupport.h>
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *PersonBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shopBtn;
@@ -64,6 +72,9 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
 
 - (IBAction)personLoginBtn:(UIButton *)sender {
     sender.layer.borderColor = UIColorFromHex(0x79b4f8).CGColor;
@@ -261,6 +272,8 @@
                 personVC.protraitUrlStr = infoDic[@"avatar_url"];
                 personVC.nickNameStr = infoDic[@"nickname"];
                 personVC.phoneStr = infoDic[@"mobile"];
+
+                 [JPUSHService setTags:nil alias:personVC.phoneStr callbackSelector:@selector(tagsAliasCallback:tags:alias:) object:self];
                 [self.navigationController pushViewController:personVC animated:YES];
             }else{
                 HomeViewController * homeVC = [[HomeViewController alloc] init];
@@ -309,6 +322,13 @@
         
     }
     
+}
+
+
+
+
+- (void)tagsAliasCallback:(int)iResCode tags:(NSSet*)tags alias:(NSString*)alias {
+    NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
 }
 
 @end
