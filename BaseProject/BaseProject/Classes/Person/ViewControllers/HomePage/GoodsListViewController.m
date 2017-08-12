@@ -40,8 +40,8 @@
 - (void)getTableViewData{
     NSMutableDictionary *GoodsListDic = [NSMutableDictionary new];
     [GoodsListDic setObject:[ConfigModel getStringforKey:UserToken] forKey:@"userToken"];
-//    [GoodsListDic setObject:self.goodListID forKey:@"real_id"];
-     [GoodsListDic setObject:@"8" forKey:@"real_id"];
+    [GoodsListDic setObject:self.goodListID forKey:@"real_id"];
+//     [GoodsListDic setObject:@"8" forKey:@"real_id"];
     [HttpRequest postPath:@"_goodlist_001" params:GoodsListDic resultBlock:^(id responseObject, NSError *error) {
         if([error isEqual:[NSNull null]] || error == nil){
             NSLog(@"success");

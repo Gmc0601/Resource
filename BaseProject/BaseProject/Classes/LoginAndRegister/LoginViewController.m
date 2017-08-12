@@ -48,6 +48,9 @@
 
 @property (nonatomic, assign) BOOL IsPerson;
 @property (nonatomic, assign) BOOL IsStore;
+
+@property (nonatomic, strong) NSString *codeStr;
+
 @end
 
 @implementation LoginViewController
@@ -221,7 +224,7 @@
         [hud removeFromSuperview];
         if ([datadic[@"error"] intValue] == 0) {
             sender.userInteractionEnabled = NO;
-//            _codeddStr = datadic[@"info"];
+            _codeStr = datadic[@"info"];
             
             self.timeCount = 60;
             self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reduceTime:) userInfo:sender repeats:YES];
@@ -236,6 +239,17 @@
 }
 
 - (IBAction)loginBtn:(UIButton *)sender {
+    if ([_codeStr isEqualToString:self.codeTF.text]) {
+       
+        
+    }else{
+        [ConfigModel mbProgressHUD:@"验证码错误" andView:self.view];
+        return;
+    }
+
+    
+    
+    
     NSMutableDictionary *loginDic = [NSMutableDictionary new];
     [loginDic setObject:self.phoneTF.text forKey:@"mobile"];
     [loginDic setObject:self.codeTF.text forKey:@"code"];
