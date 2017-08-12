@@ -143,7 +143,7 @@ NSString *identifier = @"cell";
     collectionView.backgroundColor = [UIColor whiteColor];
 
     collectionView.showsVerticalScrollIndicator = NO;
-
+    collectionView.showsHorizontalScrollIndicator = NO;
     collectionView.bounces = NO;
 
     collectionView.delegate = self;
