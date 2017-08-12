@@ -69,7 +69,6 @@
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105821097"/*设置QQ平台的appID*/  appSecret:nil redirectURL:nil];
     
     
-    
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
         JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
         entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
@@ -90,6 +89,8 @@
                                               categories:nil];
     }
 
+    
+
     // Optional
     // 获取IDFA
     // 如需使用IDFA功能请添加此代码并在初始化方法的advertisingIdentifier参数中填写对应值
@@ -99,8 +100,8 @@
     // init Push
     // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
-//    246cbe8b32adbbd8ae21c1c7
-    [JPUSHService setupWithOption:launchOptions appKey:@"6f9bdf74abe7ebbd57558b45"
+//    246cbe8b32adbbd8ae21c1c7  拾荒家族
+    [JPUSHService setupWithOption:launchOptions appKey:@"246cbe8b32adbbd8ae21c1c7"
                           channel:@"App Store"
                  apsForProduction:YES
             advertisingIdentifier:advertisingId];
@@ -110,7 +111,6 @@
 }
 
 
-
 //注册APNs成功并上报DeviceToken
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -118,6 +118,27 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [JPUSHService registerDeviceToken:deviceToken];
 }
 
+#pragma mark 获取自定义消息内容
+
+- (void)networkDidReceiveMessage:(NSNotification *)notification {
+    
+    NSDictionary * userInfo = [notification userInfo];
+    
+    NSString *content = [userInfo valueForKey:@"content"];
+    
+    NSDictionary *extras = [userInfo valueForKey:@"extras"];
+    
+    NSString *customizeField1 = [extras valueForKey:@"123456"]; //自定义参数，key是自己定义的
+    
+    NSLog(@"自定义message:%@",userInfo);
+    
+    NSLog(@"推%@",content);
+    
+    NSLog(@"推%@",extras);
+    
+    NSLog(@"推%@",customizeField1);
+    
+}
 
 
 // iOS 10 Support
@@ -149,7 +170,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
-    // Required,For systems with less than or equal to iOS6
     [JPUSHService handleRemoteNotification:userInfo];
 }
 
