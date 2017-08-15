@@ -173,6 +173,7 @@
             NSString *info = datadic[@"info"];
             _integral = info.intValue;
             [ConfigModel mbProgressHUD:@"操作成功" andView:self.view];
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
             [ConfigModel mbProgressHUD:datadic[@"info"] andView:self.view];
         }
