@@ -183,6 +183,7 @@
         
         if ([datadic[@"error"] intValue] == 0) {
             [ConfigModel mbProgressHUD:@"提交成功！" andView:nil];
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
             [ConfigModel mbProgressHUD:@"提交失败，请重新填写。" andView:nil];
         }

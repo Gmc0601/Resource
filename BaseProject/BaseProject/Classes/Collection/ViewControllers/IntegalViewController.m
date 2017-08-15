@@ -220,6 +220,10 @@
                 model.summery = dict[@"action_type"];
                 model.date = dict[@"create_time"];
                 
+                if(dict[@"withdraw_status"] != nil){
+                    model.summery = [NSString stringWithFormat:@"%@%@",model.summery,dict[@"withdraw_status"]];
+                }
+                
                 if([dict[@"type"] isEqualToString:@"2"]){
                     model.sum = [NSString stringWithFormat:@"-%@",model.sum];
                 }
