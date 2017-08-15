@@ -216,7 +216,7 @@
             for (NSDictionary *dict in infoDic) {
                 IntegralRecordModel *model = [IntegralRecordModel new];
                 model.sum = dict[@"amount"];
-                model.type = [dict[@"type"]  isEqual: @"1"] ? @"收入":@"支出";
+                model.type = dict[@"action_type"];//[dict[@"type"]  isEqual: @"1"] ? @"收入":@"支出";
                 model.summery = dict[@"action_type"];
                 model.date = dict[@"create_time"];
                 
@@ -224,13 +224,18 @@
                     model.summery = [NSString stringWithFormat:@"%@%@",model.summery,dict[@"withdraw_status"]];
                 }
                 
-                if(dict[@"reason"] != nil && dict[@"reason"] != [NSNull null]){
-                    model.summery = [NSString stringWithFormat:@"%@%@",model.summery,dict[@"reason"]];
-                }
-                
                 if([dict[@"type"] isEqualToString:@"2"]){
                     model.sum = [NSString stringWithFormat:@"-%@",model.sum];
+                    
+                    if(dict[@"username"] != nil && dict[@"username"] != [NSNull null]){
+                        model.summery = [NSString stringWithFormat:@"%@给%@",model.summery,dict[@"username"]];
+                    }
+                }else{
+                    if(dict[@"username"] != nil && dict[@"username"] != [NSNull null]){
+                        model.summery = [NSString stringWithFormat:@"%@来自%@",model.summery,dict[@"username"]];
+                    }
                 }
+                
                 
                 [_models addObject:model];
             }
