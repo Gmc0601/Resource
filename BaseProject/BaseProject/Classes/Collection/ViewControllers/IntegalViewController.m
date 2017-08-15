@@ -220,8 +220,12 @@
                 model.summery = dict[@"action_type"];
                 model.date = dict[@"create_time"];
                 
-                if(dict[@"withdraw_status"] != nil){
+                if(dict[@"withdraw_status"] != nil && dict[@"withdraw_status"] != [NSNull null]){
                     model.summery = [NSString stringWithFormat:@"%@%@",model.summery,dict[@"withdraw_status"]];
+                }
+                
+                if(dict[@"reason"] != nil && dict[@"reason"] != [NSNull null]){
+                    model.summery = [NSString stringWithFormat:@"%@%@",model.summery,dict[@"reason"]];
                 }
                 
                 if([dict[@"type"] isEqualToString:@"2"]){
