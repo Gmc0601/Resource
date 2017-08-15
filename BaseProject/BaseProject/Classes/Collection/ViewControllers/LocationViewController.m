@@ -27,7 +27,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavTitle:@"定位"];
+    [self setNavTitle:@"所在位置"];
     [AMapServices sharedServices].apiKey = API_KEY;
     _search = [[AMapSearchAPI alloc] init];
     _search.delegate = self;
