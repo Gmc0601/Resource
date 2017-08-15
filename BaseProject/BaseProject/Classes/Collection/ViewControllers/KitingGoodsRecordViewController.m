@@ -31,6 +31,7 @@
     __weak KitingGoodsRecordViewController *weakSelf = self;
     [_tb addRefreshHeaderWithBlock:^{
         _pageIndex = 0;
+        _models = [NSMutableArray arrayWithCapacity:0];
         [weakSelf loadKitingRecord];
         [weakSelf.tb.header endHeadRefresh];
     }];
