@@ -138,7 +138,7 @@
     lblName.text = text;
     [_superView addSubview:lblName];
     
-    CGFloat width =  [lblName.text widthWithFontSize:SizeWidth(15) height:SizeHeight(15)];
+    CGFloat width =  [lblName.text widthWithFontSize:SizeWidth(15) height:SizeHeight(15)] + SizeWidth(15);
     [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_top).offset(SizeHeight(17));
         make.left.equalTo(_superView.mas_left).offset(SizeWidth(16));
@@ -177,7 +177,7 @@
     [_superView addSubview:txt];
     [txt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(leftView.mas_centerY);
-        make.left.equalTo(leftView.mas_right).offset(SizeWidth(15));
+        make.left.equalTo(leftView.mas_right).offset(SizeWidth(0));
         make.right.equalTo(_superView.mas_right).offset(SizeWidth(-15));
         make.height.equalTo(@(SizeHeight(20)));
     }];
@@ -217,7 +217,7 @@
     [_superView addSubview:_btnAddress];
     [_btnAddress mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(leftView.mas_centerY);
-        make.left.equalTo(leftView.mas_right).offset(SizeWidth(15));
+        make.left.equalTo(leftView.mas_right).offset(SizeWidth(0));
         make.right.equalTo(_superView.mas_right).offset(SizeWidth(-16));
         make.height.equalTo(@(SizeHeight(30)));
     }];
