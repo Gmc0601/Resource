@@ -303,6 +303,12 @@
 }
 
 -(void) tapKitingButton{
+    
+    if(_bankCard == nil || _bankCard.cardNumber == nil || [_bankCard.cardNumber isEqualToString:@""]){
+        [ConfigModel mbProgressHUD:@"请添加银行卡" andView:self.view];
+        return;
+    }
+    
     if (_selectIndex < 0) {
         [ConfigModel mbProgressHUD:@"请选择要兑换的积分" andView:self.view];
         return;
