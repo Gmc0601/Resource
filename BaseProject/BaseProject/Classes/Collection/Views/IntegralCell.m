@@ -26,7 +26,9 @@
     _model = model;
     NSArray *arr = [_model.date componentsSeparatedByString:@" "];
     _lblDate.text = arr[0];
-    _lblTime.text = arr[1];
+    
+    NSString *time = arr[1];
+    _lblTime.text = [time stringByReplacingCharactersInRange:NSMakeRange(5,3)  withString:@""];
     _lblSum.text = _model.sum;
     _lblSummery.text = _model.summery;
     _lblType.text = _model.type;
