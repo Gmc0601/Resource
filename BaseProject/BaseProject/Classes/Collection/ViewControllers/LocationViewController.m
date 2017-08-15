@@ -28,7 +28,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavTitle:@"所在位置"];
-    [AMapServices sharedServices].apiKey = API_KEY;
+    [AMapServices sharedServices].apiKey = @"292c0fdfe3e1facb67a1e743303426bb";
     _search = [[AMapSearchAPI alloc] init];
     _search.delegate = self;
     _orginalDataSource =[NSMutableArray arrayWithCapacity:0];
@@ -238,6 +238,13 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
         }
     }
     [_tb reloadData];
+}
+
+- (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [_tb reloadData];
+
+    NSLog(@"%@",error);
 }
 
 @end
