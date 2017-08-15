@@ -37,7 +37,8 @@
     [lab sizeToFit];
     self.navigationItem.titleView = lab;
     [self addTableView];
-    
+    self.view.backgroundColor = [ColorContants blueBackgroundColor];
+
     _models = [NSMutableArray arrayWithCapacity:0];
     [self.navigationItem setLeftBarButtonItem:nil];
     [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];}
