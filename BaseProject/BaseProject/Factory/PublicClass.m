@@ -73,24 +73,24 @@
 
 +(void) addCallButtonInViewContrller:(UIViewController *) viewController{
     UIButton *btnShowCall = [[UIButton alloc] init];
-    [btnShowCall setImage:[UIImage imageNamed:@"icon_nav_dh"] forState:UIControlStateNormal];
+    [btnShowCall setImage:[UIImage imageNamed:@"hsd_btn_fpxx"] forState:UIControlStateNormal];
     
     [btnShowCall addTarget:viewController action:@selector(showCallView) forControlEvents:UIControlEventTouchUpInside];
-    [btnShowCall setTitle:@"平台" forState:UIControlStateNormal];
+//    [btnShowCall setTitle:@"平台" forState:UIControlStateNormal];
     [btnShowCall setTitleColor:[ColorContants userNameFontColor] forState:UIControlStateNormal];
     btnShowCall.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
     btnShowCall.titleLabel.textAlignment = NSTextAlignmentCenter;
     btnShowCall.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     btnShowCall.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-    btnShowCall.imageEdgeInsets = UIEdgeInsetsMake(0, 0, SizeHeight(20), SizeWidth(-40));
-    btnShowCall.contentEdgeInsets = UIEdgeInsetsMake(0, SizeWidth(-20), SizeHeight(5), 0);
+//    btnShowCall.imageEdgeInsets = UIEdgeInsetsMake(0, 0, SizeHeight(20), SizeWidth(-40));
+//    btnShowCall.contentEdgeInsets = UIEdgeInsetsMake(0, SizeWidth(-20), SizeHeight(5), 0);
     [viewController.view addSubview:btnShowCall];
     
     [btnShowCall mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(viewController.view.mas_right).offset(SizeWidth(-30));
         make.bottom.equalTo(viewController.view.mas_bottom).offset(SizeHeight(-45));
-        make.height.equalTo(@(SizeHeight(52)));
-        make.width.equalTo(@(SizeWidth(52)));
+        make.height.equalTo(@(SizeHeight(59)));
+        make.width.equalTo(@(SizeWidth(59)));
     }];
 }
 
