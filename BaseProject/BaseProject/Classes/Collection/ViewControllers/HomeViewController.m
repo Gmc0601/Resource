@@ -470,7 +470,7 @@
             [_models sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
                 GoodsModel *model1 = (GoodsModel *) obj1;
                 GoodsModel *model2 = (GoodsModel *) obj2;
-                return model1.sequence < model2.sequence;
+                return model1.sequence > model2.sequence;
             }];
             
             [self setUser:_user];
