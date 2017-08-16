@@ -118,11 +118,12 @@
 		CA1A01FA1F31DA2500C88313 /* NearbyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA1A01DA1F31DA2500C88313 /* NearbyTableViewCell.xib */; };
 		CA1A01FB1F31DA2500C88313 /* PagegeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A01DC1F31DA2500C88313 /* PagegeCollectionViewCell.m */; };
 		CA1A01FC1F31DA2500C88313 /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A01DE1F31DA2500C88313 /* PersonViewController.m */; };
-		CA1A01FD1F31DA2500C88313 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A01E11F31DA2500C88313 /* MessageTableViewCell.m */; };
-		CA1A01FE1F31DA2500C88313 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA1A01E21F31DA2500C88313 /* MessageTableViewCell.xib */; };
-		CA1A01FF1F31DA2500C88313 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A01E41F31DA2500C88313 /* MessageViewController.m */; };
-		CA1A02001F31DA2500C88313 /* NewsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A01E61F31DA2500C88313 /* NewsWebViewController.m */; };
 		CA1A02031F31F34200C88313 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1A02021F31F34200C88313 /* MapViewController.m */; };
+		CA2008AF1F43EFEF002C1A95 /* NewsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2008A61F43EFEF002C1A95 /* NewsWebViewController.m */; };
+		CA2008B01F43EFEF002C1A95 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2008A71F43EFEF002C1A95 /* MessageViewController.m */; };
+		CA2008B11F43EFEF002C1A95 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA2008A81F43EFEF002C1A95 /* MessageTableViewCell.xib */; };
+		CA2008B21F43EFEF002C1A95 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2008AA1F43EFEF002C1A95 /* MessageTableViewCell.m */; };
+		CA2008B31F43EFEF002C1A95 /* messageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2008AC1F43EFEF002C1A95 /* messageModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -357,15 +358,17 @@
 		CA1A01DC1F31DA2500C88313 /* PagegeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagegeCollectionViewCell.m; sourceTree = "<group>"; };
 		CA1A01DD1F31DA2500C88313 /* PersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
 		CA1A01DE1F31DA2500C88313 /* PersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonViewController.m; sourceTree = "<group>"; };
-		CA1A01E01F31DA2500C88313 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
-		CA1A01E11F31DA2500C88313 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
-		CA1A01E21F31DA2500C88313 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
-		CA1A01E31F31DA2500C88313 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
-		CA1A01E41F31DA2500C88313 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
-		CA1A01E51F31DA2500C88313 /* NewsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsWebViewController.h; sourceTree = "<group>"; };
-		CA1A01E61F31DA2500C88313 /* NewsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsWebViewController.m; sourceTree = "<group>"; };
 		CA1A02011F31F34200C88313 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		CA1A02021F31F34200C88313 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		CA2008A61F43EFEF002C1A95 /* NewsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsWebViewController.m; sourceTree = "<group>"; };
+		CA2008A71F43EFEF002C1A95 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		CA2008A81F43EFEF002C1A95 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
+		CA2008A91F43EFEF002C1A95 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
+		CA2008AA1F43EFEF002C1A95 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
+		CA2008AB1F43EFEF002C1A95 /* messageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messageModel.h; sourceTree = "<group>"; };
+		CA2008AC1F43EFEF002C1A95 /* messageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messageModel.m; sourceTree = "<group>"; };
+		CA2008AD1F43EFEF002C1A95 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		CA2008AE1F43EFEF002C1A95 /* NewsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsWebViewController.h; sourceTree = "<group>"; };
 		CA22C6391F3C94A6006F1D81 /* BaseProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BaseProject.entitlements; sourceTree = "<group>"; };
 		F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -936,13 +939,15 @@
 		CA1A01DF1F31DA2500C88313 /* message */ = {
 			isa = PBXGroup;
 			children = (
-				CA1A01E01F31DA2500C88313 /* MessageTableViewCell.h */,
-				CA1A01E11F31DA2500C88313 /* MessageTableViewCell.m */,
-				CA1A01E21F31DA2500C88313 /* MessageTableViewCell.xib */,
-				CA1A01E31F31DA2500C88313 /* MessageViewController.h */,
-				CA1A01E41F31DA2500C88313 /* MessageViewController.m */,
-				CA1A01E51F31DA2500C88313 /* NewsWebViewController.h */,
-				CA1A01E61F31DA2500C88313 /* NewsWebViewController.m */,
+				CA2008A61F43EFEF002C1A95 /* NewsWebViewController.m */,
+				CA2008A71F43EFEF002C1A95 /* MessageViewController.m */,
+				CA2008A81F43EFEF002C1A95 /* MessageTableViewCell.xib */,
+				CA2008A91F43EFEF002C1A95 /* MessageTableViewCell.h */,
+				CA2008AA1F43EFEF002C1A95 /* MessageTableViewCell.m */,
+				CA2008AB1F43EFEF002C1A95 /* messageModel.h */,
+				CA2008AC1F43EFEF002C1A95 /* messageModel.m */,
+				CA2008AD1F43EFEF002C1A95 /* MessageViewController.h */,
+				CA2008AE1F43EFEF002C1A95 /* NewsWebViewController.h */,
 			);
 			path = message;
 			sourceTree = "<group>";
@@ -1069,7 +1074,7 @@
 				CA1A01FA1F31DA2500C88313 /* NearbyTableViewCell.xib in Resources */,
 				CA1A01EF1F31DA2500C88313 /* ChangeNickViewController.xib in Resources */,
 				CA1A01F11F31DA2500C88313 /* PersonMessageViewController.xib in Resources */,
-				CA1A01FE1F31DA2500C88313 /* MessageTableViewCell.xib in Resources */,
+				CA2008B11F43EFEF002C1A95 /* MessageTableViewCell.xib in Resources */,
 				4295584B1F248A9B000B2BB2 /* LoginViewController.xib in Resources */,
 				42A444431EF133E000F90791 /* LaunchScreen.storyboard in Resources */,
 				CA1A01F51F31DA2500C88313 /* fixPhoneViewController.xib in Resources */,
@@ -1184,9 +1189,10 @@
 				42C84F021EF2E97D0008189D /* NSString+Category.m in Sources */,
 				6BBCE7E61F26437F006B6DA4 /* Constants.m in Sources */,
 				6B12E4881F2B8991008C4A3F /* PublicClass.m in Sources */,
-				CA1A02001F31DA2500C88313 /* NewsWebViewController.m in Sources */,
 				429558341F2488CA000B2BB2 /* TBRefreshFootView.m in Sources */,
 				CA1A01EC1F31DA2500C88313 /* SettingViewController.m in Sources */,
+				CA2008AF1F43EFEF002C1A95 /* NewsWebViewController.m in Sources */,
+				CA2008B21F43EFEF002C1A95 /* MessageTableViewCell.m in Sources */,
 				42C84EFE1EF2E97D0008189D /* NSDictionary+Category.m in Sources */,
 				42C84EFC1EF2E97D0008189D /* NSData+Category.m in Sources */,
 				6B0166031F2D7677002071E2 /* BankCardCell.m in Sources */,
@@ -1203,6 +1209,7 @@
 				42C84ECB1EF2DD1A0008189D /* NSString+MD5.m in Sources */,
 				6B0165F91F2CD7D0002071E2 /* BankCardModel.m in Sources */,
 				CA1A01F61F31DA2500C88313 /* GoodsListViewController.m in Sources */,
+				CA2008B01F43EFEF002C1A95 /* MessageViewController.m in Sources */,
 				42C84F1C1EF2EB650008189D /* NSObject+SBJSON.m in Sources */,
 				429558271F248874000B2BB2 /* CCBaseViewController.m in Sources */,
 				CA1A01F91F31DA2500C88313 /* NearbyTableViewCell.m in Sources */,
@@ -1220,7 +1227,6 @@
 				CA1A01F21F31DA2500C88313 /* AbandonGoodsViewController.m in Sources */,
 				6B12E4821F2B8157008C4A3F /* FactorySet.m in Sources */,
 				CA1A01F31F31DA2500C88313 /* CollectionViewController.m in Sources */,
-				CA1A01FF1F31DA2500C88313 /* MessageViewController.m in Sources */,
 				42C84EB11EF2DB060008189D /* main.m in Sources */,
 				42C84EC91EF2DD1A0008189D /* DicToString.m in Sources */,
 				6B0165FC1F2CD812002071E2 /* KitingModel.m in Sources */,
@@ -1234,12 +1240,12 @@
 				6B9E6C121F33216B00B387BE /* ImagePickerView.m in Sources */,
 				42C84F0A1EF2E97D0008189D /* UIImage+Category.m in Sources */,
 				6B8F8D8C1F29E02400F413F2 /* GoodsCategoryModel.m in Sources */,
-				CA1A01FD1F31DA2500C88313 /* MessageTableViewCell.m in Sources */,
 				42C84EB01EF2DB060008189D /* AppDelegate.m in Sources */,
 				42C84F1E1EF2EB650008189D /* SBJSON.m in Sources */,
 				6B0165F61F2CD700002071E2 /* KitingViewController.m in Sources */,
 				42C84EFA1EF2E97D0008189D /* NSArray+Category.m in Sources */,
 				42C84EC71EF2DD1A0008189D /* GTMBase64.m in Sources */,
+				CA2008B31F43EFEF002C1A95 /* messageModel.m in Sources */,
 				6B0165F21F2C9098002071E2 /* TempViewController.m in Sources */,
 				6B12E4911F2B941F008C4A3F /* IntegralRecordModel.m in Sources */,
 				6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */,
@@ -1401,6 +1407,7 @@
 				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 5XW4L96Z63;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BaseProject/Classes/Collection/ViewControllers/Loaction/Class",
@@ -1425,6 +1432,7 @@
 				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 5XW4L96Z63;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BaseProject/Classes/Collection/ViewControllers/Loaction/Class",
