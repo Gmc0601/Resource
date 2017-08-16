@@ -11,13 +11,13 @@
 #import "TBNavigationController.h"
 #import "TempViewController.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
-
-
+#import <AudioToolbox/AudioToolbox.h>
+#import "MessageViewController.h"
 #import <UMSocialCore/UMSocialCore.h>
 #import "PersonViewController.h"
 #import "HomeViewController.h"
 #import "LoginViewController.h"
-#define USHARE_DEMO_APPKEY @"5861e5daf5ade41326001eab"
+#define USHARE_DEMO_APPKEY @"599159cb4ad1565de800153f"
 
 #import "JPUSHService.h"
 // iOS10注册APNs所需头文件
@@ -66,7 +66,7 @@
     /* 设置友盟appkey */
     [[UMSocialManager defaultManager] setUmSocialAppkey:USHARE_DEMO_APPKEY];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxdc1e388c3822c80b" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:nil];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105821097"/*设置QQ平台的appID*/  appSecret:nil redirectURL:nil];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1106265421"/*设置QQ平台的appID*/  appSecret:nil redirectURL:nil];
     
     
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
@@ -88,9 +88,9 @@
                                                           UIRemoteNotificationTypeAlert)
                                               categories:nil];
     }
-
     
-
+    
+    
     // Optional
     // 获取IDFA
     // 如需使用IDFA功能请添加此代码并在初始化方法的advertisingIdentifier参数中填写对应值
@@ -100,13 +100,13 @@
     // init Push
     // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
-//    246cbe8b32adbbd8ae21c1c7  拾荒家族
+    //    246cbe8b32adbbd8ae21c1c7  拾荒家族
     [JPUSHService setupWithOption:launchOptions appKey:@"246cbe8b32adbbd8ae21c1c7"
                           channel:@"App Store"
-                 apsForProduction:YES
+                 apsForProduction:NO
             advertisingIdentifier:advertisingId];
     
-
+    
     return YES;
 }
 
@@ -115,6 +115,7 @@
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidLoginNotification object:nil];
     [JPUSHService registerDeviceToken:deviceToken];
 }
 
@@ -149,6 +150,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [JPUSHService handleRemoteNotification:userInfo];
     }
     completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+    AudioServicesPlaySystemSound(1007);
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    NSInteger badge = [[aps valueForKey:@"badge"] integerValue];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
+    NSLog(@"iOS系统，收到通知:%ld", (long)badge);
 }
 
 // iOS 10 Support
@@ -159,13 +165,34 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [JPUSHService handleRemoteNotification:userInfo];
     }
     completionHandler();  // 系统要求执行这个方法
+    [self goToMssageViewController];
+    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"skipMeassage" object:nil];
+    NSLog(@"iOS10系统，收到通知:%@", [self logDic:userInfo]);
 }
+
+-(void)goToMssageViewController{
+    MessageViewController *personMessVC = [[MessageViewController alloc ] init];
+    UINavigationController * Nav = [[UINavigationController alloc]initWithRootViewController:personMessVC];//
+    [self.window.rootViewController presentViewController:Nav animated:YES completion:nil];
+    
+}
+
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
     // Required, iOS 7 Support
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
+    AudioServicesPlaySystemSound(1007);
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    NSInteger badge = [[aps valueForKey:@"badge"] integerValue];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
+    if (application.applicationState ==UIApplicationStateActive) {
+        
+    }else{
+        [self goToMssageViewController];
+    }
+    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -189,16 +216,23 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [JPUSHService resetBadge];//清空JPush服务器中存储的badge值
+    
+    //    [application cancelAllLocalNotifications];
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    [application setApplicationIconBadgeNumber:0];
+    //    [application cancelAllLocalNotifications];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
@@ -226,7 +260,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                      * The device is out of space.
                      * The store could not be migrated to the current model version.
                      Check the error message to determine what the actual problem was.
-                    */
+                     */
                     NSLog(@"Unresolved error %@, %@", error, error.userInfo);
                     abort();
                 }
@@ -282,6 +316,27 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         // 其他如支付等SDK的回调
     }
     return result;
+}
+
+
+- (NSString *)logDic:(NSDictionary *)dic {
+    if (![dic count]) {
+        return nil;
+    }
+    NSString *tempStr1 =
+    [[dic description] stringByReplacingOccurrencesOfString:@"\\u"
+                                                 withString:@"\\U"];
+    NSString *tempStr2 =
+    [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *tempStr3 =
+    [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *str =
+    [NSPropertyListSerialization propertyListFromData:tempData
+                                     mutabilityOption:NSPropertyListImmutable
+                                               format:NULL
+                                     errorDescription:NULL];
+    return str;
 }
 
 @end
