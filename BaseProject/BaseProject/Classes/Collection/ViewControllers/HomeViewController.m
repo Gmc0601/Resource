@@ -414,15 +414,19 @@
     [self changeBackground:scrollView];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self changeBackground:scrollView];
+}
+
 -(void) changeBackground:(UIScrollView *) scrollView{
-    if (scrollView.contentOffset.y > SizeHeight(20)) {
-        [UIView animateWithDuration:1 animations:^{
+    if (scrollView.contentOffset.y > SizeHeight(80)) {
+        [UIView animateWithDuration:0.5 animations:^{
             _backgroundView.alpha = 1;
             [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zxh"] forState:UIControlStateNormal];
             [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_szh"] forState:UIControlStateNormal];
         }];
     }else{
-        [UIView animateWithDuration:1 animations:^{
+        [UIView animateWithDuration:0.5 animations:^{
             _backgroundView.alpha = 0;
             [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
             [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
