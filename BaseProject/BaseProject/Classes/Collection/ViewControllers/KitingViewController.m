@@ -13,6 +13,7 @@
 #import "KitingCell.h"
 #import "BankCardCell.h"
 #import "BankCarInfoViewController.h"
+#import <PopupDialog/PopupDialog-Swift.h>
 
 @interface KitingViewController ()
 @property(retain,atomic) NSMutableArray *models;
@@ -332,11 +333,12 @@
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
         NSString *info = datadic[@"info"];
-        [ConfigModel mbProgressHUD:info andView:self.view];
-
         if ([datadic[@"error"] intValue] == 0) {
             self.integral = self.integral - model.integral;
             _lblIntergal.text = [NSString stringWithFormat:@"我的积分：%d",self.integral];
+            [self showPopup];
+        }else{
+            [ConfigModel mbProgressHUD:info andView:self.view];
         }
     }];
 }
@@ -386,9 +388,9 @@
         NSLog(@"%@",responseObject);
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
-            _bankCard = [BankCardModel new];
             
             if (infoDic[@"banknumber"] != nil && [infoDic[@"type"]  isEqual: @"1"]) {
+                _bankCard = [BankCardModel new];
                 _bankCard.bankName = infoDic[@"real_name"];
                 _bankCard.cardNumber = infoDic[@"banknumber"];
                 _bankCard.userName = infoDic[@"real_name"];
