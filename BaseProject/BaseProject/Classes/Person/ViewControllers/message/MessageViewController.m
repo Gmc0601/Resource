@@ -11,6 +11,9 @@
 
 #import "NewsWebViewController.h"
 #import "TBRefresh.h"
+#import "AppDelegate.h"
+#import "PersonViewController.h"
+#import "messageModel.h"
 @interface MessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSMutableArray *messageArr;
@@ -59,7 +62,7 @@
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [messageMudic setObject:userTokenStr forKey:@"userToken"];
     [messageMudic setObject:[NSString stringWithFormat:@"%d",_indexPage] forKey:@"page"];
-    [messageMudic setObject:[NSString stringWithFormat:@"%d",2] forKey:@"size"];
+    [messageMudic setObject:[NSString stringWithFormat:@"%d",10] forKey:@"size"];
     
     [HttpRequest postPath:@"_information_001" params:messageMudic resultBlock:^(id responseObject, NSError *error) {
         NSDictionary *datadic = responseObject;
@@ -70,23 +73,21 @@
             [self.messageTable.footer endFooterRefreshing];
         }
         
+           NSLog(@"222%@", responseObject);
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
             if (infoDic.count == 0) {
                 _indexPage--;
                 return;
             }
-            NSLog(@"222%@", datadic[@"info"]);
             for (NSDictionary *Dic in datadic[@"info"]) {
-                if ([messageArr containsObject:Dic]) {
-                    return;
-                }else{
-                    [messageArr addObject:Dic];
-                }
+                messageModel *model = [[messageModel alloc] init];
+                [model setValuesForKeysWithDictionary:Dic];
+                [messageArr addObject:model];
+              
             }
-            [self.messageTable reloadData];
-            
-
+ 
+              [self.messageTable reloadData];
         }else {
             _indexPage--;
             NSString *info = datadic[@"info"];
@@ -94,7 +95,7 @@
         }
     }];
     
-
+    
     
 }
 
@@ -162,7 +163,11 @@
 }
 
 -(void)clickMessBackBtn{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    PersonViewController *mainVC = [[PersonViewController alloc] init];
+    UIApplication *app = [UIApplication sharedApplication];
+    AppDelegate *app2 = app.delegate;
+    app2.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:mainVC];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
@@ -180,17 +185,23 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"MessageTableViewCell" owner:self options:nil] lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    messageModel *model = messageArr[indexPath.section];
+    [cell setCellWithModel:model];
     
-    cell.messageTimeLabel.text = messageArr[indexPath.row][@"create_time"];
-    cell.messagetitlelabel.text = messageArr[indexPath.row][@"title"];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NewsWebViewController *newsWeb = [[NewsWebViewController alloc] init];
-    newsWeb.messageDetailTime = messageArr[indexPath.row][@"create_time"];
-    newsWeb.messageDetailTitle = messageArr[indexPath.row][@"title"];
-    newsWeb.messageDetailContent = messageArr[indexPath.row][@"content"];
+    messageModel *model = messageArr[indexPath.section];
+//    newsWeb.messageDetailTime = messageArr[indexPath.row][@"create_time"];
+//    newsWeb.messageDetailTitle = messageArr[indexPath.row][@"title"];
+//    newsWeb.messageDetailContent = messageArr[indexPath.row][@"content"];
+//    NSLog(@"444%@", model.myID);
+    newsWeb.newsId = model.myID;
+//    newsWeb.messageDetailTime = model.create_time;
+//    newsWeb.messageDetailTitle = model.title;
+//    newsWeb.messageDetailContent = model.content;
     newsWeb.titleStr = @"消息详情";
     [self.navigationController pushViewController:newsWeb animated:YES];
 }

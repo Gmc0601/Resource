@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "messageModel.h"
 @interface MessageTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (weak, nonatomic) IBOutlet UILabel *messagetitlelabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageTimeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *checkBtn;
+
+- (void)setCellWithModel:(messageModel *)model;
 
 @end

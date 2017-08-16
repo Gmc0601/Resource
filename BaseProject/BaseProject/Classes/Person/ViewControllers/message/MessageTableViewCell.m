@@ -7,7 +7,7 @@
 //
 
 #import "MessageTableViewCell.h"
-
+#import "messageModel.h"
 @implementation MessageTableViewCell
 
 - (void)awakeFromNib {
@@ -19,6 +19,13 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+
+- (void)setCellWithModel:(messageModel *)model{
+    self.messageTimeLabel.text = model.create_time;
+    self.messagetitlelabel.text = model.title;
+
 }
 
 @end

@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="103"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="102"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="102.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="哈哈哈哈哈哈哈哈哈哈哈好恍恍惚惚恍恍惚惚恍恍惚惚恍恍惚惚恍恍惚惚恍恍惚惚恍恍惚惚" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNS-KT-8V3">
@@ -38,25 +38,26 @@
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3pD-On-E9p">
-                        <rect key="frame" x="250" y="73" width="60" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="查看" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzZ-GA-EDZ">
+                        <rect key="frame" x="248" y="73" width="60" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="BI0-bM-pFN"/>
+                            <constraint firstAttribute="width" constant="60" id="7Gd-Y5-6sX"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="查看"/>
-                    </button>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="3pD-On-E9p" firstAttribute="top" secondItem="ukJ-wT-vLU" secondAttribute="top" id="ACY-HL-Iv4"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="PzZ-GA-EDZ" secondAttribute="trailing" constant="4" id="HfZ-Nu-Ttp"/>
                     <constraint firstItem="ukJ-wT-vLU" firstAttribute="top" secondItem="UNS-KT-8V3" secondAttribute="bottom" constant="16" id="IEa-tj-7kh"/>
+                    <constraint firstItem="PzZ-GA-EDZ" firstAttribute="top" secondItem="ukJ-wT-vLU" secondAttribute="top" id="Iod-aB-yfX"/>
                     <constraint firstItem="UNS-KT-8V3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="RcA-VH-dxc"/>
                     <constraint firstItem="UNS-KT-8V3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="VRX-2k-Ppr"/>
-                    <constraint firstAttribute="trailing" secondItem="3pD-On-E9p" secondAttribute="trailing" constant="10" id="b0p-sl-x04"/>
+                    <constraint firstItem="PzZ-GA-EDZ" firstAttribute="height" secondItem="ukJ-wT-vLU" secondAttribute="height" id="djU-X6-EYc"/>
                     <constraint firstAttribute="trailingMargin" secondItem="UNS-KT-8V3" secondAttribute="trailing" constant="10" id="jva-c5-J3P"/>
                     <constraint firstItem="ukJ-wT-vLU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="nAx-dl-lEq"/>
-                    <constraint firstItem="3pD-On-E9p" firstAttribute="height" secondItem="ukJ-wT-vLU" secondAttribute="height" id="pka-cf-ZJT"/>
                 </constraints>
                 <userDefinedRuntimeAttributes>
                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -77,6 +78,7 @@
                 <outlet property="messageView" destination="H2p-sc-9uM" id="5AF-s2-hQT"/>
                 <outlet property="messagetitlelabel" destination="UNS-KT-8V3" id="xfL-4A-JoG"/>
             </connections>
+            <point key="canvasLocation" x="95" y="92"/>
         </tableViewCell>
     </objects>
 </document>

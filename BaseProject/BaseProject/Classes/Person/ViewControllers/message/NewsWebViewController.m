@@ -12,8 +12,8 @@
 {
     UIWebView *NewsWebView;
     NSString *urlStr;
-    NSString *readStr;
-    UIButton *PraiseBtn;
+    NSString *timeStr;
+    NSString *titleStr;
     
     UILabel *titleLabelD;
     UILabel *timeLabelD;
@@ -62,10 +62,40 @@
     
     [self.view addSubview:NewsWebView];
 //    [NewsWebView loadRequest:requeset];
+    [self getDetailInfo];
     
-    [self creatUI];
     
 }
+
+
+- (void)getDetailInfo{
+    NSMutableDictionary *newsIdMudic = [NSMutableDictionary new];
+    [newsIdMudic setObject:self.newsId forKey:@"id"];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [newsIdMudic setObject:userTokenStr forKey:@"userToken"];
+    [HttpRequest postPath:@"_notificationdetails_001" params:newsIdMudic resultBlock:^(id responseObject, NSError *error) {
+        
+        if([error isEqual:[NSNull null]] || error == nil){
+            NSLog(@"success");
+        }
+        
+        NSLog(@"%@>>>>>>%@",responseObject[@"info"], responseObject);
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            urlStr = infoDic[@"content"];
+            timeStr = infoDic[@"create_time"];
+            titleStr = infoDic[@"title"];
+            [self creatUI];
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+
+}
+
 
 
 - (void)creatUI{
@@ -86,20 +116,15 @@
     timeLabelD.textColor = RGBColor(153, 153, 153);
     [NewsWebView.scrollView addSubview:timeLabelD];
     
-//    separView = [[UIView alloc] initWithFrame:CGRectZero];
-//    separView.backgroundColor = [UIColor lightGrayColor];
-//    [NewsWebView.scrollView addSubview:separView];
 
     
-    urlStr = self.messageDetailContent;
-    titleLabelD.text = self.messageDetailTitle;
-    timeLabelD.text = self.messageDetailTime;
+//    urlStr = urlStr;
+    titleLabelD.text = titleStr;
+    timeLabelD.text = timeStr;
     
-
     NSString *wideStr = [NSString stringWithFormat:@" <head><style>img{width:%fpx !important;}</style></head>", (kScreenW+100)*2];
     urlStr = [wideStr stringByAppendingString:urlStr];
         
-
     [NewsWebView loadHTMLString:urlStr baseURL:nil];
 
     
