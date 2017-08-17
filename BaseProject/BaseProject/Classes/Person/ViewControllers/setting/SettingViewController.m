@@ -12,6 +12,7 @@
 
 #import "ProtocolViewController.h"
 #import "LoginViewController.h"
+#import <UMSocialCore/UMSocialCore.h>
 @interface SettingViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIAlertViewDelegate>
 {
     NSArray *roleArray;
@@ -166,6 +167,15 @@
 
         }
         NSLog(@"error>>>>%@", error);
+    }];
+    
+    
+    [[UMSocialManager defaultManager] cancelAuthWithPlatform:UMSocialPlatformType_QQ completion:^(id result, NSError *error) {
+
+    }];
+    
+    [[UMSocialManager defaultManager] cancelAuthWithPlatform:UMSocialPlatformType_WechatSession completion:^(id result, NSError *error) {
+        
     }];
 
 }

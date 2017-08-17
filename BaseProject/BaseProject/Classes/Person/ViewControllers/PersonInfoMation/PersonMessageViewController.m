@@ -8,6 +8,7 @@
 
 #import "PersonMessageViewController.h"
 #import "ChangeNickViewController.h"
+
 @interface PersonMessageViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
 {
      NSData *oneImgViewData;

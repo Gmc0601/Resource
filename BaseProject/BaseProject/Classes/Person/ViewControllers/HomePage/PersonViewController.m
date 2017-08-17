@@ -244,9 +244,10 @@ NSString *identifier = @"cell";
             NSLog(@"success");
         }
         
+        NSLog(@"999%@", responseObject);
         NSDictionary *datadic = responseObject;
-         NSArray *gosssArr = datadic[@"info"][@"goodlist"];
-        NSLog(@"%lulogin>>%@", (unsigned long)gosssArr.count,gosssArr);
+//         NSArray *gosssArr = datadic[@"info"][@"goodlist"];
+//        NSLog(@"%lulogin>>%@", (unsigned long)gosssArr.count,gosssArr);
 
         if ([datadic[@"error"] intValue] == 0) {
 
@@ -473,6 +474,7 @@ NSString *identifier = @"cell";
     
     
     _lblTelNumber.text = [ConfigModel getStringforKey:@"PersonPhone"];
+//     _lblTelNumber.text = self.phoneStr;
      _lblName.text = [ConfigModel getStringforKey:@"PersonNickName"];
     dispatch_queue_t xrQueue = dispatch_queue_create("loadImae", NULL); // 创建GCD线程队列
     dispatch_async(xrQueue, ^{
