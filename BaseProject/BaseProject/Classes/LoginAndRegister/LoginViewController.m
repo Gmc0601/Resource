@@ -13,7 +13,7 @@
 #import "MBProgressHUD.h"
 #import "RegisterResultViewController.h"
 #import "HomeViewController.h"
-
+#import "fixPhoneViewController.h"
 
 #import "JPUSHService.h"
 // iOS10注册APNs所需头文件
@@ -22,6 +22,7 @@
 #endif
 // 如果需要使用idfa功能所需要引入的头文件（可选）
 #import <AdSupport/AdSupport.h>
+#import "AppDelegate.h"
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *PersonBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shopBtn;
@@ -159,6 +160,7 @@
         } else {
             UMSocialUserInfoResponse *resp = result;
             
+            
             // 授权信息
             NSLog(@"QQ uid: %@", resp.uid);
             NSLog(@"QQ openid: %@", resp.openid);
@@ -173,6 +175,21 @@
             
             // 第三方平台SDK源数据
             NSLog(@"QQ originalResponse: %@", resp.originalResponse);
+            
+            [self IfFixedPhoneNumber:resp.uid IFQQ:YES];
+            
+//            [fixMuDic setObject:@"1" forKey:@"login_type"];
+//            [fixMuDic setObject:resp.accessToken forKey:@"qqtoken"];
+//            [fixMuDic setObject:resp.name forKey:@"nickanme"];
+//            [fixMuDic setObject:resp.iconurl forKey:@"avatar_url"];
+            
+            
+            
+            [ConfigModel saveBoolObject:_IsPerson forKey:isPersonlogin];
+            [ConfigModel saveBoolObject:YES forKey:@"IsQQ"];
+            [ConfigModel saveString:resp.uid forKey:@"qqtoken"];
+            [ConfigModel saveString:resp.iconurl forKey:@"PersonPortrait"];
+            [ConfigModel saveString:resp.name forKey:@"PersonNickName"];
         }
     }];
 }
@@ -203,10 +220,68 @@
             
             // 第三方平台SDK源数据
             NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+            
+              [self IfFixedPhoneNumber:resp.openid IFQQ:NO];
+            
+            [ConfigModel saveBoolObject:_IsPerson forKey:isPersonlogin];
+            [ConfigModel saveBoolObject:NO forKey:@"IsQQ"];
+            [ConfigModel saveString:resp.openid forKey:@"wechat"];
+            [ConfigModel saveString:resp.iconurl forKey:@"PersonPortrait"];
+            [ConfigModel saveString:resp.name forKey:@"PersonNickName"];
         }
     }];
 }
 
+
+
+- (void)IfFixedPhoneNumber:(NSString *)str IFQQ:(BOOL)BoolStr{
+    
+      NSMutableDictionary *fixMuDic = [NSMutableDictionary dictionary];
+    if (self.IsPerson) {
+        [fixMuDic setObject:@"1" forKey:@"user_type"];
+    }else{
+        [fixMuDic setObject:@"2" forKey:@"user_type"];
+    }
+    
+    if (BoolStr) {
+         [fixMuDic setObject:str forKey:@"qqtoken"];
+    }else{
+         [fixMuDic setObject:str forKey:@"wechat"];
+    }
+    
+    
+    [HttpRequest postPath:@"_login_001" params:fixMuDic resultBlock:^(id responseObject, NSError *error) {
+        NSLog(@"List>>>>>>%@", responseObject);
+        NSDictionary *datadic = responseObject;
+        if ([datadic[@"error"] intValue] == 0) {
+            if (_IsPerson) {
+                NSDictionary *infoDic = datadic[@"info"];
+                NSString *usertoken = infoDic[@"userToken"];
+                [ConfigModel saveString:usertoken forKey:UserToken];
+                PersonViewController *personVC = [[ PersonViewController alloc] init];
+                personVC.protraitUrlStr = infoDic[@"avatar_url"];
+                personVC.nickNameStr = infoDic[@"nickname"];
+                personVC.phoneStr = infoDic[@"mobile"];
+                [ConfigModel saveString:infoDic[@"mobile"] forKey:@"PersonPhone"];
+                UIApplication *app = [UIApplication sharedApplication];
+                AppDelegate *app2 = app.delegate;
+                app2.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:personVC];
+                
+                [JPUSHService setTags:nil alias:personVC.phoneStr callbackSelector:@selector(tagsAliasCallback:tags:alias:) object:self];
+            }
+            
+            
+        }else {
+            
+            fixPhoneViewController *fixPhoneVC = [[fixPhoneViewController alloc] init];
+            [self presentViewController:fixPhoneVC animated:YES completion:nil];
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+        NSLog(@"error>>>>%@", error);
+    }];
+    
+}
 
 //获取验证码
 - (IBAction)getCodeBtn:(UIButton *)sender {
@@ -247,8 +322,6 @@
         return;
     }
 
-    
-    
     
     NSMutableDictionary *loginDic = [NSMutableDictionary new];
     [loginDic setObject:self.phoneTF.text forKey:@"mobile"];

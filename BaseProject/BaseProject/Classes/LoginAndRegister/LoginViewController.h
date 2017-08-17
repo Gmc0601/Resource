@@ -10,4 +10,7 @@
 
 @interface LoginViewController : UIViewController
 
+
+- (void)IfFixedPhoneNumber:(NSString *)str IFQQ:(BOOL)BoolStr;
+
 @end
