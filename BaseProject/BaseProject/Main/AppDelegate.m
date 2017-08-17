@@ -65,7 +65,7 @@
     [UMSocialGlobal shareInstance].isClearCacheWhenGetUserInfo = NO;
     /* 设置友盟appkey */
     [[UMSocialManager defaultManager] setUmSocialAppkey:USHARE_DEMO_APPKEY];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxdc1e388c3822c80b" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:nil];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxea22851dde7db344" appSecret:@"33629e6c71b5dc553ea815d1b27efe17" redirectURL:nil];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1106265421"/*设置QQ平台的appID*/  appSecret:nil redirectURL:nil];
     
     

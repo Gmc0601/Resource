@@ -73,7 +73,7 @@
             [self.messageTable.footer endFooterRefreshing];
         }
         
-           NSLog(@"222%@", responseObject);
+           NSLog(@"%@222%@",messageMudic, responseObject);
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
             if (infoDic.count == 0) {
@@ -148,7 +148,7 @@
         }
         
         NSDictionary *datadic = responseObject;
-        NSLog(@"error>%@", datadic);
+        NSLog(@"%@error>%@", messageMudic,datadic);
         if ([datadic[@"error"] intValue] == 0) {
             messageArr = datadic[@"info"];
             [self.messageTable reloadData];

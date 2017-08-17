@@ -13,9 +13,14 @@
 #import "ProtocolViewController.h"
 #import "LoginViewController.h"
 #import <UMSocialCore/UMSocialCore.h>
-@interface SettingViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIAlertViewDelegate>
+#import "HomeViewController.h"
+#import "AppDelegate.h"
+#import "JPUSHService.h"
+#import "LoginViewController.h"
+@interface SettingViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIAlertViewDelegate,UIApplicationDelegate>
 {
     NSArray *roleArray;
+    BOOL ISExist;
 }
 @end
 
@@ -27,7 +32,7 @@
     [super viewDidLoad];
 //    self.phoneStr = @"15639073148";
     self.navigationItem.title = @"设置";
-    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickSettingBackBtn)];
     // Do any additional setup after loading the view from its nib.
     
 //    roleArray = [[NSArray alloc]initWithObjects:@"个人",@"回收点",nil];
@@ -49,6 +54,34 @@
     
     [CDZPicker showPickerInView:self.view withStrings:@[@"个人",@"回收点"] confirm:^(NSArray<NSString *> *stringArray) {
         self.typeLabel.text = stringArray.firstObject;
+        
+        NSMutableDictionary *changeDic = [NSMutableDictionary dictionary];
+        if ([self.typeLabel.text isEqualToString:@"个人"]) {
+             [changeDic setObject:@"1" forKey:@"user_type"];
+        }else{
+             [changeDic setObject:@"2" forKey:@"user_type"];
+        }
+       
+        [changeDic setObject:[ConfigModel getStringforKey:@"PersonPhone"] forKey:@"mobile"];
+
+        [HttpRequest postPath:@"_login_001" params:changeDic resultBlock:^(id responseObject, NSError *error) {
+            NSLog(@"List>>>>>>%@", responseObject);
+            NSDictionary *datadic = responseObject;
+            if ([datadic[@"error"] intValue] == 0) {
+              ISExist = YES;
+                
+                
+            }else {
+                ISExist = NO;
+
+                
+                NSString *info = datadic[@"info"];
+                [ConfigModel mbProgressHUD:info andView:nil];
+            }
+            NSLog(@"error>>>>%@", error);
+        }];
+        
+        
     }cancel:^{
         //your code
     }];
@@ -202,7 +235,8 @@
     NSLog(@"%f999-----", cacheSize);
 //    self.cacheSize.text = [NSString stringWithFormat:@"%.2fKB",cacheSize];
     
-    [ConfigModel mbProgressHUD:[NSString stringWithFormat:@"恭喜您已清除%@M",[NSString stringWithFormat:@"%.2f",cacheSize/1024]] andView:self.view];
+//    [ConfigModel mbProgressHUD:[NSString stringWithFormat:@"恭喜您已清除%@M",[NSString stringWithFormat:@"%.2f",cacheSize/1024]] andView:self.view];
+      [ConfigModel mbProgressHUD:@"恭喜您已清除完毕" andView:self.view];
     
 }
 -( float )readCacheSize
@@ -242,8 +276,33 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)clickBackBtn{
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)clickSettingBackBtn{
+    if ([self.typeLabel.text isEqualToString:@"个人"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        if (ISExist) {
+            HomeViewController *homeVC = [[HomeViewController alloc] init];
+            UIApplication *app = [UIApplication sharedApplication];
+            AppDelegate *app2 = app.delegate;
+            app2.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:homeVC];
+            
+            [JPUSHService setTags:nil alias:[ConfigModel getStringforKey:@"PersonPhone"] callbackSelector:@selector(tagsAliasCallback:tags:alias:) object:self];
+            
+        }else{
+            LoginViewController *loginVC = [[LoginViewController alloc] init];
+            [self presentViewController:loginVC animated:YES completion:nil];
+            
+        }
+        
+        
+    }
+
+}
+
+
+
+- (void)tagsAliasCallback:(int)iResCode tags:(NSSet*)tags alias:(NSString*)alias {
+    NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
 }
 /*
 #pragma mark - Navigation
