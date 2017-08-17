@@ -23,6 +23,10 @@
 // 如果需要使用idfa功能所需要引入的头文件（可选）
 #import <AdSupport/AdSupport.h>
 #import "AppDelegate.h"
+
+#import "UMSocialQQHandler.h" //QQ的头文件
+#import "UMSocialWechatHandler.h"
+
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *PersonBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shopBtn;
@@ -145,10 +149,27 @@
 }
 
 - (IBAction)weixinBtn:(id)sender {
+    if ( [[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"weixin://"]]) {
+        NSLog(@"存在");
+       
+    }else{
+       [ConfigModel mbProgressHUD:@"您未安装微信" andView:self.view];
+        return;
+    }
+  
+    
      [self getAuthWithUserInfoFromWechat];
 }
 
 - (IBAction)qqBtn:(id)sender {
+
+    if ([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"mqqapi://"]]) {
+         NSLog(@"存在");
+    }else{
+        [ConfigModel mbProgressHUD:@"您未安装QQ" andView:self.view];
+        return;
+
+    }
     [self getAuthWithUserInfoFromQQ];
 }
 
