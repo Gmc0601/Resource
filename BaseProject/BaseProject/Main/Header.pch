@@ -99,6 +99,8 @@
 #define isPersonlogin @"isPersonlogin"
 #define isStorelogin @"isStorelogin"
 
+#define isQQ @"isQQ"
+
 
 #define UserToken @"userTOken"
 
