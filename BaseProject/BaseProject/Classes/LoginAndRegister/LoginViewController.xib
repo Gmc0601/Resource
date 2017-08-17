@@ -90,7 +90,7 @@
                         <action selector="getCodeBtn:" destination="-1" eventType="touchUpInside" id="kuQ-Hb-jjV"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="17382279994" placeholder="手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Z4-o9-uwn">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Z4-o9-uwn">
                     <rect key="frame" x="67.5" y="275" width="160" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="scv-RM-6Wk"/>
