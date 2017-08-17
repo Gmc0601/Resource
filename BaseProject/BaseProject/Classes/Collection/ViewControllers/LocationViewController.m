@@ -70,6 +70,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
                                                                                                  NSParagraphStyleAttributeName:style}];
     _txtKeyword.attributedPlaceholder = str;
     _txtKeyword.backgroundColor = [UIColor whiteColor];
+    [_txtKeyword addTarget:self action:@selector(tapSearchButton) forControlEvents:UIControlEventEditingChanged];
     
     [_header addSubview:_txtKeyword];
     [_txtKeyword mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -238,7 +239,6 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 }
 
 -(void) tapSearchButton{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
     AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
     

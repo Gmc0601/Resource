@@ -9,7 +9,7 @@
 #import "SettingViewController.h"
 #import "AboutUsViewController.h"
 #import "CDZPicker.h"
-
+#import "ConfigModel.h"
 #import "ProtocolViewController.h"
 #import "LoginViewController.h"
 #import <UMSocialCore/UMSocialCore.h>
@@ -37,6 +37,9 @@
     
 //    roleArray = [[NSArray alloc]initWithObjects:@"个人",@"回收点",nil];
 
+    if (![ConfigModel isPerson]) {
+        self.typeLabel.text = @"回收点";
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
