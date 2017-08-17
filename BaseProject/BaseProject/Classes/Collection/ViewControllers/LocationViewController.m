@@ -12,7 +12,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 
 @interface LocationViewController()<CLLocationManagerDelegate,
-UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate>
+UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property(retain,atomic) AMapSearchAPI *search;
 @property(retain,atomic) AMapPOIAroundSearchRequest *request;
@@ -21,6 +21,8 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 @property(retain,atomic) UITableView *tb;
 @property(retain,atomic) UIView *header;
 @property(retain,atomic) UITextField *txtKeyword;
+@property(assign,nonatomic) CLLocationCoordinate2D location;
+@property(retain,atomic) NSString *city;
 @end
 
 @implementation LocationViewController
@@ -60,6 +62,8 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
     _txtKeyword = [UITextField new];
     _txtKeyword.font = font;
     _txtKeyword.textColor = color;
+    _txtKeyword.delegate = self;
+    _txtKeyword.returnKeyType = UIReturnKeySearch;
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.alignment = NSTextAlignmentCenter;
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:@"搜索附近位置" attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont,
@@ -203,7 +207,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *location=[locations firstObject];//取出第一个位置
     CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
-    
+    _location = location.coordinate;
     AMapPOIAroundSearchRequest *request = [[AMapPOIAroundSearchRequest alloc] init];
     
     request.location            = [AMapGeoPoint locationWithLatitude:coordinate.latitude longitude:coordinate.longitude];
@@ -215,10 +219,13 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 - (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    _orginalDataSource =[NSMutableArray arrayWithCapacity:0];
+
     if (response.pois.count != 0)
     {
         for (AMapPOI *p in response.pois) {
             [_orginalDataSource addObject:p];
+            _city = p.city;
         }
     }
     
@@ -231,13 +238,16 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 }
 
 -(void) tapSearchButton{
-    _dataSource = [NSMutableArray arrayWithCapacity:0];
-    for (AMapPOI *p in _orginalDataSource) {
-        if ([_txtKeyword.text isEqualToString:@""] ||[p.name containsString:_txtKeyword.text] || [p.address containsString:_txtKeyword.text]) {
-            [_dataSource addObject:p];
-        }
-    }
-    [_tb reloadData];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+    AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
+    
+    request.keywords            = _txtKeyword.text;
+    request.requireExtension    = YES;
+    request.city = _city;
+    request.cityLimit           = YES;
+    request.requireSubPOIs      = YES;
+    [self.search AMapPOIKeywordsSearch:request];
 }
 
 - (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error{
@@ -245,6 +255,12 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
     [_tb reloadData];
 
     NSLog(@"%@",error);
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    [self tapSearchButton];
+    return YES;
 }
 
 @end
