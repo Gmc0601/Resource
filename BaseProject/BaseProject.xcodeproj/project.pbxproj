@@ -939,15 +939,15 @@
 		CA1A01DF1F31DA2500C88313 /* message */ = {
 			isa = PBXGroup;
 			children = (
-				CA2008A61F43EFEF002C1A95 /* NewsWebViewController.m */,
+				CA2008AD1F43EFEF002C1A95 /* MessageViewController.h */,
 				CA2008A71F43EFEF002C1A95 /* MessageViewController.m */,
-				CA2008A81F43EFEF002C1A95 /* MessageTableViewCell.xib */,
 				CA2008A91F43EFEF002C1A95 /* MessageTableViewCell.h */,
 				CA2008AA1F43EFEF002C1A95 /* MessageTableViewCell.m */,
+				CA2008A81F43EFEF002C1A95 /* MessageTableViewCell.xib */,
 				CA2008AB1F43EFEF002C1A95 /* messageModel.h */,
 				CA2008AC1F43EFEF002C1A95 /* messageModel.m */,
-				CA2008AD1F43EFEF002C1A95 /* MessageViewController.h */,
 				CA2008AE1F43EFEF002C1A95 /* NewsWebViewController.h */,
+				CA2008A61F43EFEF002C1A95 /* NewsWebViewController.m */,
 			);
 			path = message;
 			sourceTree = "<group>";
