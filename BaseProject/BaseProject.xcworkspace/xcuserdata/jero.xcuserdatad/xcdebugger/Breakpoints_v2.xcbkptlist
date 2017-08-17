@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BaseProject/Classes/LoginAndRegister/LoginViewController.m"
-            timestampString = "524587561.884706"
+            filePath = "BaseProject/Classes/Person/ViewControllers/message/MessageViewController.m"
+            timestampString = "524625915.001779"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
-            landmarkName = "-getAuthWithUserInfoFromWechat"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "-getMessageListData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
