@@ -31,7 +31,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "MapViewController.h"
-@interface PersonViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CLLocationManagerDelegate,PersonPageTableViewDelegate>
+@interface PersonViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CLLocationManagerDelegate,PersonPageTableViewDelegate,UIScrollViewDelegate>
 {
     UITableView *myTableView;
     UICollectionView  *collectionView;
@@ -464,6 +464,7 @@ NSString *identifier = @"cell";
 
 - (void)calculateBtn{
     MapViewController *mapVC = [[MapViewController alloc] init];
+    mapVC.StoreArr = potsArr;
     [self.navigationController pushViewController:mapVC animated:YES];
 }
 
@@ -596,5 +597,24 @@ NSString *identifier = @"cell";
     
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"%f",scrollView.contentOffset.y);
+    
+    if (scrollView.contentOffset.y >200) {
+        [self.navigationController setNavigationBarHidden:NO];
+        self.navigationController.navigationBar.translucent = NO;
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_tab_zxh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(ClickMessageButton)];
+        
+        self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"grzx_icon_szh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(ClickSettingButton)];
+        
+    }else{
+          self.navigationController.navigationBar.translucent = YES;
+        [self.navigationController setNavigationBarHidden:YES];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    
+    
+}
 
 @end
