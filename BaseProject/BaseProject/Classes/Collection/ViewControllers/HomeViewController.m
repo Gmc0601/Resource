@@ -64,7 +64,7 @@
     [self.view addSubview:_backgroundView];
     
     _btnMessage = [[UIButton alloc] init];
-    [_btnMessage setBackgroundImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
+    [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
     [_btnMessage addTarget:self action:@selector(tapMessageButton) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view  addSubview:_btnMessage];
@@ -76,7 +76,7 @@
     }];
     
     _btnSetting = [[UIButton alloc] init];
-    [_btnSetting setBackgroundImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
+    [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
     [_btnSetting addTarget:self action:@selector(tapSettingButton) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view  addSubview:_btnSetting];
@@ -86,6 +86,9 @@
         make.width.equalTo(@(SizeWidth(20.4)));
         make.height.equalTo(@(SizeHeight(22)));
     }];
+    
+    [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zxh"] forState:UIControlStateHighlighted];
+    [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_szh"] forState:UIControlStateHighlighted];
 }
 
 
@@ -422,14 +425,14 @@
     if (scrollView.contentOffset.y > SizeHeight(80)) {
         [UIView animateWithDuration:0.5 animations:^{
             _backgroundView.alpha = 1;
-            [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zxh"] forState:UIControlStateNormal];
-            [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_szh"] forState:UIControlStateNormal];
+            [_btnMessage setHighlighted:YES];
+            [_btnSetting setHighlighted:YES];
         }];
     }else{
         [UIView animateWithDuration:0.5 animations:^{
             _backgroundView.alpha = 0;
-            [_btnMessage setImage:[UIImage imageNamed:@"icon_tab_zx"] forState:UIControlStateNormal];
-            [_btnSetting setImage:[UIImage imageNamed:@"grzx_icon_sz"] forState:UIControlStateNormal];
+            [_btnMessage setHighlighted:NO];
+            [_btnSetting setHighlighted:NO];
         }];
     }
 }
