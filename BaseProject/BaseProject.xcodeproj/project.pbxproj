@@ -968,12 +968,12 @@
 		CADC2FFC1F499B6F00EED7E4 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				CADC300A1F49A04700EED7E4 /* CustomAnnotationView.m */,
-				CADC300B1F49A04700EED7E4 /* CustomCalloutView.m */,
-				CADC300C1F49A04700EED7E4 /* CustomCalloutView.h */,
 				CADC300D1F49A04700EED7E4 /* ZAnnotation.h */,
-				CADC300E1F49A04700EED7E4 /* CustomAnnotationView.h */,
 				CADC300F1F49A04700EED7E4 /* ZAnnotation.m */,
+				CADC300C1F49A04700EED7E4 /* CustomCalloutView.h */,
+				CADC300B1F49A04700EED7E4 /* CustomCalloutView.m */,
+				CADC300E1F49A04700EED7E4 /* CustomAnnotationView.h */,
+				CADC300A1F49A04700EED7E4 /* CustomAnnotationView.m */,
 			);
 			path = Map;
 			sourceTree = "<group>";
