@@ -124,6 +124,10 @@
 		CA2008B11F43EFEF002C1A95 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA2008A81F43EFEF002C1A95 /* MessageTableViewCell.xib */; };
 		CA2008B21F43EFEF002C1A95 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2008AA1F43EFEF002C1A95 /* MessageTableViewCell.m */; };
 		CA2008B31F43EFEF002C1A95 /* messageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2008AC1F43EFEF002C1A95 /* messageModel.m */; };
+		CADC30091F499FBB00EED7E4 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CADC30081F499FBB00EED7E4 /* logo.png */; };
+		CADC30101F49A04700EED7E4 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = CADC300A1F49A04700EED7E4 /* CustomAnnotationView.m */; };
+		CADC30111F49A04700EED7E4 /* CustomCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CADC300B1F49A04700EED7E4 /* CustomCalloutView.m */; };
+		CADC30121F49A04700EED7E4 /* ZAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = CADC300F1F49A04700EED7E4 /* ZAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,6 +374,13 @@
 		CA2008AD1F43EFEF002C1A95 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		CA2008AE1F43EFEF002C1A95 /* NewsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsWebViewController.h; sourceTree = "<group>"; };
 		CA22C6391F3C94A6006F1D81 /* BaseProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BaseProject.entitlements; sourceTree = "<group>"; };
+		CADC30081F499FBB00EED7E4 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		CADC300A1F49A04700EED7E4 /* CustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationView.m; sourceTree = "<group>"; };
+		CADC300B1F49A04700EED7E4 /* CustomCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCalloutView.m; sourceTree = "<group>"; };
+		CADC300C1F49A04700EED7E4 /* CustomCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCalloutView.h; sourceTree = "<group>"; };
+		CADC300D1F49A04700EED7E4 /* ZAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAnnotation.h; sourceTree = "<group>"; };
+		CADC300E1F49A04700EED7E4 /* CustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationView.h; sourceTree = "<group>"; };
+		CADC300F1F49A04700EED7E4 /* ZAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAnnotation.m; sourceTree = "<group>"; };
 		F79BCDCE7109E930EA932FB6 /* Pods-BaseProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseProject/Pods-BaseProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -570,6 +581,7 @@
 		42A4442F1EF133E000F90791 /* BaseProject */ = {
 			isa = PBXGroup;
 			children = (
+				CADC30081F499FBB00EED7E4 /* logo.png */,
 				CA22C6391F3C94A6006F1D81 /* BaseProject.entitlements */,
 				42C84EB31EF2DC7B0008189D /* Header.pch */,
 				42C84EB21EF2DC7B0008189D /* CCUrl.h */,
@@ -911,6 +923,7 @@
 		CA1A01CB1F31DA2500C88313 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				CADC2FFC1F499B6F00EED7E4 /* Map */,
 				CA1A01DD1F31DA2500C88313 /* PersonViewController.h */,
 				CA1A01DE1F31DA2500C88313 /* PersonViewController.m */,
 				CA1A01CC1F31DA2500C88313 /* AbandonGoodsViewController.h */,
@@ -950,6 +963,19 @@
 				CA2008A61F43EFEF002C1A95 /* NewsWebViewController.m */,
 			);
 			path = message;
+			sourceTree = "<group>";
+		};
+		CADC2FFC1F499B6F00EED7E4 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				CADC300A1F49A04700EED7E4 /* CustomAnnotationView.m */,
+				CADC300B1F49A04700EED7E4 /* CustomCalloutView.m */,
+				CADC300C1F49A04700EED7E4 /* CustomCalloutView.h */,
+				CADC300D1F49A04700EED7E4 /* ZAnnotation.h */,
+				CADC300E1F49A04700EED7E4 /* CustomAnnotationView.h */,
+				CADC300F1F49A04700EED7E4 /* ZAnnotation.m */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1079,6 +1105,7 @@
 				42A444431EF133E000F90791 /* LaunchScreen.storyboard in Resources */,
 				CA1A01F51F31DA2500C88313 /* fixPhoneViewController.xib in Resources */,
 				CA1A01E81F31DA2500C88313 /* AboutUsViewController.xib in Resources */,
+				CADC30091F499FBB00EED7E4 /* logo.png in Resources */,
 				42A444401EF133E000F90791 /* Assets.xcassets in Resources */,
 				6B0165F31F2C9098002071E2 /* TempViewController.xib in Resources */,
 				42A4443B1EF133E000F90791 /* Main.storyboard in Resources */,
@@ -1214,9 +1241,11 @@
 				429558271F248874000B2BB2 /* CCBaseViewController.m in Sources */,
 				CA1A01F91F31DA2500C88313 /* NearbyTableViewCell.m in Sources */,
 				6B0166401F2E39A7002071E2 /* KitingGoodsRecordCell.m in Sources */,
+				CADC30121F49A04700EED7E4 /* ZAnnotation.m in Sources */,
 				42C84F0D1EF2E97D0008189D /* UITableViewCell+CellAnimation.m in Sources */,
 				42A4443E1EF133E000F90791 /* BaseProject.xcdatamodeld in Sources */,
 				6B12E47C1F2B762B008C4A3F /* IntegalViewController.m in Sources */,
+				CADC30101F49A04700EED7E4 /* CustomAnnotationView.m in Sources */,
 				CA1A01E71F31DA2500C88313 /* AboutUsViewController.m in Sources */,
 				42C84F001EF2E97D0008189D /* NSMutableAttributedString+Category.m in Sources */,
 				CA1A01E91F31DA2500C88313 /* CDZPicker.m in Sources */,
@@ -1249,6 +1278,7 @@
 				6B0165F21F2C9098002071E2 /* TempViewController.m in Sources */,
 				6B12E4911F2B941F008C4A3F /* IntegralRecordModel.m in Sources */,
 				6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */,
+				CADC30111F49A04700EED7E4 /* CustomCalloutView.m in Sources */,
 				CA1A02031F31F34200C88313 /* MapViewController.m in Sources */,
 				42C84F011EF2E97D0008189D /* NSMutableDictionary+Category.m in Sources */,
 				CA1A01FB1F31DA2500C88313 /* PagegeCollectionViewCell.m in Sources */,
