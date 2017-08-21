@@ -48,7 +48,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="o3v-DW-ceN"/>
                     </constraints>
-                    <state key="normal" title="收购点">
+                    <state key="normal" title="回收点">
                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
