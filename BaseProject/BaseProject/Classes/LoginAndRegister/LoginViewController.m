@@ -63,12 +63,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self CreateUI];
-    self.personBTNHeight.constant = SizeHeight(29);
-    self.personBtnHeight.constant = SizeHeight(64);
-    self.sepaViewHeight.constant = SizeHeight(153);
-    self.thirdHeight.constant = SizeHeight(73);
-    self.thirdSepaHeight.constant = SizeHeight(83.5);
-    self.qqHeight.constant = SizeHeight(44);
+ 
     
     
      self.logginBtnHeight.constant = SizeHeight(44);
