@@ -40,7 +40,7 @@
 -(void) setModel:(GoodsModel *)model{
     _model = model;
     self.title = model.name;
-    [BottomImgView sd_setImageWithURL:[NSURL URLWithString:_model.imgUrl]];
+//    [BottomImgView sd_setImageWithURL:[NSURL URLWithString:_model.imgUrl]];
     moneyLabel.text = [NSString stringWithFormat:@"￥%.2f", _model.price];
     if (_model.unit != nil) {
         unitLabel.text = [NSString stringWithFormat:@"单位(%@):",_model.unit];
@@ -81,19 +81,19 @@
     
     
     BottomImgView = [[UIImageView alloc] init];
-    BottomImgView.layer.cornerRadius = 5;
+//    BottomImgView.layer.cornerRadius = 5;
     BottomImgView.layer.masksToBounds = YES;
     BottomImgView.frame = CGRectMake(SizeWidth((kScreenW-SizeWidth(355))/2), SizeHeight(15), SizeWidth(355), SizeHeight(308));
     [TBheadView addSubview:BottomImgView];
-    BottomImgView.image = [UIImage imageNamed:@"53ccb7628f2cd"];
+    BottomImgView.image = [UIImage imageNamed:@"bg_img_fpxq"];
     BottomImgView.userInteractionEnabled = YES;
     
     headImgView = [[UIImageView alloc] init];
-    headImgView.layer.cornerRadius = 5;
+//    headImgView.layer.cornerRadius = 5;
     headImgView.layer.masksToBounds = YES;
     headImgView.frame = CGRectMake(-1, 1, SizeWidth(357), SizeHeight(310));
     [BottomImgView addSubview:headImgView];
-    headImgView.image = [UIImage imageNamed:@"圆角矩形-11-拷贝"];
+//    headImgView.image = [UIImage imageNamed:@"圆角矩形-11-拷贝"];
     headImgView.userInteractionEnabled = YES;
     
     moneyLabel = [[UILabel alloc] init];
