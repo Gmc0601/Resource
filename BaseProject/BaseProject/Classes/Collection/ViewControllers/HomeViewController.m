@@ -377,7 +377,7 @@
     UIFont *font1 = [UIFont fontWithName:[FontConstrants helveticaNeue] size:SizeWidth(15)];
     UIFont *font2 = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
     _lblIntegral.attributedText = [NSMutableAttributedString attributeString:strIntegral prefixFont:font1 prefixColor:[ColorContants orange] suffixString:@" 积分" suffixFont:font2 suffixColor:[ColorContants orange] ];
-    [_lblIntegral sizeToFit];
+//    [_lblIntegral sizeToFit];
 }
 
 -(void) addGoodsList{
