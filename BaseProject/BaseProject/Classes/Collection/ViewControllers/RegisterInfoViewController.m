@@ -74,10 +74,10 @@
     UILabel *lblCardId = [self addTitleLable:titleFont withTitleColor:titleColor with:@"身份证号:" withTopView:border1];
     UIView *border3 = [self addBorder:lblCardId];
     
-    UILabel *lblPointName = [self addTitleLable:titleFont withTitleColor:titleColor with:@"收购点名称:" withTopView:border3];
+    UILabel *lblPointName = [self addTitleLable:titleFont withTitleColor:titleColor with:@"回收点名称:" withTopView:border3];
     UIView *border4 = [self addBorder:lblPointName];
     
-    UILabel *lblPointAddress = [self addTitleLable:titleFont withTitleColor:titleColor with:@"收购点地址:" withTopView:border4];
+    UILabel *lblPointAddress = [self addTitleLable:titleFont withTitleColor:titleColor with:@"回收点地址:" withTopView:border4];
     UIView *border5 = [self addBorder:lblPointAddress];
     
     UILabel *lblDetailAddress = [self addTitleLable:titleFont withTitleColor:titleColor with:@"详细地址:" withTopView:border5];
@@ -87,7 +87,7 @@
 //    _txtTelNo = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入手机号" withLeftView:lblTelNo];
 //    _txtTelNo.keyboardType = UIKeyboardTypePhonePad;
     _txtCardId = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入身份证号" withLeftView:lblCardId];
-     _txtPointName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入收购点名称" withLeftView:lblPointName];
+     _txtPointName = [self addTextField:titleFont withTitleColor:titleColor with:@"请输入回收点名称" withLeftView:lblPointName];
      _btnAddress = [self addLocationButton:lblPointAddress];
      _txtDetailAddress = [self addTextField:titleFont withTitleColor:titleColor with:@"例：16号楼234室" withLeftView:lblDetailAddress];
 
@@ -273,7 +273,7 @@
     }
     
     if (_txtPointName.text == nil || _txtPointName.text.length == 0) {
-        [strMsg appendString:@",收购点名称"];
+        [strMsg appendString:@",回收点名称"];
         isInvalidate = YES;
     }
     
@@ -283,7 +283,7 @@
     }
     
     if (_location == nil) {
-        [strMsg appendString:@"\n请选择收购点地址"];
+        [strMsg appendString:@"\n请选择回收点地址"];
         isInvalidate = YES;
     }
     
