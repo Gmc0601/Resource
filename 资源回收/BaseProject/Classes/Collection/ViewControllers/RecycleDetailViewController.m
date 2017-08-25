@@ -40,7 +40,7 @@
 -(void) setModel:(GoodsModel *)model{
     _model = model;
     self.title = model.name;
-    [BottomImgView sd_setImageWithURL:[NSURL URLWithString:_model.imgUrl]];
+//    [BottomImgView sd_setImageWithURL:[NSURL URLWithString:_model.imgUrl]];
     moneyLabel.text = [NSString stringWithFormat:@"￥%.2f", _model.price];
     if (_model.unit != nil) {
         unitLabel.text = [NSString stringWithFormat:@"单位(%@):",_model.unit];
