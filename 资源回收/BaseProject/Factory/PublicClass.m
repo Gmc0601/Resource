@@ -94,9 +94,9 @@
     }];
 }
 
-+(void) showCallPopupWithTelNo:(NSString *) telNo inViewController:(UIViewController*) viewController{
++(void) showCallPopupWithTelNo:(NSString *) telNo withWeight:(NSString *) weight  inViewController:(UIViewController*) viewController{
     PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@"拨打平台电话"
-                                                    message:@"\n重量达到500kg平台才会来哟~"
+                                                    message:[NSString stringWithFormat:@"\n重量达到%@kg平台才会来哟~",weight]
                                                       image:nil
                                             buttonAlignment:UILayoutConstraintAxisHorizontal
                                             transitionStyle:PopupDialogTransitionStyleBounceUp

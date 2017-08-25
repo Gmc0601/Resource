@@ -36,6 +36,7 @@
 @property(retain,atomic) UIButton *btnSetting;
 @property(retain,atomic) UserModel *user;
 @property(retain,atomic) NSString *strTel;
+@property(retain,atomic) NSString *weight;
 @end
 
 @implementation HomeViewController
@@ -410,7 +411,7 @@
 }
 
 -(void) showCallView{
-    [PublicClass showCallPopupWithTelNo:_strTel inViewController:self];
+    [PublicClass showCallPopupWithTelNo:_strTel withWeight:_weight inViewController:self];
 }
 
 -(void) showIntegralDetail{
@@ -522,6 +523,7 @@
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
             _strTel = infoDic[@"phone"];
+            _weight = infoDic[@"number"];
             [PublicClass addCallButtonInViewContrller:self];
         }
         NSLog(@"error>>>>%@", error);

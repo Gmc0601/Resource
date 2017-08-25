@@ -113,7 +113,7 @@
             _lblIntergal.text = [NSString stringWithFormat:@"%d",self.integral];
             [ConfigModel mbProgressHUD:@"操作成功" andView:self.view];
         }else{
-            [ConfigModel mbProgressHUD:@"操作失败" andView:self.view];
+            [ConfigModel mbProgressHUD:@"积分不够" andView:self.view];
         }
     }];
 }

@@ -25,6 +25,7 @@
     UILabel *unitLabel;
     UILabel *priceLabel;
     NSString *telNum;
+    NSString *weight;
 }
 @property(retain,nonatomic) GoodsModel *model;
 @end
@@ -195,7 +196,7 @@
 }
 
 -(void) showCallView{
-    [PublicClass showCallPopupWithTelNo:telNum inViewController:self];
+    [PublicClass showCallPopupWithTelNo:telNum withWeight:weight inViewController:self];
 }
 
 -(CGFloat) getSumMoney{
@@ -239,6 +240,7 @@
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
             telNum = infoDic[@"phone"];
+            weight = infoDic[@"number"];
             [PublicClass addCallButtonInViewContrller:self];
         }
         NSLog(@"error>>>>%@", error);
