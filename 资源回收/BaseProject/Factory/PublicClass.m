@@ -96,7 +96,7 @@
 
 +(void) showCallPopupWithTelNo:(NSString *) telNo inViewController:(UIViewController*) viewController{
     PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@"拨打平台电话"
-                                                    message:[NSString stringWithFormat:@"%@\n",telNo]
+                                                    message:@"\n重量达到500kg平台才会来哟~"
                                                       image:nil
                                             buttonAlignment:UILayoutConstraintAxisHorizontal
                                             transitionStyle:PopupDialogTransitionStyleBounceUp
@@ -135,17 +135,17 @@
     [popup addButtons: @[ok, cancel]];
     
     
-    UILabel *lbl = [UILabel new];
-    lbl.text = @"重量达到500kg平台才会来哟~";
-    lbl.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
-    lbl.textColor = [ColorContants integralWhereFontColor];
-    lbl.textAlignment = NSTextAlignmentCenter;
-    [popupViewController.view addSubview:lbl];
-    [lbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(popupViewController.view);
-        make.top.equalTo(popupViewController.view.mas_top).offset(SizeHeight(90));
-        make.width.equalTo(popupViewController.view);
-    }];
+//    UILabel *lbl = [UILabel new];
+//    lbl.text = @"重量达到500kg平台才会来哟~";
+//    lbl.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
+//    lbl.textColor = [ColorContants integralWhereFontColor];
+//    lbl.textAlignment = NSTextAlignmentCenter;
+//    [popupViewController.view addSubview:lbl];
+//    [lbl mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(popupViewController.view);
+//        make.top.equalTo(popupViewController.view.mas_top).offset(SizeHeight(90));
+//        make.width.equalTo(popupViewController.view);
+//    }];
     
     [viewController presentViewController:popup animated:YES completion:nil];
 }
