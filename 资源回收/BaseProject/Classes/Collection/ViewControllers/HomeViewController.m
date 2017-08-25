@@ -162,6 +162,12 @@
     cell.layer.cornerRadius = SizeHeight(5);
     
     if (lblName == nil) {
+        UIView *bgView = [[UIView alloc] initWithFrame:cell.bounds];
+        bgView.backgroundColor = [UIColor colorWithHexString:@"#61000000"];
+        bgView.layer.cornerRadius = SizeWidth(10);
+        bgView.alpha = 0.49;
+        [cell addSubview:bgView];
+        
         lblName = [[UILabel alloc] init];
         lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
         lblName.textColor = [ColorContants whiteFontColor];
