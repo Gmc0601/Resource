@@ -212,6 +212,7 @@
     _btnAddress = [UIButton new];
     [_btnAddress setImage:[UIImage imageNamed:@"fpxq_icon_dw"] forState:UIControlStateNormal];
     _btnAddress.titleLabel.font = placeHolderFont;
+    _btnAddress.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [_btnAddress setTitleColor:placeHolderColor forState:UIControlStateNormal];
     [_btnAddress setTitle:@"单击选择" forState:UIControlStateNormal];
     [_btnAddress addTarget:self action:@selector(tapLocationButton) forControlEvents:UIControlEventTouchUpInside];
