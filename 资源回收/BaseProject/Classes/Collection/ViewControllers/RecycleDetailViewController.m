@@ -13,7 +13,7 @@
 #import "NearbyTableViewCell.h"
 #import "UIImageView+WebCache.h"
 
-@interface RecycleDetailViewController ()
+@interface RecycleDetailViewController ()<UITextFieldDelegate>
 {
     UIView *TBheadView;
     UIImageView *headImgView;
@@ -41,7 +41,7 @@
     _model = model;
     self.title = model.name;
 //    [BottomImgView sd_setImageWithURL:[NSURL URLWithString:_model.imgUrl]];
-    moneyLabel.text = [NSString stringWithFormat:@"￥%.2f", _model.price];
+//    moneyLabel.text = [NSString stringWithFormat:@"￥%.2f", _model.price];
     if (_model.unit != nil) {
         unitLabel.text = [NSString stringWithFormat:@"单位(%@):",_model.unit];
         priceLabel.text = [NSString stringWithFormat:@"单位:%.2f元/%@",_model.price,_model.unit];
@@ -106,7 +106,7 @@
         
     }];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
-    moneyLabel.text = @"¥ 8.88";
+    moneyLabel.text = @"¥ 0.00";
     moneyLabel.font = [UIFont systemFontOfSize:24];
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:moneyLabel.text];
     NSRange range = NSMakeRange(0, 1);
@@ -134,7 +134,14 @@
     AmountTF.layer.borderWidth = 1;
     AmountTF.font = [UIFont systemFontOfSize:14];
     AmountTF.keyboardType = UIKeyboardTypeDecimalPad;
+    AmountTF.delegate = self;
     AmountTF.layer.borderColor = UIColorFromHex(0xe0e0e0).CGColor;
+    
+    CGRect frame = [AmountTF frame];
+    frame.size.width=SizeWidth(10);
+    [AmountTF setLeftView:[[UIView alloc]initWithFrame:frame]];
+    [AmountTF setLeftViewMode:UITextFieldViewModeAlways];
+
     [AmountTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headImgView).offset(SizeWidth(20));
         make.top.equalTo(unitLabel).offset(SizeHeight(30));
@@ -192,7 +199,7 @@
 }
 
 -(CGFloat) getSumMoney{
-    return floor(AmountTF.text.floatValue * _model.price);
+    return (roundf(AmountTF.text.floatValue * _model.price * 100))/100;
 }
 
 -(void) loadData{
@@ -236,5 +243,33 @@
         }
         NSLog(@"error>>>>%@", error);
     }];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    
+    NSMutableString *futureString = [NSMutableString stringWithString:textField.text];
+    [futureString insertString:string atIndex:range.location];
+    
+    NSInteger flag = 0;
+    // 这个可以自定义,保留到小数点后两位,后几位都可以
+    const NSInteger limited = 2;
+    
+    for (NSInteger i = futureString.length - 1; i >= 0; i--) {
+        
+        if ([futureString characterAtIndex:i] == '.') {
+            // 如果大于了限制的就提示
+            if (flag > limited) {
+                [ConfigModel mbProgressHUD:@"输入金额请控制在小数点后两位" andView:self.view];
+                return NO;
+            }
+            
+            break;
+        }
+        
+        flag++;
+    }
+    
+    return YES;
 }
 @end
