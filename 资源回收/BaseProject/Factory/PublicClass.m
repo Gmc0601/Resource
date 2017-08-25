@@ -96,7 +96,7 @@
 
 +(void) showCallPopupWithTelNo:(NSString *) telNo inViewController:(UIViewController*) viewController{
     PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@"拨打平台电话"
-                                                    message:telNo
+                                                    message:[NSString stringWithFormat:@"%@\n",telNo]
                                                       image:nil
                                             buttonAlignment:UILayoutConstraintAxisHorizontal
                                             transitionStyle:PopupDialogTransitionStyleBounceUp
@@ -109,7 +109,7 @@
     popupViewController.titleFont = [UIFont fontWithName:[FontConstrants pingFang] size:15];
     
     popupViewController.messageColor = [ColorContants kitingFontColor];
-    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:13];
+    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(13)];
     
     
     CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{
@@ -121,8 +121,10 @@
     cancel.titleColor = popupViewController.titleColor;
     
     DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"拨打" height:50 dismissOnTap:NO action:^{
-        NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@",telNo];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+        NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",telNo];
+        UIWebView *callWebview = [[UIWebView alloc] init];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+        [viewController.view addSubview:callWebview];
         [popup dismiss:^{
             
         }];
@@ -131,6 +133,19 @@
     ok.titleColor = popupViewController.titleColor;
     
     [popup addButtons: @[ok, cancel]];
+    
+    
+    UILabel *lbl = [UILabel new];
+    lbl.text = @"重量达到500kg平台才会来哟~";
+    lbl.font = [UIFont fontWithName:[FontConstrants pingFang] size:12];
+    lbl.textColor = [ColorContants integralWhereFontColor];
+    lbl.textAlignment = NSTextAlignmentCenter;
+    [popupViewController.view addSubview:lbl];
+    [lbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(popupViewController.view);
+        make.top.equalTo(popupViewController.view.mas_top).offset(SizeHeight(90));
+        make.width.equalTo(popupViewController.view);
+    }];
     
     [viewController presentViewController:popup animated:YES completion:nil];
 }
