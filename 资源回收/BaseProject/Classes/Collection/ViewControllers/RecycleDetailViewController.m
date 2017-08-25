@@ -61,6 +61,7 @@
     [self CreateUI];
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
+    [self getTelNum];
 }
 
 - (void)clickBackBtn{
@@ -162,10 +163,7 @@
         make.top.equalTo(AmountTF);
         make.width.equalTo(@(SizeWidth(57)));
         make.height.equalTo(@(SizeHeight(44)));
-        
     }];
-    
-    
     
     priceLabel = [[UILabel alloc] init];
     [headImgView addSubview:priceLabel];
