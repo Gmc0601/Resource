@@ -229,6 +229,8 @@
                     
                     if(dict[@"username"] != nil && dict[@"username"] != [NSNull null]){
                         model.summery = [NSString stringWithFormat:@"%@给%@",model.summery,dict[@"username"]];
+                    }else if(dict[@"good_name"] != nil && dict[@"good_name"] != [NSNull null]){
+                        model.summery = dict[@"good_name"];
                     }
                 }else{
                     if(dict[@"username"] != nil && dict[@"username"] != [NSNull null]){

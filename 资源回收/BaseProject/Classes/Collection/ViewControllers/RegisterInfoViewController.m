@@ -32,6 +32,7 @@
 @property(retain,atomic) UIView *superView;
 @property(retain,atomic) ImagePickerView *currentPicker;
 @property(retain,atomic) AMapGeoPoint *location;
+@property(retain,atomic) NSString *address;
 @property(retain,atomic) NSString *strTel;
 @end
 
@@ -312,11 +313,13 @@
 
     NSMutableDictionary *params = [NSMutableDictionary new];
 
+    NSString *address = [NSString stringWithFormat:@"%@%@",_address,_txtDetailAddress.text];
+    
     [params setObject:_txtName.text forKey:@"nickname"];
     [params setObject:_strTel forKey:@"mobile"];
     [params setObject:_txtCardId.text forKey:@"id_num"];
     [params setObject:_txtPointName.text forKey:@"good_name"];
-    [params setObject:_txtDetailAddress.text forKey:@"address"];
+    [params setObject:address forKey:@"address"];
     [params setObject:[NSString stringWithFormat:@"%f",_location.longitude] forKey:@"long"];
     [params setObject:[NSString stringWithFormat:@"%f",_location.latitude] forKey:@"lat"];
     [params setObject:[GTMBase64 encodeBase64Data:_imgCardFront] forKey:@"front_img"];
@@ -369,11 +372,12 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void) chooseAddress:(AMapGeoPoint *)point withName:(NSString *) name{
+-(void) chooseAddress:(AMapGeoPoint *)point withName:(NSString *) name withAddress:(NSString *)address{
     _location = point;
+    _address = address;
     UIColor *titleColor = [ColorContants userNameFontColor];
     [_btnAddress setTitleColor:titleColor forState:UIControlStateNormal];
-    [_btnAddress setTitle:name forState:UIControlStateNormal];
+    [_btnAddress setTitle:_address forState:UIControlStateNormal];
 }
 
 -(void) backAction{

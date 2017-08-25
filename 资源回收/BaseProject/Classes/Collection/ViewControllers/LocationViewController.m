@@ -166,7 +166,7 @@ UIAlertViewDelegate,AMapSearchDelegate,UITableViewDataSource,UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     AMapPOI *poi = (AMapPOI *) _dataSource[indexPath.row];
     AMapGeoPoint *point = poi.location;
-    [self.delegate chooseAddress:point withName:poi.name];
+    [self.delegate chooseAddress:point withName:poi.name withAddress:poi.address];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
