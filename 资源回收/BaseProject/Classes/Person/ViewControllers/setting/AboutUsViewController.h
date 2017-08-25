@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface AboutUsViewController : UIViewController
+#import "CCBaseViewController.h"
+@interface AboutUsViewController : CCBaseViewController
 @property (weak, nonatomic) IBOutlet UIImageView *aboutUsImg;
 @property (weak, nonatomic) IBOutlet UILabel *versonlabel;
 
