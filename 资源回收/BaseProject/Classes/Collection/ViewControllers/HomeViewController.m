@@ -270,7 +270,7 @@
 {
     GoodsListViewController *newViewController = [[GoodsListViewController alloc] init];
     newViewController.goodListID = ((GoodsModel *)_models[indexPath.row])._id;
-    newViewController.title =  ((GoodsModel *)_models[indexPath.row]).name;
+    newViewController.titleListStr =  ((GoodsModel *)_models[indexPath.row]).name;
     [self.navigationController pushViewController:newViewController animated:YES];
 }
 

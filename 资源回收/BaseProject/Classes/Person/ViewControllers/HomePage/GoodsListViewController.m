@@ -91,7 +91,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 48;
+    return 50;
 }
 
 
@@ -103,6 +103,9 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsTableViewCell" owner:self options:nil] lastObject];
     }
+    UIView *view = [[UIView alloc] initWithFrame:FRAME(0, 49, kScreenW, 1)];
+    view.backgroundColor = [UIColor whiteColor];
+    [cell.contentView addSubview:view];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.TableViewImg sd_setImageWithURL:[NSURL URLWithString:ListArr[indexPath.row][@"img"]] placeholderImage:[UIImage imageNamed:@""]];
     cell.backgroundColor = [UIColor yellowColor];
