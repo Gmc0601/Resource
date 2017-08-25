@@ -21,7 +21,7 @@
     
     self.titleLab.text = @"关于我们";
     self.rightBar.hidden = YES;
-    
+    self.view.backgroundColor = RGBColor(239, 240, 241);
     
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
