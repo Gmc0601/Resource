@@ -11,7 +11,7 @@
 #import <Masonry/Masonry.h>
 
 #import "NearbyTableViewCell.h"
-@interface AbandonGoodsViewController ()<UITableViewDelegate,UITableViewDataSource,PersonPageTableViewDelegate>
+@interface AbandonGoodsViewController ()<UITableViewDelegate,UITableViewDataSource,PersonPageTableViewDelegate, UITextFieldDelegate>
 {
     UITableView *AbandonTableView;
     UIView *TBheadView;
@@ -34,13 +34,13 @@
     GoodsDetailArr = [NSMutableArray new];
     self.title = self.abandanGoosVCTitleStr;
     self.automaticallyAdjustsScrollViewInsets = NO;
-     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"icon_nav_fh"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(clickBackBtn)];
     // Do any additional setup after loading the view.
-
+    
     [self initTableView];
     [self CreateUI];
     [self getGoodsDetailData];
-     AbandonTableView.tableHeaderView = TBheadView;
+    AbandonTableView.tableHeaderView = TBheadView;
 }
 
 
@@ -69,7 +69,7 @@
         }
         NSLog(@"error>>>>%@", error);
     }];
-
+    
 }
 
 
@@ -82,14 +82,14 @@
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 1)];
     [TBheadView addSubview:topView];
     topView.backgroundColor = UIColorFromHex(0xf1f2f2);
-
+    
     
     BottomImgView = [[UIImageView alloc] init];
     BottomImgView.layer.cornerRadius = 5;
     BottomImgView.layer.masksToBounds = YES;
     BottomImgView.frame = CGRectMake(SizeWidth((kScreenW-SizeWidth(355))/2), SizeHeight(15), SizeWidth(355), SizeHeight(308));
     [TBheadView addSubview:BottomImgView];
-//    BottomImgView.image = [UIImage imageNamed:@"53ccb7628f2cd"];
+    //    BottomImgView.image = [UIImage imageNamed:@"53ccb7628f2cd"];
     BottomImgView.userInteractionEnabled = YES;
     
     headImgView = [[UIImageView alloc] init];
@@ -130,7 +130,7 @@
         
     }];
     unitLabel.font = [UIFont systemFontOfSize:15];
-//    unitLabel.text = @"单位(kg):";
+    //    unitLabel.text = @"单位(kg):";
     unitLabel.text = [NSString stringWithFormat:@"单位(%@):",self.abandanGoodUnitStr ];
     
     AmountTF = [[UITextField alloc] init];
@@ -141,6 +141,7 @@
     AmountTF.keyboardType = UIKeyboardTypeDecimalPad;
     [AmountTF setValue:[NSNumber numberWithInt:20] forKey:@"paddingLeft"];
     AmountTF.font = [UIFont systemFontOfSize:14];
+    AmountTF.delegate = self;
     AmountTF.layer.borderColor = UIColorFromHex(0xe0e0e0).CGColor;
     [AmountTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headImgView).offset(SizeWidth(20));
@@ -176,11 +177,11 @@
         make.height.equalTo(@(SizeHeight(13)));
         
     }];
-//    priceLabel.text = @"单价: 0.80元/kg";
+    //    priceLabel.text = @"单价: 0.80元/kg";
     priceLabel.text = [NSString stringWithFormat:@"单价: %@元/%@",self.abandanGoodPriceStr,self.abandanGoodUnitStr];
     NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc] initWithString:priceLabel.text];
     NSRange priceStrRange = NSMakeRange(4, self.abandanGoodPriceStr.length);
-//    [priceStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:priceStrRange];
+    //    [priceStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:priceStrRange];
     [priceStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:priceStrRange];
     priceLabel.attributedText = priceStr;
     
@@ -214,9 +215,38 @@
     [self.navigationController pushViewController:mapVC animated:YES];
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSRange rangeItem = [AmountTF.text rangeOfString:@"."];//判断字符串是否包含
+    
+    if (rangeItem.location!=NSNotFound){
+        if ([string isEqualToString:@"."]) {
+            return NO;
+        }else{
+            //rangeItem.location == 0   说明“.”在第一个位置
+            if (range.location>rangeItem.location+2) {
+                return NO;
+            }
+        }
+    }else{
+        if ([string isEqualToString:@"."]) {
+            if (AmountTF.text.length<1) {
+                AmountTF.text = @"0.";
+                return NO;
+            }
+            return YES;
+        }
+        if (range.location>1) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 
 - (void)calculateMoneyBtnBtn{
     moneyLabel.text = [NSString stringWithFormat:@"￥ %.2f",[self getSumMoney]];
+    NSLog(@"%f", [self getSumMoney]);
     moneyLabel.font = [UIFont systemFontOfSize:24];
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:moneyLabel.text];
     NSRange range = NSMakeRange(0, 1);
@@ -225,8 +255,8 @@
     moneyLabel.attributedText = attString;
 }
 
--(CGFloat) getSumMoney{
-    return floor(AmountTF.text.floatValue * [self.abandanGoodPriceStr floatValue]);
+-(float) getSumMoney{
+    return [AmountTF.text floatValue] * [self.abandanGoodPriceStr floatValue];
 }
 - (void)initTableView{
     AbandonTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH-64) style:UITableViewStylePlain];
@@ -252,15 +282,15 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"NearbyTableViewCell" owner:self options:nil] lastObject];
     }
-
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.personHomePageImage sd_setImageWithURL:[NSURL URLWithString:GoodsDetailArr[indexPath.row][@"good_img"]] placeholderImage:[UIImage imageNamed:@"backGroud"]];
-     cell.personHomePagePhone.text = GoodsDetailArr[indexPath.row][@"mobile"];
+    cell.personHomePagePhone.text = GoodsDetailArr[indexPath.row][@"mobile"];
     cell.personHomePageTitle.text = GoodsDetailArr[indexPath.row][@"good_name"];
     cell.personHomePageAddress.text = GoodsDetailArr[indexPath.row][@"address"];
     cell.personHomePageDistance.text = [NSString stringWithFormat:@"%@ km",GoodsDetailArr[indexPath.row][@"distance"]];
     cell.delegate = self;
-
+    
     return cell;
 }
 
@@ -282,13 +312,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
