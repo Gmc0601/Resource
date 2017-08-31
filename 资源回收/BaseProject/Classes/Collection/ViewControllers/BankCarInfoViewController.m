@@ -12,6 +12,7 @@
 @interface BankCarInfoViewController ()
 @property(retain,atomic) UITextField *txtUserName;
 @property(retain,atomic) UITextField *txtCardNo;
+@property(retain,atomic) UITextField *txtBankName;
 @end
 
 @implementation BankCarInfoViewController
@@ -95,6 +96,33 @@
         make.height.equalTo(@(SizeHeight(1)));
     }];
     
+    
+    
+    UILabel *lblBankName = [[UILabel alloc] init];
+    lblBankName.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    lblBankName.textColor = [ColorContants userNameFontColor];
+    lblBankName.textAlignment = NSTextAlignmentLeft;
+    lblBankName.text = @"开户行名称:";
+    [self.view addSubview:lblBankName];
+    
+    [lblBankName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(border2.mas_bottom).offset(SizeHeight(padding));
+        make.left.equalTo(lblMsg.mas_left);
+        make.width.equalTo(@(SizeWidth(85)));
+        make.height.equalTo(@(SizeHeight(15)));
+    }];
+    
+    UIView *border3 = [UIView new];
+    border3.backgroundColor = [ColorContants otherFontColor];
+    [self.view addSubview:border3];
+    
+    [border3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lblBankName.mas_bottom).offset(SizeHeight(20));
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.width.equalTo(@(SizeWidth(730/2)));
+        make.height.equalTo(@(SizeHeight(1)));
+    }];
+    
     UIButton *btnConfirm = [[UIButton alloc] init];
     btnConfirm.backgroundColor = [ColorContants BlueButtonColor];
     btnConfirm.layer.cornerRadius = SizeHeight(3);
@@ -106,7 +134,7 @@
     
     [self.view addSubview:btnConfirm];
     [btnConfirm mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(border2.mas_bottom).offset(SizeHeight(18));
+        make.top.equalTo(border3.mas_bottom).offset(SizeHeight(18));
         make.centerX.equalTo(self.view.mas_centerX);
         make.width.equalTo(@(SizeWidth(690/2)));
         make.height.equalTo(@(SizeHeight(43)));
@@ -147,13 +175,30 @@
         make.height.equalTo(@(SizeHeight(40)));
     }];
     
+    _txtBankName = [UITextField new];
+    _txtBankName.font = placeHolderFont;
+    _txtBankName.textColor = [ColorContants kitingFontColor];
+    NSAttributedString *str2 = [[NSAttributedString alloc] initWithString:@"请填写开户行名称" attributes:@{ NSForegroundColorAttributeName : placeHolderColor,NSFontAttributeName:placeHolderFont}];
+
+    _txtBankName.attributedPlaceholder = str2;
+    
+    [self.view addSubview:_txtBankName];
+    
+    [_txtBankName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(lblBankName.mas_centerY);
+        make.left.equalTo(lblBankName.mas_right).offset(SizeWidth(5));
+        make.right.equalTo(border2.mas_right);
+        make.height.equalTo(@(SizeHeight(40)));
+    }];
+    
     _txtCardNo.text = _model.cardNumber;
     _txtUserName.text = _model.userName;
+    _txtBankName.text = _model.bankName;
 }
 
 -(void) tapConfirmButton{
     
-    if ([_txtCardNo isEqual:@""]){
+    if ([_txtCardNo.text isEqual:@""]){
         [ConfigModel mbProgressHUD:@"请输入持卡人姓名" andView:self.view];
         
         return;
@@ -169,17 +214,23 @@
         return;
     }
     
+    if ([_txtBankName.text isEqual:@""]){
+        [ConfigModel mbProgressHUD:@"请输入开户行名称" andView:self.view];
+        
+        return;
+    }
+    
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
     [params setObject:_txtCardNo.text forKey:@"banknumber"];
+    [params setObject:_txtBankName.text forKey:@"bank_name"];
     [params setObject:_txtUserName.text forKey:@"real_name"];
     [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_boundcard_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
-        NSString *info = datadic[@"info"];
         
         if ([datadic[@"error"] intValue] == 0) {
             [ConfigModel mbProgressHUD:@"提交成功！" andView:nil];

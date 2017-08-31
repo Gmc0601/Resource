@@ -391,7 +391,7 @@
             
             if (infoDic[@"banknumber"] != nil && [infoDic[@"type"]  isEqual: @"1"]) {
                 _bankCard = [BankCardModel new];
-                _bankCard.bankName = infoDic[@"real_name"];
+                _bankCard.bankName = infoDic[@"bank_name"];
                 _bankCard.cardNumber = infoDic[@"banknumber"];
                 _bankCard.userName = infoDic[@"real_name"];
                 [_collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]]];
