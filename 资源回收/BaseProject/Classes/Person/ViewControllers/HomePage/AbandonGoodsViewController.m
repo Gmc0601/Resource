@@ -216,28 +216,27 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSRange rangeItem = [AmountTF.text rangeOfString:@"."];//判断字符串是否包含
     
-    if (rangeItem.location!=NSNotFound){
-        if ([string isEqualToString:@"."]) {
-            return NO;
-        }else{
-            //rangeItem.location == 0   说明“.”在第一个位置
-            if (range.location>rangeItem.location+2) {
+    NSMutableString *futureString = [NSMutableString stringWithString:textField.text];
+    [futureString insertString:string atIndex:range.location];
+    
+    NSInteger flag = 0;
+    // 这个可以自定义,保留到小数点后两位,后几位都可以
+    const NSInteger limited = 2;
+    
+    for (NSInteger i = futureString.length - 1; i >= 0; i--) {
+        
+        if ([futureString characterAtIndex:i] == '.') {
+            // 如果大于了限制的就提示
+            if (flag > limited) {
+                [ConfigModel mbProgressHUD:@"输入金额请控制在小数点后两位" andView:self.view];
                 return NO;
             }
+            
+            break;
         }
-    }else{
-        if ([string isEqualToString:@"."]) {
-            if (AmountTF.text.length<1) {
-                AmountTF.text = @"0.";
-                return NO;
-            }
-            return YES;
-        }
-        if (range.location>1) {
-            return NO;
-        }
+        
+        flag++;
     }
     
     return YES;
