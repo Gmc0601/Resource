@@ -95,6 +95,9 @@
                 model.goodsName = dict[@"good_name"];
                 model.date = (NSDate *)dict[@"create_time"];
                 model.type = dict[@"type"] ;
+                if([model.type isEqualToString:@"订购"]){
+                    model.integral = @"";
+                }
                 [_models addObject:model];
             }
             [_models sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
