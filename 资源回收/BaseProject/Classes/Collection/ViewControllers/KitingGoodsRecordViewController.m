@@ -94,7 +94,7 @@
                 model.integral = [NSString stringWithFormat:@"-%@",  dict[@"amount"]];
                 model.goodsName = dict[@"good_name"];
                 model.date = (NSDate *)dict[@"create_time"];
-                model.type = @"兑换";
+                model.type = dict[@"type"] ;
                 [_models addObject:model];
             }
             [_models sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {

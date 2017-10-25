@@ -13,10 +13,13 @@
 #import "PublicClass.h"
 #import "KitingGoodsRecordViewController.h"
 #import <PopupDialog/PopupDialog-Swift.h>
-@interface KitingGoodsViewController ()
+#import "SelectKittingTypeViewController.h"
+
+@interface KitingGoodsViewController ()<SelectKittingTypeViewControllerDelegate>
 @property(retain,atomic) NSMutableArray *models;
 @property(retain,atomic) UILabel *lblIntergal;
 @property(retain,atomic)  UICollectionView *collectionView;
+@property(retain,atomic)  NSString *type;
 @end
 
 @implementation KitingGoodsViewController
@@ -27,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavTitle:@"积分兑换"];
+    _type = @"kit";
     [self addCollectionView];
     _models = [NSMutableArray arrayWithCapacity:0];
     [PublicClass setRightTitleOnTargetNav:self action:@selector(gotoRecord) Title:@"兑换记录"];
@@ -58,19 +62,26 @@
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    _type = @"kit";
     KitingGoodsModel *mode = _models[indexPath.row];
-    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@""
-                                                    message:@"兑换会减掉相应的积分哟\n确定兑换码？"
-                                                      image:nil
-                                            buttonAlignment:UILayoutConstraintAxisHorizontal
-                                            transitionStyle:PopupDialogTransitionStyleBounceUp
-                                           gestureDismissal:YES
-                                                 completion:nil];
-
-    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
+//    SelectKittingTypeViewController *newVC = [[SelectKittingTypeViewController alloc] initWithModel:mode];
     
-    popupViewController.messageColor = [ColorContants userNameFontColor];
-    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SelectKittingTypeViewController *newVC = (SelectKittingTypeViewController *)[story instantiateViewControllerWithIdentifier:@"SelectKittingType"];
+    newVC.delegate = self;
+    PopupDialog *popup = [[PopupDialog alloc] initWithViewController:newVC buttonAlignment:UILayoutConstraintAxisHorizontal transitionStyle:PopupDialogTransitionStyleBounceUp gestureDismissal:YES completion:nil];
+//    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@""
+//                                                    message:@"兑换会减掉相应的积分哟\n确定兑换码？"
+//                                                      image:nil
+//                                            buttonAlignment:UILayoutConstraintAxisHorizontal
+//                                            transitionStyle:PopupDialogTransitionStyleBounceUp
+//                                           gestureDismissal:YES
+//                                                 completion:nil];
+
+//    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
+//
+//    popupViewController.messageColor = [ColorContants userNameFontColor];
+//    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
     
     
     CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{
@@ -79,7 +90,7 @@
         }];
     }];
     
-    cancel.titleColor = popupViewController.titleColor;
+//    cancel.titleColor = popupViewController.titleColor;
     
     DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"确认" height:50 dismissOnTap:NO action:^{
         [self kiting:mode];
@@ -88,7 +99,7 @@
         }];
     }];
     
-    ok.titleColor = popupViewController.titleColor;
+//    ok.titleColor = popupViewController.titleColor;
     
     [popup addButtons: @[cancel,ok]];
     
@@ -101,6 +112,10 @@
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
     [params setObject:userTokenStr forKey:@"userToken"];
     [params setObject:model._id forKey:@"id"];
+    [params setObject:@"1" forKey:@"good_type"];
+    if([@"buy" isEqualToString:_type]){
+        [params setObject:@"2" forKey:@"good_type"];
+    }
     [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_exchangegood_001" params:params resultBlock:^(id responseObject, NSError *error) {
@@ -109,8 +124,10 @@
         NSString *info = datadic[@"info"];
         
         if ([datadic[@"error"] intValue] == 0) {
-            self.integral = self.integral - model.needIntergal.intValue;
-            _lblIntergal.text = [NSString stringWithFormat:@"%d",self.integral];
+            if(![@"buy" isEqualToString:_type]){
+                self.integral = self.integral - model.needIntergal.intValue;
+                _lblIntergal.text = [NSString stringWithFormat:@"%d",self.integral];
+            }
             [ConfigModel mbProgressHUD:@"操作成功" andView:self.view];
         }else{
             [ConfigModel mbProgressHUD:@"积分不够" andView:self.view];
@@ -252,4 +269,10 @@
     }];
 }
 
+-(void) didChangeType:(NSString *)type{
+    _type = type;
+}
+
 @end
+
+

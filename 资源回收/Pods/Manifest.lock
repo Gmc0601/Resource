@@ -34,6 +34,7 @@ PODS:
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - TNRadioButtonGroup (0.4)
   - UIImage-ResizeMagick (0.0.1)
   - UMengUShare/Core (6.4.0):
     - UMengUShare/Network
@@ -60,6 +61,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - PopupDialog (~> 0.5)
   - SDWebImage
+  - TNRadioButtonGroup
   - UIImage-ResizeMagick
   - UMengUShare/Social/ReducedQQ
   - UMengUShare/Social/ReducedWeChat
@@ -80,10 +82,11 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  TNRadioButtonGroup: f5fb9b545d8913bbabe6a72ea1fa6fba4d833bb6
   UIImage-ResizeMagick: f08c2d14d1e8a5f0b402185408785540562f2fe7
   UMengUShare: 83f849f356db0db9f18488cfbc2055a20b150481
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 4e7b4a753e9c09fb9ae15ab1b74e159ae20d6fcc
+PODFILE CHECKSUM: b37a383179a71081faf16fd9d1ca0284d4a510d9
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1.beta.1

@@ -82,6 +82,7 @@
 		6B12E48B1F2B8B48008C4A3F /* IntegralCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E48A1F2B8B48008C4A3F /* IntegralCell.m */; };
 		6B12E48E1F2B8D45008C4A3F /* IntegralHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E48D1F2B8D45008C4A3F /* IntegralHeaderCell.m */; };
 		6B12E4911F2B941F008C4A3F /* IntegralRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B12E4901F2B941F008C4A3F /* IntegralRecordModel.m */; };
+		6B27EA5D1F9F5B4200EA09F3 /* SelectKittingTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B27EA5C1F9F5B4200EA09F3 /* SelectKittingTypeViewController.m */; };
 		6B5900071F2A4C7100874676 /* RecycleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */; };
 		6B88760E1F2F68BE00EF5E4F /* RegisterInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B88760D1F2F68BE00EF5E4F /* RegisterInfoViewController.m */; };
 		6B8F8D891F29BCEF00F413F2 /* GoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8F8D881F29BCEF00F413F2 /* GoodsModel.m */; };
@@ -297,6 +298,8 @@
 		6B12E48D1F2B8D45008C4A3F /* IntegralHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegralHeaderCell.m; sourceTree = "<group>"; };
 		6B12E48F1F2B941F008C4A3F /* IntegralRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegralRecordModel.h; sourceTree = "<group>"; };
 		6B12E4901F2B941F008C4A3F /* IntegralRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegralRecordModel.m; sourceTree = "<group>"; };
+		6B27EA5B1F9F5B4200EA09F3 /* SelectKittingTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectKittingTypeViewController.h; sourceTree = "<group>"; };
+		6B27EA5C1F9F5B4200EA09F3 /* SelectKittingTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectKittingTypeViewController.m; sourceTree = "<group>"; };
 		6B5900051F2A4C7100874676 /* RecycleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecycleDetailViewController.h; sourceTree = "<group>"; };
 		6B5900061F2A4C7100874676 /* RecycleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecycleDetailViewController.m; sourceTree = "<group>"; };
 		6B88760C1F2F68BE00EF5E4F /* RegisterInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterInfoViewController.h; sourceTree = "<group>"; };
@@ -813,6 +816,8 @@
 				6B01663C1F2E38CC002071E2 /* KitingGoodsRecordViewController.m */,
 				6B0166441F2E3EFC002071E2 /* SendIntegralViewController.h */,
 				6B0166451F2E3EFC002071E2 /* SendIntegralViewController.m */,
+				6B27EA5B1F9F5B4200EA09F3 /* SelectKittingTypeViewController.h */,
+				6B27EA5C1F9F5B4200EA09F3 /* SelectKittingTypeViewController.m */,
 			);
 			name = Integral;
 			sourceTree = "<group>";
@@ -1048,7 +1053,7 @@
 				TargetAttributes = {
 					42A4442C1EF133E000F90791 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 5XW4L96Z63;
+						DevelopmentTeam = JS5UW5ZZU7;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1141,7 +1146,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		133526D14F1C236D4D0AF02F /* [CP] Copy Pods Resources */ = {
@@ -1250,6 +1255,7 @@
 				42C84F001EF2E97D0008189D /* NSMutableAttributedString+Category.m in Sources */,
 				CA1A01E91F31DA2500C88313 /* CDZPicker.m in Sources */,
 				42C84F0B1EF2E97D0008189D /* UIMenuItem+Category.m in Sources */,
+				6B27EA5D1F9F5B4200EA09F3 /* SelectKittingTypeViewController.m in Sources */,
 				CA1A01F41F31DA2500C88313 /* fixPhoneViewController.m in Sources */,
 				6BBCE7DE1F262F0F006B6DA4 /* HomeViewController.m in Sources */,
 				42C84EB61EF2DCBC0008189D /* ConfigModel.m in Sources */,
@@ -1436,7 +1442,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5XW4L96Z63;
+				DEVELOPMENT_TEAM = JS5UW5ZZU7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1444,9 +1450,9 @@
 				);
 				GCC_PREFIX_HEADER = BaseProject/Main/Header.pch;
 				INFOPLIST_FILE = BaseProject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.BaseProject..app;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.BaseProject.app1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1461,7 +1467,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5XW4L96Z63;
+				DEVELOPMENT_TEAM = JS5UW5ZZU7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1469,9 +1475,9 @@
 				);
 				GCC_PREFIX_HEADER = BaseProject/Main/Header.pch;
 				INFOPLIST_FILE = BaseProject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.BaseProject..app;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.BaseProject.app1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
