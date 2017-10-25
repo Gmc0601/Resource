@@ -64,24 +64,11 @@
 {
     _type = @"kit";
     KitingGoodsModel *mode = _models[indexPath.row];
-//    SelectKittingTypeViewController *newVC = [[SelectKittingTypeViewController alloc] initWithModel:mode];
     
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SelectKittingTypeViewController *newVC = (SelectKittingTypeViewController *)[story instantiateViewControllerWithIdentifier:@"SelectKittingType"];
     newVC.delegate = self;
     PopupDialog *popup = [[PopupDialog alloc] initWithViewController:newVC buttonAlignment:UILayoutConstraintAxisHorizontal transitionStyle:PopupDialogTransitionStyleBounceUp gestureDismissal:YES completion:nil];
-//    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:@""
-//                                                    message:@"兑换会减掉相应的积分哟\n确定兑换码？"
-//                                                      image:nil
-//                                            buttonAlignment:UILayoutConstraintAxisHorizontal
-//                                            transitionStyle:PopupDialogTransitionStyleBounceUp
-//                                           gestureDismissal:YES
-//                                                 completion:nil];
-
-//    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
-//
-//    popupViewController.messageColor = [ColorContants userNameFontColor];
-//    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
     
     
     CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{

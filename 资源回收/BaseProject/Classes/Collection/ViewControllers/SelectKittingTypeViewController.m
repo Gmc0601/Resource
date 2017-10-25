@@ -14,14 +14,11 @@
 @interface SelectKittingTypeViewController ()
 @property (weak, nonatomic) IBOutlet UIView *container;
 @property (retain, atomic) TNRadioButtonGroup *myGroup;
+@property (retain, atomic) UIView *kitting;
+@property (retain, atomic) UIView *buy;
 @end
 
 @implementation SelectKittingTypeViewController
-
--(void) viewWillDisappear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SELECTED_RADIO_BUTTON_CHANGED object:self.myGroup];
-
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,15 +49,34 @@
         make.height.equalTo(@(SizeHeight(16)));
     }];
     
+    UIView *kittingView = [UIView new];
+    [self.container addSubview:kittingView];
+    [kittingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.container.mas_left).offset(SizeWidth(20));
+        make.top.equalTo(lbl.mas_bottom).offset(SizeHeight(25));
+        make.height.equalTo(@(SizeHeight(38)));
+        make.right.equalTo(self.container.mas_right).offset(-SizeWidth(20));
+    }];
+    
+    UIView *bugView = [UIView new];
+    [self.container addSubview:bugView];
+    [bugView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.container.mas_left).offset(SizeWidth(20));
+        make.top.equalTo(kittingView.mas_bottom).offset(SizeHeight(10));
+        make.height.equalTo(@(SizeHeight(38)));
+        make.right.equalTo(self.container.mas_right).offset(-SizeWidth(20));
+    }];
+    
+    
     UILabel *lbl1 = [UILabel new];
     lbl1.text = @"积分兑换";
     lbl1.textAlignment = NSTextAlignmentLeft;
     lbl1.textColor = [ColorContants userNameFontColor];
     lbl1.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(16)];
-    [self.container addSubview:lbl1];
+    [kittingView addSubview:lbl1];
     [lbl1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.container.mas_left).offset(SizeWidth(20));
-        make.top.equalTo(lbl.mas_bottom).offset(SizeHeight(25));
+        make.left.equalTo(kittingView.mas_left);
+        make.top.equalTo(kittingView);
         make.height.equalTo(@(SizeHeight(20)));
         make.width.equalTo(@(SizeWidth(100)));
     }];
@@ -70,7 +86,7 @@
     lbl2.textAlignment = NSTextAlignmentLeft;
     lbl2.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
     lbl2.textColor = [ColorContants integralWhereFontColor];
-    [self.container addSubview:lbl2];
+    [kittingView addSubview:lbl2];
     [lbl2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(lbl1.mas_left);
         make.top.equalTo(lbl1.mas_bottom);
@@ -83,11 +99,11 @@
     lbl3.font = lbl1.font;
     lbl3.textColor = lbl1.textColor;
     lbl3.textAlignment = NSTextAlignmentLeft;
-    [self.container addSubview:lbl3];
+    [bugView addSubview:lbl3];
     [lbl3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(lbl1.mas_left);
-        make.top.equalTo(lbl2.mas_bottom).offset(SizeHeight(15));
-        make.height.equalTo(@(SizeHeight(16)));
+        make.left.equalTo(bugView.mas_left);
+        make.top.equalTo(bugView);
+        make.height.equalTo(@(SizeHeight(20)));
         make.width.equalTo(@(SizeWidth(100)));
     }];
     
@@ -96,49 +112,59 @@
     lbl4.font =  lbl2.font;
     lbl4.textColor =  lbl2.textColor;
     lbl4.textAlignment = NSTextAlignmentLeft;
-    [self.container addSubview:lbl4];
+    [bugView addSubview:lbl4];
     [lbl4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(lbl1.mas_left);
+        make.left.equalTo(lbl3.mas_left);
         make.top.equalTo(lbl3.mas_bottom);
-        make.height.equalTo(@(SizeHeight(12)));
+        make.height.equalTo(@(SizeHeight(14)));
         make.width.equalTo(@(SizeWidth(150)));
-    }];
-    
-    TNCircularRadioButtonData *kitData = [TNCircularRadioButtonData new];
-    kitData.identifier = @"kit";
-    kitData.selected = YES;
-    kitData.borderRadius = 15;
-    kitData.circleRadius = 15;
-    
-    
-    TNCircularRadioButtonData *buyData = [TNCircularRadioButtonData new];
-    buyData.identifier = @"buy";
-    buyData.selected = NO;
-    buyData.borderRadius = 15;
-    buyData.circleRadius = 15;
-    
-    _myGroup = [[TNRadioButtonGroup alloc] initWithRadioButtonData:@[kitData, buyData] layout:TNRadioButtonGroupLayoutVertical];
-    _myGroup.identifier = @"my group";
-    _myGroup.marginBetweenItems = 30;
 
-    [_myGroup create];
-    [self.container addSubview:_myGroup];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sexGroupUpdated:) name:SELECTED_RADIO_BUTTON_CHANGED object:_myGroup];
-    
-    [_myGroup update];
-    
-    
-    [_myGroup mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.container).offset(-SizeWidth(20));
-        make.top.equalTo(lbl1.mas_top).offset(SizeHeight(5));
-        make.height.equalTo(@(SizeHeight(70)));
-        make.width.equalTo(@(SizeWidth(15)));
     }];
+    
+    _kitting = [UIView new];
+    _kitting.backgroundColor = [UIColor blackColor];
+    _kitting.layer.borderWidth = 3;
+    _kitting.layer.cornerRadius = 10;
+    [kittingView addSubview:_kitting];
+    [_kitting mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(kittingView.mas_right);
+        make.centerY.equalTo(kittingView);
+        make.height.equalTo(@(SizeHeight(20)));
+        make.width.equalTo(@(SizeWidth(20)));
+    }];
+    
+    _buy = [UIView new];
+    _buy.backgroundColor = [UIColor whiteColor];
+    _buy.layer.borderWidth = 3;
+    _buy.layer.cornerRadius = 10;
+    [bugView addSubview:_buy];
+    [_buy mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(bugView.mas_right);
+        make.centerY.equalTo(bugView);
+        make.height.equalTo(@(SizeHeight(20)));
+        make.width.equalTo(@(SizeWidth(20)));
+    }];
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapKitting)];
+    kittingView.userInteractionEnabled = YES;
+    [kittingView addGestureRecognizer:tap1];
+    
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBuy)];
+    bugView.userInteractionEnabled = YES;
+    [bugView addGestureRecognizer:tap2];
+   
 }
 
-- (void)sexGroupUpdated:(NSNotification *)notification {
-    [self.delegate didChangeType:_myGroup.selectedRadioButton.data.identifier];
+-(void) tapKitting{
+    _kitting.backgroundColor = [UIColor blackColor];
+    _buy.backgroundColor = [UIColor whiteColor];
+    [self.delegate didChangeType:@"kit"];
+}
+
+-(void) tapBuy{
+    _kitting.backgroundColor = [UIColor whiteColor];
+    _buy.backgroundColor = [UIColor blackColor];
+    [self.delegate didChangeType:@"buy"];
+
 }
 
 @end
