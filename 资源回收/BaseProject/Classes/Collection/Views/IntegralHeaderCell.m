@@ -35,24 +35,24 @@
     CGFloat cornerRadius = SizeHeight(33/2);
     
     
-    UIButton *btnConvert = [UIButton new];
-    [btnConvert setTitle:@"兑换" forState:UIControlStateNormal];
-    [btnConvert setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
-    btnConvert.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
-    btnConvert.titleLabel.textAlignment = NSTextAlignmentCenter;
-    btnConvert.layer.borderColor = [ColorContants silverColor].CGColor;
-    btnConvert.layer.borderWidth = SizeHeight(1);
-    btnConvert.layer.cornerRadius = SizeHeight(cornerRadius);
-    
-    [btnConvert addTarget:self action:@selector(tapConvertButton) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:btnConvert];
-    
-    [btnConvert mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.mas_bottom).offset(SizeHeight(-27));
-        make.centerX.equalTo(self.mas_centerX).offset(0);
-        make.width.equalTo(@(SizeWidth(100)));
-        make.height.equalTo(@(SizeHeight(33)));
-    }];
+//    UIButton *btnConvert = [UIButton new];
+//    [btnConvert setTitle:@"兑换" forState:UIControlStateNormal];
+//    [btnConvert setTitleColor:[ColorContants whiteFontColor] forState:UIControlStateNormal];
+//    btnConvert.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+//    btnConvert.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    btnConvert.layer.borderColor = [ColorContants silverColor].CGColor;
+//    btnConvert.layer.borderWidth = SizeHeight(1);
+//    btnConvert.layer.cornerRadius = SizeHeight(cornerRadius);
+//    
+//    [btnConvert addTarget:self action:@selector(tapConvertButton) forControlEvents:UIControlEventTouchUpInside];
+//    [self addSubview:btnConvert];
+//    
+//    [btnConvert mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.mas_bottom).offset(SizeHeight(-27));
+//        make.centerX.equalTo(self.mas_centerX).offset(0);
+//        make.width.equalTo(@(SizeWidth(100)));
+//        make.height.equalTo(@(SizeHeight(33)));
+//    }];
     
     UIButton *btnKitting = [UIButton new];
     [btnKitting setTitle:@"提现" forState:UIControlStateNormal];
@@ -67,8 +67,8 @@
     [self addSubview:btnKitting];
     
     [btnKitting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(btnConvert.mas_centerY).offset(0);
-        make.right.equalTo(btnConvert.mas_left).offset(SizeWidth(-20));
+        make.bottom.equalTo(self.mas_bottom).offset(SizeHeight(-27));
+        make.right.equalTo(self.mas_centerX).offset(SizeWidth(-23));
         make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(@(SizeHeight(33)));
     }];
@@ -86,8 +86,8 @@
     [self addSubview:btnSend];
     
     [btnSend mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(btnConvert.mas_centerY).offset(0);
-        make.left.equalTo(btnConvert.mas_right).offset(SizeWidth(20));
+        make.centerY.equalTo(btnKitting.mas_centerY).offset(0);
+        make.left.equalTo(self.mas_centerX).offset(SizeWidth(23));
         make.width.equalTo(@(SizeWidth(100)));
         make.height.equalTo(@(SizeHeight(33)));
     }];
@@ -102,7 +102,7 @@
     
     [_lblIntegral mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX).offset(0);
-        make.bottom.equalTo(btnConvert.mas_top).offset(SizeHeight(-41));
+        make.bottom.equalTo(btnKitting.mas_top).offset(SizeHeight(-41));
         make.width.equalTo(self);
         make.height.equalTo(@(SizeHeight(50)));
     }];

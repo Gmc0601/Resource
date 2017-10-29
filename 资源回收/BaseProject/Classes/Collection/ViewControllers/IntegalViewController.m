@@ -15,7 +15,7 @@
 #include "PublicClass.h"
 #import "KitingGoodsViewController.h"
 #import "SendIntegralViewController.h"
-
+#import "KitingGoodsRecordViewController.h"
 @interface IntegalViewController ()
 @property(retain,atomic) NSMutableArray *models;
 @property(retain,atomic)  UITableView *tb;
@@ -41,7 +41,10 @@
 
     _models = [NSMutableArray arrayWithCapacity:0];
     [self.navigationItem setLeftBarButtonItem:nil];
-    [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];}
+    [PublicClass setLeftButtonItemOnTargetNav:self action:@selector(backAction) image:[UIImage imageNamed:@"icon_nav_fhb.png"]];
+
+      [PublicClass setRightTitleOnTargetNav:self action:@selector(gotoRecord) Title:@"兑换记录"];
+}
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -288,5 +291,10 @@
     [self loadData:_type];
 }
 
+-(void) gotoRecord{
+    KitingGoodsRecordViewController *newViewController = [KitingGoodsRecordViewController new];
+    
+    [self.navigationController pushViewController:newViewController animated:YES];
+}
 
 @end

@@ -23,8 +23,9 @@
 #import "MessageViewController.h"
 #import "SettingViewController.h"
 #import "PersonMessageViewController.h"
+#import "KitingGoodCell.h"
 
-@interface HomeViewController ()
+@interface HomeViewController ()<KitingGoodCellDelegate>
 @property(retain,atomic) NSMutableArray *models;
 @property(retain,atomic) UILabel *lblIntegral;
 @property(retain,atomic) UILabel *lblName;
@@ -37,6 +38,10 @@
 @property(retain,atomic) UserModel *user;
 @property(retain,atomic) NSString *strTel;
 @property(retain,atomic) NSString *weight;
+@property(retain,atomic)  UIButton *btnRecycle;
+@property(retain,atomic)  UIButton *btnOrderAndKitting;
+@property(retain,atomic)  UIView *blueBorder;
+@property(assign,atomic)  BOOL isKitting;
 @end
 
 @implementation HomeViewController
@@ -50,12 +55,16 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getTelNum];
-    [self loadData];
+    if (_isKitting) {
+        [self loadKitingGoodsList];
+    }else{
+        [self loadRecycleData];
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBar.translucent = YES;
+    //    self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.hidden = YES;
 }
 
@@ -105,40 +114,21 @@
         return 0;
     }
     
-    
-    
     return _models.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
-//    if(_models.count > 0 && (indexPath.row + 1) <= _models.count){
+    if (_isKitting) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"kittingGoodCell" forIndexPath:indexPath];
+        ((KitingGoodCell *) cell).model = _models[indexPath.row];
+        ((KitingGoodCell *) cell).delegate = self;
+    }else{
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
         [self setCell:cell withMode:_models[indexPath.row]];
-//    }else{
-//        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"otherCell" forIndexPath:indexPath];
-//        
-//        int tag = 30011;
-//        cell.backgroundColor = [ColorContants gray];
-//        if ([cell viewWithTag:tag] == nil) {
-//            UILabel *lblName = [[UILabel alloc] init];
-//            lblName.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
-//            lblName.textColor = [ColorContants otherFontColor];
-//            lblName.textAlignment = NSTextAlignmentCenter;
-//            lblName.text = @"其他";
-//            lblName.tag = tag;
-//            [cell addSubview:lblName];
-//            
-//            [lblName mas_makeConstraints:^(MASConstraintMaker *make) {
-//                CGFloat height = SizeHeight(15);
-//                make.width.equalTo(cell.mas_width);
-//                make.height.equalTo(@(height));
-//                make.centerY.equalTo(cell.mas_centerY);
-//                make.left.equalTo(cell.mas_left);
-//            }];
-//
-//        }
-//    }
+        
+    }
+    
     
     return cell;
 }
@@ -190,13 +180,13 @@
 
 -(void) addCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(SizeWidth(113), SizeHeight(113));
     
-    layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
+    layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 23));
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"otherCell"];
+    [_collectionView registerClass:[KitingGoodCell class] forCellWithReuseIdentifier:@"kittingGoodCell"];
+    
     [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header1"];
     
     [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2"];
@@ -209,6 +199,14 @@
     [self.view addSubview:self.collectionView];
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (_isKitting) {
+        return CGSizeMake(SizeWidth(338/2), SizeHeight(222));
+    }else{
+        return CGSizeMake(SizeWidth(113), SizeHeight(113));
+    }
+}
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionReusableView *headerView;
@@ -219,34 +217,78 @@
             headerView.backgroundColor = [ColorContants gray];
             [self setHeaderView:headerView];
         }
-    }else{
-        headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2" forIndexPath:indexPath];
-        headerView.backgroundColor = [UIColor whiteColor];
-        if (headerView.subviews.count == 0) {
-            UILabel *lblTitile = [[UILabel alloc] init];
-            lblTitile.text = @"回收商品种类";
-            lblTitile.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
-            lblTitile.textColor = [ColorContants userNameFontColor];
-            headerView.backgroundColor = self.collectionView.backgroundColor;
-            [headerView addSubview:lblTitile];
-            
-            [lblTitile mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(headerView.mas_left).offset(SizeWidth(16));
-                make.top.equalTo(headerView.mas_top).offset(SizeHeight(15));
-                make.bottom.equalTo(headerView.mas_bottom).offset(SizeHeight(-15));
-                make.right.equalTo(headerView.mas_right).offset(0);
-            }];
-        }
+        
+        return headerView;
     }
     
-    return headerView;
+    UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header2" forIndexPath:indexPath];
+    header.backgroundColor = [UIColor whiteColor];
+    
+    if (header.subviews.count > 1) {
+        return header;
+    }
+    
+    header.backgroundColor = [ColorContants gray];
+    CGFloat width = SizeWidth(139);
+    CGFloat margin = SizeWidth(87.5);
+    
+    _btnRecycle = [[UIButton alloc]init];
+    [_btnRecycle setTitle:@"回收再生资源区" forState:UIControlStateNormal];
+    [_btnRecycle setTitleColor:[ColorContants phoneNumerFontColor] forState:UIControlStateNormal] ;
+//    [_btnRecycle setTitleColor:[ColorContants BlueFontColor] forState:UIControlStateSelected];
+    _btnRecycle.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    _btnRecycle.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [_btnRecycle addTarget:self action:@selector(tapRecycleButton) forControlEvents:UIControlEventTouchUpInside];
+    [_btnRecycle setSelected:YES];
+    [header addSubview:_btnRecycle];
+    
+    [_btnRecycle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(header.mas_centerY);
+        make.centerX.equalTo(header.mas_centerX).offset(-margin);
+        make.height.equalTo(header.mas_height);
+        make.width.equalTo(@(width));
+    }];
+    
+    _btnOrderAndKitting = [[UIButton alloc]init];
+    [_btnOrderAndKitting setTitle:@"订购兑换区" forState:UIControlStateNormal];
+    [_btnOrderAndKitting setTitleColor:[ColorContants phoneNumerFontColor] forState:UIControlStateNormal] ;
+//    [_btnOrderAndKitting setTitleColor:[ColorContants BlueFontColor] forState:UIControlStateSelected];
+    _btnOrderAndKitting.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:15];
+    _btnOrderAndKitting.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [_btnOrderAndKitting addTarget:self action:@selector(tapOrderAndKittingButton) forControlEvents:UIControlEventTouchUpInside];
+    [header addSubview:_btnOrderAndKitting];
+    
+    [_btnOrderAndKitting mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(header.mas_centerY);
+        make.centerX.equalTo(header.mas_centerX).offset(margin);
+        make.height.equalTo(header.mas_height);
+        make.width.equalTo(@(width));
+    }];
+    
+    UIView *border = [[UIView alloc] init];
+    border.backgroundColor = [ColorContants integralSeperatorColor];
+    [header addSubview:border];
+    
+    [border mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(header.mas_left);
+        make.right.equalTo(header.mas_right);
+        make.bottom.equalTo(header.mas_bottom);
+        make.height.equalTo(@1);
+    }];
+    
+    _blueBorder = [[UIView alloc] init];
+    _blueBorder.backgroundColor = [ColorContants BlueFontColor];
+    [header addSubview:_blueBorder];
+    _blueBorder.frame = CGRectMake(0, 0, SizeWidth(278/2), SizeHeight(1.5));
+    _blueBorder.center = CGPointMake(self.view.center.x - margin, SizeHeight(42)-SizeHeight(0));
+    return header;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return CGSizeMake(self.view.bounds.size.width, SizeHeight(538/2 + 10));
     }else{
-        return CGSizeMake(self.view.bounds.size.width, SizeHeight(40));;
+        return CGSizeMake(self.view.bounds.size.width, SizeHeight(53));;
     }
 }
 
@@ -268,6 +310,10 @@
 //点击item方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_isKitting) {
+        return;
+    }
+    
     GoodsListViewController *newViewController = [[GoodsListViewController alloc] init];
     newViewController.goodListID = ((GoodsModel *)_models[indexPath.row])._id;
     newViewController.titleListStr =  ((GoodsModel *)_models[indexPath.row]).name;
@@ -391,10 +437,6 @@
     [_lblIntegral sizeToFit];
 }
 
--(void) addGoodsList{
-    
-}
-
 -(void) tapMessageButton{
     MessageViewController *personMessVC = [[MessageViewController alloc ] init];
     [self.navigationController pushViewController:personMessVC animated:YES];
@@ -404,10 +446,6 @@
     SettingViewController  *setVC = [[SettingViewController alloc] init];
     setVC.from = Home_Setting;
     [self.navigationController pushViewController:setVC animated:YES];
-}
-
--(void) tapCheckButton{
-    
 }
 
 -(void) showCallView{
@@ -449,17 +487,17 @@
     }
 }
 
--(void) loadData{
+-(void) loadRecycleData{
     NSMutableDictionary *params = [NSMutableDictionary new];
-//    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
-//    [params setObject:userTokenStr forKey:@"userToken"];
+    //    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    //    [params setObject:userTokenStr forKey:@"userToken"];
     [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_homepage_001" params:params resultBlock:^(id responseObject, NSError *error) {
         [ConfigModel hideHud:self];
         NSDictionary *datadic = responseObject;
         _models = [NSMutableArray arrayWithCapacity:0];
-
+        
         if ([datadic[@"error"] intValue] == 0) {
             NSDictionary *infoDic = responseObject[@"info"];
             NSDictionary *userInfo = infoDic[@"userinfo"];
@@ -554,6 +592,143 @@
             [ConfigModel mbProgressHUD:info andView:nil];
         }
         NSLog(@"error>>>>%@", error);
+    }];
+}
+
+-(void) tapRecycleButton{
+    _isKitting = NO;
+    [_btnRecycle setSelected:YES];
+    [_btnOrderAndKitting setSelected:NO];
+    [self addConstraintsForHightlight:_btnRecycle];
+    [self loadRecycleData];
+}
+
+-(void) tapOrderAndKittingButton{
+    _isKitting = YES;
+    [_btnRecycle setSelected:NO];
+    [_btnOrderAndKitting setSelected:YES];
+    [self addConstraintsForHightlight:_btnOrderAndKitting];
+    [self loadKitingGoodsList];
+}
+
+
+-(void) addConstraintsForHightlight:(UIView *) center{
+    _blueBorder.center = CGPointMake(center.center.x, center.superview.bounds.size.height-SizeHeight(13));
+}
+
+-(void) loadKitingGoodsList{
+    [ConfigModel showHud:self];
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    
+    [HttpRequest postPath:@"_exchangegoodlist_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        _models = [NSMutableArray arrayWithCapacity:0];
+        
+        if ([datadic[@"error"] intValue] == 0) {
+            NSDictionary *infoDic = responseObject[@"info"];
+            for (NSDictionary *dict in infoDic) {
+                KitingGoodsModel *model = [KitingGoodsModel new];
+                model.needIntergal = dict[@"num"];
+                model.name = dict[@"name"];
+                model.imgUrl = dict[@"img"];
+                model._id = dict[@"id"];
+                [_models addObject:model];
+            }
+            
+            [_models sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                KitingGoodsModel *model1 = (KitingGoodsModel *) obj1;
+                KitingGoodsModel *model2 = (KitingGoodsModel *) obj2;
+                return model1.sequence < model2.sequence;
+            }];
+            
+            [_collectionView reloadData];
+            
+        }else {
+            NSString *info = datadic[@"info"];
+            [ConfigModel mbProgressHUD:info andView:nil];
+        }
+    }];
+}
+
+-(void) didSelectKittingId:(NSString *)_id isKitting:(BOOL)isKitting{
+    NSString *title = @"积分兑换";
+    NSString *message = @"兑换积分会减掉相应的积分";
+    if (!isKitting) {
+        title = @"订购";
+        message = @"订购商品线下付款";
+    }
+    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:title
+                                                    message:message
+                                                      image:nil
+                                            buttonAlignment:UILayoutConstraintAxisHorizontal
+                                            transitionStyle:PopupDialogTransitionStyleBounceUp
+                                           gestureDismissal:YES
+                                                 completion:nil];
+    
+    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
+    
+    
+
+    popupViewController.messageColor = [ColorContants userNameFontColor];
+    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+    
+    PopupDialogDefaultView *dialogAppearance = [PopupDialogDefaultView appearance];
+    dialogAppearance.titleFont            = [UIFont fontWithName:[FontConstrants pingFangBold] size:SizeWidth(18)];
+    dialogAppearance.titleColor           = [ColorContants userNameFontColor];
+    dialogAppearance.messageFont          = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+    dialogAppearance.messageColor         = [ColorContants kitingFontColor];
+    
+    CancelButton *cancel = [[CancelButton alloc] initWithTitle:@"取消" height:50 dismissOnTap:NO action:^{
+        [popup dismiss:^{
+            
+        }];
+    }];
+    
+    cancel.titleColor = popupViewController.titleColor;
+    
+    DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"确认" height:50 dismissOnTap:NO action:^{
+        [self kiting:_id isKitting:isKitting];
+        [popup dismiss:^{
+            
+        }];
+    }];
+    
+    ok.titleColor = popupViewController.titleColor;
+    
+    [popup addButtons: @[cancel,ok]];
+    
+    [self presentViewController:popup animated:YES completion:nil];
+
+}
+
+-(void) kiting:(NSString *) kittingId isKitting:(BOOL) isKitting{
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
+    [params setObject:userTokenStr forKey:@"userToken"];
+    [params setObject:kittingId forKey:@"id"];
+    [params setObject:@"1" forKey:@"good_type"];
+    if(!isKitting){
+        [params setObject:@"2" forKey:@"good_type"];
+    }
+    [ConfigModel showHud:self];
+    
+    [HttpRequest postPath:@"_exchangegood_001" params:params resultBlock:^(id responseObject, NSError *error) {
+        [ConfigModel hideHud:self];
+        NSDictionary *datadic = responseObject;
+        NSString *info = datadic[@"info"];
+        
+        if ([datadic[@"error"] intValue] == 0) {
+            if(isKitting){
+                [self setIntergral:[NSString stringWithFormat:@"%@",info]];
+            }
+            [ConfigModel mbProgressHUD:@"操作成功" andView:self.view];
+        }else{
+            [ConfigModel mbProgressHUD:@"积分不够" andView:self.view];
+        }
     }];
 }
 

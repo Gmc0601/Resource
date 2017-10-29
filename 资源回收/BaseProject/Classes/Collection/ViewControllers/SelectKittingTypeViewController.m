@@ -7,13 +7,11 @@
 //
 
 #import "SelectKittingTypeViewController.h"
-#import <TNRadioButtonGroup/TNRadioButtonGroup.h>
 #import <Masonry/Masonry.h>
 #import "Constants.h"
 
 @interface SelectKittingTypeViewController ()
 @property (weak, nonatomic) IBOutlet UIView *container;
-@property (retain, atomic) TNRadioButtonGroup *myGroup;
 @property (retain, atomic) UIView *kitting;
 @property (retain, atomic) UIView *buy;
 @end

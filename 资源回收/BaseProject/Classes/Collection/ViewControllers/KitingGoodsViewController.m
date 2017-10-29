@@ -77,6 +77,8 @@
         }];
     }];
     
+    
+    
 //    cancel.titleColor = popupViewController.titleColor;
     
     DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"确认" height:50 dismissOnTap:NO action:^{
