@@ -22,6 +22,10 @@
     return @"HelveticaNeue";
 }
 
++(NSString *) helvetica{
+    return @"Helvetica";
+}
+
 +(NSString *) helveticaNeue_pingFang{
     return @"HelveticaNeue,PingFang-SC-Medium";
 }

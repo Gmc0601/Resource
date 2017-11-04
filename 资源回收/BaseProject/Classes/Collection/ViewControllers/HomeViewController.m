@@ -24,6 +24,7 @@
 #import "SettingViewController.h"
 #import "PersonMessageViewController.h"
 #import "KitingGoodCell.h"
+#import "SelectKittingTypeViewController.h"
 
 @interface HomeViewController ()<KitingGoodCellDelegate>
 @property(retain,atomic) NSMutableArray *models;
@@ -654,26 +655,12 @@
 }
 
 -(void) didSelectKittingId:(NSString *)_id isKitting:(BOOL)isKitting{
-    NSString *title = @"积分兑换";
-    NSString *message = @"兑换积分会减掉相应的积分";
-    if (!isKitting) {
-        title = @"订购";
-        message = @"订购商品线下付款";
-    }
-    PopupDialog *popup = [[PopupDialog alloc] initWithTitle:title
-                                                    message:message
-                                                      image:nil
-                                            buttonAlignment:UILayoutConstraintAxisHorizontal
-                                            transitionStyle:PopupDialogTransitionStyleBounceUp
-                                           gestureDismissal:YES
-                                                 completion:nil];
     
-    PopupDialogDefaultViewController *popupViewController = (PopupDialogDefaultViewController *)popup.viewController;
-    
-    
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SelectKittingTypeViewController *newVC = (SelectKittingTypeViewController *)[story instantiateViewControllerWithIdentifier:@"SelectKittingType"];
+    newVC.isKitting = isKitting;
+    PopupDialog *popup = [[PopupDialog alloc] initWithViewController:newVC buttonAlignment:UILayoutConstraintAxisHorizontal transitionStyle:PopupDialogTransitionStyleBounceUp gestureDismissal:YES completion:nil];
 
-    popupViewController.messageColor = [ColorContants userNameFontColor];
-    popupViewController.messageFont = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
     
     PopupDialogDefaultView *dialogAppearance = [PopupDialogDefaultView appearance];
     dialogAppearance.titleFont            = [UIFont fontWithName:[FontConstrants pingFangBold] size:SizeWidth(18)];
@@ -687,16 +674,13 @@
         }];
     }];
     
-    cancel.titleColor = popupViewController.titleColor;
-    
     DefaultButton *ok = [[DefaultButton alloc] initWithTitle:@"确认" height:50 dismissOnTap:NO action:^{
-        [self kiting:_id isKitting:isKitting];
+        [self kiting:_id isKitting:isKitting withCount:newVC.count];
         [popup dismiss:^{
             
         }];
     }];
     
-    ok.titleColor = popupViewController.titleColor;
     
     [popup addButtons: @[cancel,ok]];
     
@@ -704,7 +688,12 @@
 
 }
 
--(void) kiting:(NSString *) kittingId isKitting:(BOOL) isKitting{
+-(void) kiting:(NSString *) kittingId isKitting:(BOOL) isKitting withCount:(int) count{
+    
+    if (count <= 0) {
+        [ConfigModel mbProgressHUD:@"请输入商品个数" andView:self.view];
+        return;
+    }
     
     NSMutableDictionary *params = [NSMutableDictionary new];
     NSString *userTokenStr = [ConfigModel getStringforKey:UserToken];
@@ -714,6 +703,8 @@
     if(!isKitting){
         [params setObject:@"2" forKey:@"good_type"];
     }
+    [params setObject:[NSString stringWithFormat:@"%d",count] forKey:@"good_num"];
+
     [ConfigModel showHud:self];
     
     [HttpRequest postPath:@"_exchangegood_001" params:params resultBlock:^(id responseObject, NSError *error) {
@@ -727,7 +718,7 @@
             }
             [ConfigModel mbProgressHUD:@"操作成功" andView:self.view];
         }else{
-            [ConfigModel mbProgressHUD:@"积分不够" andView:self.view];
+            [ConfigModel mbProgressHUD:info andView:self.view];
         }
     }];
 }

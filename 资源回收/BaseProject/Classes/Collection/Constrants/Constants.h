@@ -13,6 +13,7 @@
 +(NSString *) helveticaNeue;
 +(NSString *) helveticaNeue_pingFang;
 +(NSString *) pingFangBold;
++(NSString *) helvetica;
 @end
 
 @interface ColorContants : NSObject

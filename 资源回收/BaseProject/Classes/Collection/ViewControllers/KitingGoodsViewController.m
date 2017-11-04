@@ -15,7 +15,7 @@
 #import <PopupDialog/PopupDialog-Swift.h>
 #import "SelectKittingTypeViewController.h"
 
-@interface KitingGoodsViewController ()<SelectKittingTypeViewControllerDelegate>
+@interface KitingGoodsViewController()
 @property(retain,atomic) NSMutableArray *models;
 @property(retain,atomic) UILabel *lblIntergal;
 @property(retain,atomic)  UICollectionView *collectionView;
@@ -67,7 +67,6 @@
     
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SelectKittingTypeViewController *newVC = (SelectKittingTypeViewController *)[story instantiateViewControllerWithIdentifier:@"SelectKittingType"];
-    newVC.delegate = self;
     PopupDialog *popup = [[PopupDialog alloc] initWithViewController:newVC buttonAlignment:UILayoutConstraintAxisHorizontal transitionStyle:PopupDialogTransitionStyleBounceUp gestureDismissal:YES completion:nil];
     
     

@@ -12,157 +12,104 @@
 
 @interface SelectKittingTypeViewController ()
 @property (weak, nonatomic) IBOutlet UIView *container;
-@property (retain, atomic) UIView *kitting;
-@property (retain, atomic) UIView *buy;
+@property (retain, atomic) UITextField *txt;
 @end
 
 @implementation SelectKittingTypeViewController
 
+-(int) count{
+    return  _txt.text.intValue;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIView *bg = [UIView new];
-    bg.backgroundColor = [ColorContants integralWhereFontColor];
-    [self.container addSubview:bg];
-   
-
-    [bg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.container.mas_left);
-        make.right.equalTo(self.container.mas_right);
-        make.top.equalTo(self.container.mas_top);
-        make.height.equalTo(@(30));
-    }];
-    
     UILabel *lbl = [UILabel new];
 
-    lbl.text = @"提示";
+    lbl.text = self.isKitting ? @"积分兑换":@"订购";
     lbl.textAlignment = NSTextAlignmentCenter;
     lbl.textColor = [ColorContants userNameFontColor];
-    lbl.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(16)];
-    [bg addSubview:lbl];
+    lbl.font = [UIFont fontWithName:[FontConstrants pingFangBold] size:SizeWidth(18)];
+    [self.view addSubview:lbl];
     [lbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(bg.mas_centerX);
-        make.centerY.equalTo(bg.mas_centerY);
-        make.width.equalTo(@(SizeWidth(50)));
-        make.height.equalTo(@(SizeHeight(16)));
-    }];
-    
-    UIView *kittingView = [UIView new];
-    [self.container addSubview:kittingView];
-    [kittingView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.container.mas_left).offset(SizeWidth(20));
-        make.top.equalTo(lbl.mas_bottom).offset(SizeHeight(25));
-        make.height.equalTo(@(SizeHeight(38)));
-        make.right.equalTo(self.container.mas_right).offset(-SizeWidth(20));
-    }];
-    
-    UIView *bugView = [UIView new];
-    [self.container addSubview:bugView];
-    [bugView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.container.mas_left).offset(SizeWidth(20));
-        make.top.equalTo(kittingView.mas_bottom).offset(SizeHeight(10));
-        make.height.equalTo(@(SizeHeight(38)));
-        make.right.equalTo(self.container.mas_right).offset(-SizeWidth(20));
-    }];
-    
-    
-    UILabel *lbl1 = [UILabel new];
-    lbl1.text = @"积分兑换";
-    lbl1.textAlignment = NSTextAlignmentLeft;
-    lbl1.textColor = [ColorContants userNameFontColor];
-    lbl1.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(16)];
-    [kittingView addSubview:lbl1];
-    [lbl1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(kittingView.mas_left);
-        make.top.equalTo(kittingView);
-        make.height.equalTo(@(SizeHeight(20)));
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.view).offset(SizeHeight(25));
         make.width.equalTo(@(SizeWidth(100)));
+        make.height.equalTo(@(SizeHeight(20)));
     }];
     
-    UILabel *lbl2 = [UILabel new];
-    lbl2.text = @"兑换会减掉相应的积分";
-    lbl2.textAlignment = NSTextAlignmentLeft;
-    lbl2.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(12)];
-    lbl2.textColor = [ColorContants integralWhereFontColor];
-    [kittingView addSubview:lbl2];
-    [lbl2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(lbl1.mas_left);
-        make.top.equalTo(lbl1.mas_bottom);
-        make.height.equalTo(@(SizeHeight(14)));
+    UILabel *lblMsg = [UILabel new];
+    
+    lblMsg.text =  self.isKitting ? @"兑换会减掉相应的积分":@"订购商品线下付款";
+    lblMsg.textAlignment = NSTextAlignmentCenter;
+    lblMsg.textColor = [ColorContants kitingFontColor];
+    lblMsg.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(15)];
+    [self.view addSubview:lblMsg];
+    [lblMsg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(lbl.mas_bottom).offset(SizeHeight(15));
+        make.width.equalTo(@(SizeWidth(200)));
+        make.height.equalTo(@(SizeHeight(17)));
+    }];
+    
+    _txt = [UITextField new];
+    _txt.text = @"1";
+    _txt.textAlignment = NSTextAlignmentCenter;
+    _txt.textColor = [ColorContants userNameFontColor];
+    _txt.font = [UIFont fontWithName:[FontConstrants helvetica] size:SizeWidth(15)];
+    _txt.keyboardType = UIKeyboardTypeNumberPad;
+    _txt.layer.borderColor = [ColorContants otherFontColor].CGColor;
+    _txt.layer.borderWidth = SizeWidth(2);
+    [self.view addSubview:_txt];
+    
+    [_txt mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(lblMsg.mas_bottom).offset(SizeHeight(35));
         make.width.equalTo(@(SizeWidth(150)));
+        make.height.equalTo(@(SizeHeight(44)));
     }];
-    
-    UILabel *lbl3 = [UILabel new];
-    lbl3.text = @"订购";
-    lbl3.font = lbl1.font;
-    lbl3.textColor = lbl1.textColor;
-    lbl3.textAlignment = NSTextAlignmentLeft;
-    [bugView addSubview:lbl3];
-    [lbl3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(bugView.mas_left);
-        make.top.equalTo(bugView);
-        make.height.equalTo(@(SizeHeight(20)));
-        make.width.equalTo(@(SizeWidth(100)));
-    }];
-    
-    UILabel *lbl4 = [UILabel new];
-    lbl4.text = @"订购商品线下付款";
-    lbl4.font =  lbl2.font;
-    lbl4.textColor =  lbl2.textColor;
-    lbl4.textAlignment = NSTextAlignmentLeft;
-    [bugView addSubview:lbl4];
-    [lbl4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(lbl3.mas_left);
-        make.top.equalTo(lbl3.mas_bottom);
-        make.height.equalTo(@(SizeHeight(14)));
-        make.width.equalTo(@(SizeWidth(150)));
-
-    }];
-    
-    _kitting = [UIView new];
-    _kitting.backgroundColor = [UIColor blackColor];
-    _kitting.layer.borderWidth = 3;
-    _kitting.layer.cornerRadius = 10;
-    [kittingView addSubview:_kitting];
-    [_kitting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(kittingView.mas_right);
-        make.centerY.equalTo(kittingView);
-        make.height.equalTo(@(SizeHeight(20)));
-        make.width.equalTo(@(SizeWidth(20)));
-    }];
-    
-    _buy = [UIView new];
-    _buy.backgroundColor = [UIColor whiteColor];
-    _buy.layer.borderWidth = 3;
-    _buy.layer.cornerRadius = 10;
-    [bugView addSubview:_buy];
-    [_buy mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(bugView.mas_right);
-        make.centerY.equalTo(bugView);
-        make.height.equalTo(@(SizeHeight(20)));
-        make.width.equalTo(@(SizeWidth(20)));
-    }];
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapKitting)];
-    kittingView.userInteractionEnabled = YES;
-    [kittingView addGestureRecognizer:tap1];
-    
-    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBuy)];
-    bugView.userInteractionEnabled = YES;
-    [bugView addGestureRecognizer:tap2];
    
+    UIButton *btnAdd = [UIButton new];
+    [btnAdd setTitle:@"+" forState:UIControlStateNormal];
+    [btnAdd setTitleColor:[ColorContants userNameFontColor] forState:UIControlStateNormal];
+    btnAdd.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(18)];
+    btnAdd.backgroundColor = [ColorContants otherFontColor];
+    [btnAdd addTarget:self action:@selector(tapAdd) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnAdd];
+    
+    [btnAdd mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_txt.mas_right).offset(SizeWidth(3));
+        make.centerY.equalTo(_txt);
+        make.width.equalTo(@(SizeWidth(85/2)));
+        make.height.equalTo(@(SizeHeight(44)));
+    }];
+    
+    UIButton *btnSubtract = [UIButton new];
+    [btnSubtract setTitle:@"-" forState:UIControlStateNormal];
+    [btnSubtract setTitleColor:[ColorContants userNameFontColor] forState:UIControlStateNormal];
+    btnSubtract.titleLabel.font = [UIFont fontWithName:[FontConstrants pingFang] size:SizeWidth(18)];
+    btnSubtract.backgroundColor = [ColorContants otherFontColor];
+    [btnSubtract addTarget:self action:@selector(tapSubstract) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnSubtract];
+    
+    [btnSubtract mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_txt.mas_left).offset(-SizeWidth(3));
+        make.centerY.equalTo(_txt);
+        make.width.equalTo(@(SizeWidth(85/2)));
+        make.height.equalTo(@(SizeHeight(44)));
+    }];
 }
 
--(void) tapKitting{
-    _kitting.backgroundColor = [UIColor blackColor];
-    _buy.backgroundColor = [UIColor whiteColor];
-    [self.delegate didChangeType:@"kit"];
+-(void) tapAdd{
+    int  count = _txt.text.intValue + 1;
+    _txt.text = [NSString stringWithFormat:@"%d",count];
 }
 
--(void) tapBuy{
-    _kitting.backgroundColor = [UIColor whiteColor];
-    _buy.backgroundColor = [UIColor blackColor];
-    [self.delegate didChangeType:@"buy"];
-
+-(void) tapSubstract{
+    if(_txt.text.intValue > 1){
+        int  count = _txt.text.intValue - 1;
+        _txt.text = [NSString stringWithFormat:@"%d",count];
+    }
 }
 
 @end

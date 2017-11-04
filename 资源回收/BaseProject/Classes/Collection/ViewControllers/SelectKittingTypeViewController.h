@@ -7,13 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class SelectKittingTypeViewController;
-@protocol SelectKittingTypeViewControllerDelegate <NSObject>
-
--(void) didChangeType:(NSString *) type;
-
-@end
-
 @interface SelectKittingTypeViewController : UIViewController
-@property(weak,nonatomic) id<SelectKittingTypeViewControllerDelegate> delegate;
+@property(assign,nonatomic) int count;
+@property(assign,atomic) BOOL isKitting;
 @end
