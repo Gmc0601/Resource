@@ -154,6 +154,9 @@
     cell.layer.cornerRadius = SizeHeight(5);
     
     if (lblName == nil) {
+        cell.clipsToBounds = YES;
+        cell.layer.cornerRadius = SizeWidth(10);
+
         UIView *bgView = [[UIView alloc] initWithFrame:cell.bounds];
         bgView.backgroundColor = [UIColor colorWithHexString:@"#61000000"];
         bgView.layer.cornerRadius = SizeWidth(10);
