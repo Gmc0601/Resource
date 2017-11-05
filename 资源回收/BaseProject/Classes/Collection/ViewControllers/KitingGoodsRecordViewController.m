@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _limit = 10;
+    _limit = 12;
     _pageIndex = 0;
     [self setNavTitle:@"积分兑换记录"];
     [self addTableView];
@@ -31,7 +31,6 @@
     __weak KitingGoodsRecordViewController *weakSelf = self;
     [_tb addRefreshHeaderWithBlock:^{
         _pageIndex = 0;
-        _models = [NSMutableArray arrayWithCapacity:0];
         [weakSelf loadKitingRecord];
         [weakSelf.tb.header endHeadRefresh];
     }];
@@ -88,6 +87,8 @@
                 _pageIndex--;
                 return;
             }
+            
+            _models = [NSMutableArray arrayWithCapacity:0];
             
             for (NSDictionary *dict in infoDic) {
                 KitingGoodsRecordModel *model = [KitingGoodsRecordModel new];

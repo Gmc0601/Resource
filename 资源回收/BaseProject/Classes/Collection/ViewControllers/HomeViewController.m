@@ -155,11 +155,11 @@
     
     if (lblName == nil) {
         cell.clipsToBounds = YES;
-        cell.layer.cornerRadius = SizeWidth(10);
+        cell.layer.cornerRadius = SizeWidth(5);
 
         UIView *bgView = [[UIView alloc] initWithFrame:cell.bounds];
         bgView.backgroundColor = [UIColor colorWithHexString:@"#61000000"];
-        bgView.layer.cornerRadius = SizeWidth(10);
+        bgView.layer.cornerRadius = SizeWidth(5);
         bgView.alpha = 0.49;
         [cell addSubview:bgView];
         
